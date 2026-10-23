@@ -1,0 +1,18 @@
+# Virtual Environment
+.venv/
+venv/
+ENV/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# IDEs & System
+.DS_Store
+.idea/
+.vscode/
+
+# Penpot unpack scratch
+objects/
