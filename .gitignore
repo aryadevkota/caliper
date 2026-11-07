@@ -41,6 +41,7 @@ Thumbs.db
 # Project Temporary & Scratch Files
 ~$*
 *.tmp
+requirements.txt.full
 objects/
 logs/
 *.log
