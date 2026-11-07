@@ -1,13 +1,103 @@
 /**
  * Caliper: The Sewing & Calibration Atelier
- * Tactile Knob Physics, Rolling Yarn Loader, Web Audio Tactile Detents, and API Streaming
+ * Tactile Rotary Drag Physics, Web Audio Synthesized Mechanical Detents,
+ * 6-Specimen Swatch Specimen Drawer, Dynamic Cursor Lighting & API Streaming.
  */
 
+// Global State
 let allMachines = [];
 let currentMachine = null;
-let audioContext = null;
 
-// DOM Elements
+// Audio Synthesizer Class
+class RotaryAudio {
+  constructor() {
+    this.ctx = null;
+    this.lastClickTime = 0;
+  }
+
+  ensureContext() {
+    if (!this.ctx) {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (AudioCtx) {
+        this.ctx = new AudioCtx();
+      }
+    }
+    if (this.ctx && this.ctx.state === "suspended") {
+      this.ctx.resume();
+    }
+  }
+
+  /**
+   * Synthesize crisp mechanical dial ratchet detent click.
+   * Pitch factor modulates click frequency based on dial position.
+   */
+  playDetent(pitch = 1.0) {
+    try {
+      this.ensureContext();
+      if (!this.ctx) return;
+      const now = this.ctx.currentTime;
+      if (now - this.lastClickTime < 0.02) return; // Debounce rapid bursts
+      this.lastClickTime = now;
+
+      // 1. High-frequency metallic snap transient
+      const bufferSize = Math.floor(this.ctx.sampleRate * 0.005);
+      const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+      const output = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        output[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.25));
+      }
+      const noise = this.ctx.createBufferSource();
+      noise.buffer = buffer;
+
+      const noiseFilter = this.ctx.createBiquadFilter();
+      noiseFilter.type = "bandpass";
+      noiseFilter.frequency.setValueAtTime(3200 * pitch, now);
+      noiseFilter.Q.setValueAtTime(3.5, now);
+
+      const noiseGain = this.ctx.createGain();
+      noiseGain.gain.setValueAtTime(0.3, now);
+      noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.006);
+
+      noise.connect(noiseFilter);
+      noiseFilter.connect(noiseGain);
+      noiseGain.connect(this.ctx.destination);
+      noise.start(now);
+
+      // 2. Hollow mechanical ratchet cavity resonance
+      const osc = this.ctx.createOscillator();
+      const oscGain = this.ctx.createGain();
+      osc.type = "triangle";
+      osc.frequency.setValueAtTime(940 * pitch, now);
+      osc.frequency.exponentialRampToValueAtTime(420 * pitch, now + 0.022);
+
+      oscGain.gain.setValueAtTime(0.18, now);
+      oscGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.028);
+
+      osc.connect(oscGain);
+      oscGain.connect(this.ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.03);
+    } catch (_) {
+      // Audio policy safe
+    }
+  }
+
+  /**
+   * Synthesize softer button/switch toggle click
+   */
+  playSwitch() {
+    this.playDetent(0.78);
+  }
+}
+
+const rotaryAudio = new RotaryAudio();
+
+// Backward compatibility helper
+function playTactileClick() {
+  rotaryAudio.playSwitch();
+}
+
+// DOM Elements Cache
 const machineSelect = document.getElementById("machineSelect");
 const providerSelect = document.getElementById("providerSelect");
 const apiKeyInput = document.getElementById("apiKeyInput");
@@ -18,8 +108,13 @@ const btnSubmit = document.getElementById("btnSubmit");
 const yarnLoader = document.getElementById("yarnLoader");
 const traceDrawer = document.getElementById("traceDrawer");
 const traceToggleBtn = document.getElementById("traceToggleBtn");
+const traceToggleHint = document.getElementById("traceToggleHint");
+const btnResetDefaults = document.getElementById("btnResetDefaults");
 
 // Dials & Badges
+const bezelTension = document.getElementById("bezelTension");
+const bezelLength = document.getElementById("bezelLength");
+const bezelWidth = document.getElementById("bezelWidth");
 const rotorTension = document.getElementById("rotorTension");
 const rotorLength = document.getElementById("rotorLength");
 const rotorWidth = document.getElementById("rotorWidth");
@@ -44,68 +139,226 @@ const specNeedle = document.getElementById("specNeedle");
 const specFoot = document.getElementById("specFoot");
 const specSpeed = document.getElementById("specSpeed");
 
+// Dial State Model
+const dialState = {
+  tension: {
+    value: 4.0,
+    min: 0.0,
+    max: 9.0,
+    step: 0.5,
+    unit: "",
+    rotor: rotorTension,
+    valElem: valTension,
+    bezel: bezelTension
+  },
+  length: {
+    value: 2.5,
+    min: 0.0,
+    max: 4.0,
+    step: 0.5,
+    unit: " mm",
+    rotor: rotorLength,
+    valElem: valLength,
+    bezel: bezelLength
+  },
+  width: {
+    value: 0.0,
+    min: 0.0,
+    max: 5.0,
+    step: 0.5,
+    unit: " mm",
+    rotor: rotorWidth,
+    valElem: valWidth,
+    bezel: bezelWidth
+  }
+};
+
 /**
- * Tactile Mechanical Audio Click Generator (Web Audio API)
- * Synthesizes a crisp, physical sewing machine dial/switch detent click.
+ * Set dial value, compute sweep angle (-120deg to +120deg), and update visual/ARIA state.
  */
-function playTactileClick() {
-  try {
-    const AudioCtx = window.AudioContext || window.webkitAudioContext;
-    if (!AudioCtx) return;
-    if (!audioContext) {
-      audioContext = new AudioCtx();
-    }
-    if (audioContext.state === "suspended") {
-      audioContext.resume();
-    }
+function setDialValue(param, value, animate = true) {
+  const dial = dialState[param];
+  if (!dial || !dial.rotor) return;
 
-    const t = audioContext.currentTime;
+  const numVal = parseFloat(value);
+  if (isNaN(numVal)) return;
 
-    // 1. Transient burst: high-frequency noise spike
-    const bufferSize = Math.floor(audioContext.sampleRate * 0.005); // 5ms
-    const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
-    const output = buffer.getChannelData(0);
-    for (let i = 0; i < bufferSize; i++) {
-      output[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.2));
-    }
-    const noise = audioContext.createBufferSource();
-    noise.buffer = buffer;
+  const clamped = Math.min(dial.max, Math.max(dial.min, numVal));
+  dial.value = clamped;
 
-    const noiseFilter = audioContext.createBiquadFilter();
-    noiseFilter.type = "bandpass";
-    noiseFilter.frequency.setValueAtTime(2600, t);
-    noiseFilter.Q.setValueAtTime(3.0, t);
+  if (animate) {
+    dial.rotor.classList.add("animating");
+  } else {
+    dial.rotor.classList.remove("animating");
+  }
 
-    const noiseGain = audioContext.createGain();
-    noiseGain.gain.setValueAtTime(0.35, t);
-    noiseGain.gain.exponentialRampToValueAtTime(0.001, t + 0.006);
+  const span = dial.max - dial.min > 0 ? (dial.max - dial.min) : 1;
+  const ratio = (clamped - dial.min) / span;
+  const angle = -120 + ratio * 240;
+  dial.rotor.style.transform = `rotate(${angle.toFixed(1)}deg)`;
 
-    noise.connect(noiseFilter);
-    noiseFilter.connect(noiseGain);
-    noiseGain.connect(audioContext.destination);
-    noise.start(t);
+  if (param === "width" && clamped === 0) {
+    dial.valElem.textContent = "0.0 mm";
+    if (dial.bezel) dial.bezel.setAttribute("aria-valuetext", "0.0 mm (Straight)");
+  } else {
+    dial.valElem.textContent = `${clamped.toFixed(1)}${dial.unit}`;
+    if (dial.bezel) dial.bezel.setAttribute("aria-valuetext", `${clamped.toFixed(1)}${dial.unit}`);
+  }
 
-    // 2. Resonant mechanical latch ping
-    const osc = audioContext.createOscillator();
-    const oscGain = audioContext.createGain();
-    osc.type = "triangle";
-    osc.frequency.setValueAtTime(880, t);
-    osc.frequency.exponentialRampToValueAtTime(360, t + 0.022);
-
-    oscGain.gain.setValueAtTime(0.2, t);
-    oscGain.gain.exponentialRampToValueAtTime(0.0001, t + 0.03);
-
-    osc.connect(oscGain);
-    oscGain.connect(audioContext.destination);
-    osc.start(t);
-    osc.stop(t + 0.032);
-  } catch (err) {
-    // Ignore if audio permissions not yet granted
+  if (dial.bezel) {
+    dial.bezel.setAttribute("aria-valuenow", clamped.toFixed(1));
   }
 }
 
-// Initialize application
+/**
+ * Configure circular pointer dragging and keyboard slider controls on dials.
+ */
+function setupKnobInteractions(param) {
+  const dial = dialState[param];
+  if (!dial || !dial.bezel) return;
+
+  let isDragging = false;
+  let lastDetentVal = dial.value;
+
+  function updateFromPointer(e) {
+    const rect = dial.bezel.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const dx = e.clientX - cx;
+    const dy = e.clientY - cy;
+
+    // Angle relative to 3 o'clock in degrees
+    const degFromEast = Math.atan2(dy, dx) * (180 / Math.PI);
+    // Convert to dial angle where 12 o'clock is 0deg (-180 to +180)
+    let dialAngle = degFromEast + 90;
+    if (dialAngle > 180) dialAngle -= 360;
+
+    // Clamping to active arc [-120, +120]
+    // The bottom dead zone is between 120 and 180 (right) and -180 and -120 (left)
+    if (dialAngle > 120) {
+      dialAngle = 120;
+    } else if (dialAngle < -120) {
+      dialAngle = -120;
+    }
+
+    const ratio = (dialAngle - (-120)) / 240;
+    const rawVal = dial.min + ratio * (dial.max - dial.min);
+    const snappedVal = Math.round(rawVal / dial.step) * dial.step;
+    const clampedVal = Math.min(dial.max, Math.max(dial.min, snappedVal));
+
+    if (Math.abs(clampedVal - lastDetentVal) >= dial.step / 2) {
+      const pitch = 0.85 + 0.35 * ratio;
+      rotaryAudio.playDetent(pitch);
+      lastDetentVal = clampedVal;
+    }
+
+    setDialValue(param, clampedVal, false);
+  }
+
+  dial.bezel.addEventListener("pointerdown", (e) => {
+    if (e.button !== 0 && e.pointerType === "mouse") return;
+    isDragging = true;
+    try {
+      dial.bezel.setPointerCapture(e.pointerId);
+    } catch (_) {}
+    dial.bezel.classList.add("dragging");
+    dial.rotor.classList.remove("animating");
+    updateFromPointer(e);
+  });
+
+  dial.bezel.addEventListener("pointermove", (e) => {
+    if (!isDragging) return;
+    updateFromPointer(e);
+  });
+
+  const stopDrag = (e) => {
+    if (!isDragging) return;
+    isDragging = false;
+    try {
+      dial.bezel.releasePointerCapture(e.pointerId);
+    } catch (_) {}
+    dial.bezel.classList.remove("dragging");
+    dial.rotor.classList.add("animating");
+  };
+
+  dial.bezel.addEventListener("pointerup", stopDrag);
+  dial.bezel.addEventListener("pointercancel", stopDrag);
+
+  // Full ARIA 1.2 Slider Keyboard Access
+  dial.bezel.addEventListener("keydown", (e) => {
+    let delta = 0;
+    if (e.key === "ArrowRight" || e.key === "ArrowUp") {
+      delta = dial.step;
+    } else if (e.key === "ArrowLeft" || e.key === "ArrowDown") {
+      delta = -dial.step;
+    } else if (e.key === "PageUp") {
+      delta = dial.step * 2;
+    } else if (e.key === "PageDown") {
+      delta = -dial.step * 2;
+    } else if (e.key === "Home") {
+      e.preventDefault();
+      setDialValue(param, dial.min, true);
+      rotaryAudio.playDetent(0.8);
+      return;
+    } else if (e.key === "End") {
+      e.preventDefault();
+      setDialValue(param, dial.max, true);
+      rotaryAudio.playDetent(1.2);
+      return;
+    } else {
+      return;
+    }
+
+    e.preventDefault();
+    const nextVal = Math.min(dial.max, Math.max(dial.min, dial.value + delta));
+    if (nextVal !== dial.value) {
+      const ratio = (nextVal - dial.min) / (dial.max - dial.min);
+      rotaryAudio.playDetent(0.85 + 0.35 * ratio);
+      setDialValue(param, nextVal, true);
+    }
+  });
+}
+
+/**
+ * Setup dynamic cursor lighting occlusion on workspace cards.
+ */
+function setupDynamicLighting() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const workspace = document.querySelector(".atelier-workspace");
+  if (!workspace) return;
+
+  let ticking = false;
+  workspace.addEventListener("mousemove", (e) => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const rect = workspace.getBoundingClientRect();
+      const xRatio = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 to +0.5
+      const yRatio = (e.clientY - rect.top) / rect.height - 0.5;
+
+      const shadowX = (-xRatio * 14).toFixed(1);
+      const shadowY = (12 - yRatio * 8).toFixed(1);
+
+      document.documentElement.style.setProperty(
+        "--shadow-paper-dynamic",
+        `${shadowX}px ${shadowY}px 28px rgba(61, 30, 40, 0.09), 0 3px 6px rgba(61, 30, 40, 0.05)`
+      );
+      ticking = false;
+    });
+  });
+}
+
+// Initialize Application
 async function init() {
+  // Setup Dial Interactions
+  setupKnobInteractions("tension");
+  setupKnobInteractions("length");
+  setupKnobInteractions("width");
+
+  // Setup Dynamic Lighting Occlusion
+  setupDynamicLighting();
+
   try {
     const res = await fetch("/api/machines");
     const data = await res.json();
@@ -122,31 +375,69 @@ async function init() {
     const defaultM = allMachines.find(m => m.machine_id === "brother_sm3701") || allMachines[0];
     if (defaultM) {
       machineSelect.value = defaultM.machine_id;
-      selectMachine(defaultM.machine_id);
+      await selectMachine(defaultM.machine_id);
     }
   } catch (err) {
     console.error("Failed to load machine catalog:", err);
   }
 
-  // Setup Event Listeners
+  // Event Listeners
   machineSelect.addEventListener("change", (e) => {
-    playTactileClick();
+    rotaryAudio.playSwitch();
     selectMachine(e.target.value);
   });
 
   chatForm.addEventListener("submit", handleSubmit);
-  
-  // Trace drawer toggle
-  traceToggleBtn.addEventListener("click", () => {
-    playTactileClick();
-    const isHidden = traceDrawer.style.display === "none";
-    traceDrawer.style.display = isHidden ? "flex" : "none";
-  });
 
-  // Preset chip clicks
+  // Trace Drawer Toggle
+  if (traceToggleBtn) {
+    traceToggleBtn.addEventListener("click", () => {
+      rotaryAudio.playSwitch();
+      const isHidden = traceDrawer.style.display === "none";
+      traceDrawer.style.display = isHidden ? "flex" : "none";
+      traceToggleBtn.setAttribute("aria-expanded", isHidden ? "true" : "false");
+      if (traceToggleHint) {
+        traceToggleHint.textContent = isHidden ? "Click to Collapse ▴" : "Click to Inspect ▾";
+      }
+    });
+
+    traceToggleBtn.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        traceToggleBtn.click();
+      }
+    });
+  }
+
+  // Reset to Chassis Defaults Button
+  if (btnResetDefaults) {
+    btnResetDefaults.addEventListener("click", () => {
+      rotaryAudio.playSwitch();
+      setTimeout(() => rotaryAudio.playDetent(1.15), 110);
+
+      if (currentMachine) {
+        const defTension = currentMachine.tension_default !== undefined ? currentMachine.tension_default : 4.0;
+        const defLength = currentMachine.stitch_length_default !== undefined ? currentMachine.stitch_length_default : 2.5;
+        const defWidth = currentMachine.stitch_width_default !== undefined ? currentMachine.stitch_width_default : 0.0;
+
+        setDialValue("tension", defTension, true);
+        setDialValue("length", defLength, true);
+        setDialValue("width", defWidth, true);
+
+        badgeStitchType.textContent = "Straight";
+        badgeNeedle.textContent = `${currentMachine.min_needle_size_eu || 75}/${currentMachine.min_needle_size_us || 11} Universal`;
+        badgeFoot.textContent = currentMachine.presser_foot_system || "Snap-on Foot";
+        updateSafety({ severity: "SAFE", message: "Physical Safety Verified: Reset to chassis baseline." });
+
+        // Clear active chip states
+        document.querySelectorAll(".swatch-chip").forEach(c => c.classList.remove("active"));
+      }
+    });
+  }
+
+  // Preset Swatch Chip Clicks
   document.querySelectorAll(".swatch-chip").forEach(chip => {
     chip.addEventListener("click", () => {
-      playTactileClick();
       handleScenarioClick(chip.dataset.scenario);
     });
   });
@@ -171,37 +462,41 @@ async function selectMachine(machineId) {
     rangeLength.textContent = `Range: ${currentMachine.stitch_length_min_mm} – ${currentMachine.stitch_length_max_mm}mm`;
     rangeWidth.textContent = `Range: ${currentMachine.stitch_width_min_mm} – ${currentMachine.stitch_width_max_mm}mm`;
 
+    // Update Dial Min/Max Bounds
+    dialState.tension.min = currentMachine.tension_min || 0;
+    dialState.tension.max = currentMachine.tension_max || 9;
+    dialState.length.min = currentMachine.stitch_length_min_mm || 0;
+    dialState.length.max = currentMachine.stitch_length_max_mm || 4;
+    dialState.width.min = currentMachine.stitch_width_min_mm || 0;
+    dialState.width.max = currentMachine.stitch_width_max_mm || 5;
+
+    // Update ARIA Bounds
+    if (bezelTension) {
+      bezelTension.setAttribute("aria-valuemin", dialState.tension.min);
+      bezelTension.setAttribute("aria-valuemax", dialState.tension.max);
+    }
+    if (bezelLength) {
+      bezelLength.setAttribute("aria-valuemin", dialState.length.min);
+      bezelLength.setAttribute("aria-valuemax", dialState.length.max);
+    }
+    if (bezelWidth) {
+      bezelWidth.setAttribute("aria-valuemin", dialState.width.min);
+      bezelWidth.setAttribute("aria-valuemax", dialState.width.max);
+    }
+
     // Reset baseline knob positions with smooth physical spin
     const baseTension = currentMachine.tension_default || 4.0;
-    rotateKnob(rotorTension, baseTension, currentMachine.tension_min, currentMachine.tension_max);
-    valTension.textContent = parseFloat(baseTension).toFixed(1);
+    setDialValue("tension", baseTension, true);
 
-    rotateKnob(rotorLength, 2.5, currentMachine.stitch_length_min_mm, currentMachine.stitch_length_max_mm);
-    valLength.textContent = "2.5 mm";
+    const baseLength = currentMachine.stitch_length_default !== undefined ? currentMachine.stitch_length_default : 2.5;
+    setDialValue("length", baseLength, true);
 
-    rotateKnob(rotorWidth, 0.0, currentMachine.stitch_width_min_mm, currentMachine.stitch_width_max_mm);
-    valWidth.textContent = "0.0 mm";
+    const baseWidth = currentMachine.stitch_width_default !== undefined ? currentMachine.stitch_width_default : 0.0;
+    setDialValue("width", baseWidth, true);
+
   } catch (err) {
     console.error("Error selecting machine:", err);
   }
-}
-
-/**
- * Calculate rotation angle and rotate the physical knob smoothly.
- * Angle sweeps smoothly across 240 degrees (-120deg to +120deg).
- */
-function rotateKnob(rotorElem, value, minVal, maxVal) {
-  if (!rotorElem) return;
-  const val = parseFloat(value) || 0;
-  const min = parseFloat(minVal) || 0;
-  const max = parseFloat(maxVal) || (min + 9);
-  const clamped = Math.max(min, Math.min(max, val));
-  const span = max - min > 0 ? (max - min) : 1;
-  const ratio = (clamped - min) / span;
-
-  // -120deg to +120deg mechanical sweep
-  const angle = -120 + ratio * 240;
-  rotorElem.style.transform = `rotate(${angle.toFixed(1)}deg)`;
 }
 
 // Form Submit Handler
@@ -210,7 +505,7 @@ async function handleSubmit(e) {
   const text = userInput.value.trim();
   if (!text) return;
 
-  playTactileClick();
+  rotaryAudio.playSwitch();
 
   // Add user bubble (Confectioner's Blush memo note)
   appendMessage("user", text);
@@ -241,7 +536,7 @@ async function handleSubmit(e) {
 
     // Update Dials & Knobs with smooth physical spin
     if (data.dials) {
-      updateDials(data.dials, currentMachine);
+      updateDials(data.dials);
     }
 
     // Update Safety Status
@@ -265,27 +560,17 @@ async function handleSubmit(e) {
 }
 
 // Update Dials with Smooth Physics Spin
-function updateDials(dials, machine) {
-  const minT = machine ? machine.tension_min : 0;
-  const maxT = machine ? machine.tension_max : 9;
-  const minL = machine ? machine.stitch_length_min_mm : 0;
-  const maxL = machine ? machine.stitch_length_max_mm : 4;
-  const minW = machine ? machine.stitch_width_min_mm : 0;
-  const maxW = machine ? machine.stitch_width_max_mm : 6;
-
+function updateDials(dials) {
   if (dials.tension !== undefined && dials.tension !== null) {
-    rotateKnob(rotorTension, dials.tension, minT, maxT);
-    valTension.textContent = parseFloat(dials.tension).toFixed(1);
+    setDialValue("tension", dials.tension, true);
   }
 
   if (dials.stitch_length !== undefined && dials.stitch_length !== null) {
-    rotateKnob(rotorLength, dials.stitch_length, minL, maxL);
-    valLength.textContent = `${parseFloat(dials.stitch_length).toFixed(1)} mm`;
+    setDialValue("length", dials.stitch_length, true);
   }
 
   if (dials.stitch_width !== undefined && dials.stitch_width !== null) {
-    rotateKnob(rotorWidth, dials.stitch_width, minW, maxW);
-    valWidth.textContent = `${parseFloat(dials.stitch_width).toFixed(1)} mm`;
+    setDialValue("width", dials.stitch_width, true);
   }
 
   if (dials.stitch_type) badgeStitchType.textContent = dials.stitch_type;
@@ -311,7 +596,7 @@ function updateSafety(safety) {
   } else {
     safetyCard.innerHTML = `
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-      <div><strong>✓ Physical Safety Verified:</strong> All parameters within safe operating thresholds.</div>
+      <div><strong>✓ Physical Safety Verified:</strong> ${escapeHtml(safety.message || "All parameters within safe operating thresholds.")}</div>
     `;
   }
 }
@@ -372,32 +657,54 @@ function showYarnLoader(show) {
   }
 }
 
-// Preset Scenario Handler
+// 6-Specimen Preset Scenario Handler
 async function handleScenarioClick(scenarioId) {
-  playTactileClick();
+  rotaryAudio.playSwitch();
+
+  // Mark clicked chip as active
+  document.querySelectorAll(".swatch-chip").forEach(chip => {
+    if (chip.dataset.scenario === scenarioId) {
+      chip.classList.add("active");
+    } else {
+      chip.classList.remove("active");
+    }
+  });
+
   if (scenarioId === "1") {
-    // Scenario 1: Stretch Jersey on Brother SM3701
+    // 1. Stretch Jersey on Brother SM3701
     machineSelect.value = "brother_sm3701";
     await selectMachine("brother_sm3701");
     userInput.value = "Brother SM3701, polyester spandex jersey knit 200 GSM 50% stretch, side seam";
     handleSubmit();
   } else if (scenarioId === "2") {
-    // Scenario 2: Bird-nesting defect on Singer 4423
+    // 2. Bird-Nesting Defect on Singer 4423
     machineSelect.value = "singer_hd_4423";
     await selectMachine("singer_hd_4423");
     userInput.value = "Severe bird-nesting and looping on underside of fabric on Singer 4423";
     handleSubmit();
   } else if (scenarioId === "3") {
-    // Scenario 3: Safety Intercept on Brother SM3701
+    // 3. Denim Hazard Intercept on Brother SM3701
     machineSelect.value = "brother_sm3701";
     await selectMachine("brother_sm3701");
     userInput.value = "14oz heavy denim flat-felled seam with 70/10 needle on Brother SM3701";
     handleSubmit();
   } else if (scenarioId === "4") {
-    // Scenario 4: Silk chiffon rolled hem on Janome HD1000
+    // 4. Silk Chiffon Rolled Hem on Janome HD1000
     machineSelect.value = "janome_hd1000";
     await selectMachine("janome_hd1000");
     userInput.value = "Janome HD1000, silk chiffon 45 GSM rolled hem";
+    handleSubmit();
+  } else if (scenarioId === "5") {
+    // 5. Heavy Duck Canvas on Singer 4423
+    machineSelect.value = "singer_hd_4423";
+    await selectMachine("singer_hd_4423");
+    userInput.value = "Singer 4423, heavy duck canvas 450 GSM, reinforced structural seam with #16/100 needle";
+    handleSubmit();
+  } else if (scenarioId === "6") {
+    // 6. Fine Wool Flannel on Janome HD1000
+    machineSelect.value = "janome_hd1000";
+    await selectMachine("janome_hd1000");
+    userInput.value = "Janome HD1000, fine wool flannel 280 GSM, tailored bound seam";
     handleSubmit();
   }
 }
@@ -438,5 +745,5 @@ function escapeHtml(str) {
     .replace(/'/g, "&#039;");
 }
 
-// Start app
+// Start app when DOM ready
 document.addEventListener("DOMContentLoaded", init);

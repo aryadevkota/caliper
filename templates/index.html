@@ -11,6 +11,27 @@
 
   <div class="atelier-container">
     
+    <!-- Procedural Atelier Filters: Cardstock Fiber & Cotton Paper -->
+    <svg class="hidden-svg-filters" aria-hidden="true" style="position: absolute; width: 0; height: 0; overflow: hidden;">
+      <defs>
+        <!-- Procedural Manila Cardstock Grain -->
+        <filter id="cardstock-grain" x="0%" y="0%" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" result="noise" />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.24  0 0 0 0 0.12  0 0 0 0 0.16  0 0 0 0.045 0" in="noise" result="coloredNoise" />
+          <feComposite operator="in" in2="SourceGraphic" result="monoNoise"/>
+          <feBlend mode="multiply" in="SourceGraphic" in2="monoNoise" />
+        </filter>
+        <!-- Procedural Cotton Paper Texture -->
+        <filter id="paper-texture" x="0%" y="0%" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="4" result="paperNoise" />
+          <feDiffuseLighting in="paperNoise" lighting-color="#fff" surfaceScale="1.2" result="light">
+            <feDistantLight azimuth="60" elevation="50" />
+          </feDiffuseLighting>
+          <feBlend mode="multiply" in="SourceGraphic" in2="light" />
+        </filter>
+      </defs>
+    </svg>
+    
     <!-- Header with Authentic Caliper Brand Logo -->
     <header class="atelier-header">
       <div class="brand-wrapper">
@@ -43,38 +64,46 @@
       </div>
     </header>
 
-    <!-- Machine Selector & Controls Ribbon (Tailor's Manila Pattern Envelope Metaphor) -->
-    <section class="ribbon-panel">
-      <div class="control-field">
-        <label class="field-label" for="machineSelect">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-plum)" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-          Sewing Machine Model (50 Verified Hardware Chassis)
-        </label>
-        <select id="machineSelect" class="select-craft">
-          <!-- Populated dynamically via JS -->
-        </select>
+    <!-- Folder 01 // Hardware Chassis Specification & Inference Engine -->
+    <section class="manila-folder-card ribbon-folder" id="folderChassis">
+      <div class="manila-folder-tab">
+        <span class="manila-tab-title">Folder 01 // Hardware Chassis</span>
+        <span class="manila-tab-spec">Atelier Spec 4980</span>
+        <span class="washi-tape top-right" aria-hidden="true"></span>
       </div>
 
-      <div class="control-field">
-        <label class="field-label" for="providerSelect">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-teal)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
-          Inference Engine
-        </label>
-        <select id="providerSelect" class="select-craft">
-          <option value="auto">Auto (Local Ollama / Fallback)</option>
-          <option value="ollama-llama">Local Ollama (llama3.1:latest)</option>
-          <option value="ollama-qwen">Local Ollama (qwen2.5:0.5b)</option>
-          <option value="deterministic">Deterministic ReAct Engine (Fast / Offline)</option>
-          <option value="gemini">Google Gemini 2.5 Flash</option>
-        </select>
-      </div>
+      <div class="ribbon-panel">
+        <div class="control-field">
+          <label class="field-label" for="machineSelect">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-plum)" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            Sewing Machine Model (50 Verified Hardware Chassis)
+          </label>
+          <select id="machineSelect" class="select-craft">
+            <!-- Populated dynamically via JS -->
+          </select>
+        </div>
 
-      <div class="control-field">
-        <label class="field-label" for="apiKeyInput">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-gold)" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          Gemini Key (Optional)
-        </label>
-        <input type="password" id="apiKeyInput" class="input-craft" placeholder="AIzaSy... (optional)">
+        <div class="control-field">
+          <label class="field-label" for="providerSelect">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-teal)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+            Inference Engine
+          </label>
+          <select id="providerSelect" class="select-craft">
+            <option value="auto">Auto (Local Ollama / Fallback)</option>
+            <option value="ollama-llama">Local Ollama (llama3.1:latest)</option>
+            <option value="ollama-qwen">Local Ollama (qwen2.5:0.5b)</option>
+            <option value="deterministic">Deterministic ReAct Engine (Fast / Offline)</option>
+            <option value="gemini">Google Gemini 2.5 Flash</option>
+          </select>
+        </div>
+
+        <div class="control-field">
+          <label class="field-label" for="apiKeyInput">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-gold)" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Gemini Key (Optional)
+          </label>
+          <input type="password" id="apiKeyInput" class="input-craft" placeholder="AIzaSy... (optional)">
+        </div>
       </div>
 
       <!-- Selected Machine Hardware Chassis Spec Strip -->
@@ -132,28 +161,45 @@
           <span class="card-header-craft-sub">Conversational Physics &amp; Setup</span>
         </div>
 
-        <!-- Quick Fabric Swatch Preset Chips (Pinned Fabric Swatches) -->
+        <!-- 6-Specimen Tactile Swatch Specimen Drawer -->
         <div class="presets-tray">
-          <span class="tray-title">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-gold)" stroke-width="2.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            Quick Starter Scenarios (Proposal Deliverables):
-          </span>
-          <div class="swatch-chips">
-            <button type="button" class="swatch-chip" data-scenario="1">
-              <span>🌸 Stretch Jersey</span>
-              <span class="chip-tag">Brother SM3701 · 200 GSM · 50%</span>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <span class="tray-title" style="margin-bottom:0;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-gold)" stroke-width="2.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              Tactile Swatch Specimen Drawer (6 Presets):
+            </span>
+            <span class="specimen-count-stamp">6 SPECIMENS INDEXED</span>
+          </div>
+          <div class="swatch-chips-grid">
+            <button type="button" class="swatch-chip" data-scenario="1" title="Calibrate stretch knit jersey">
+              <span class="swatch-chip-title">🌸 Stretch Jersey</span>
+              <span class="swatch-chip-meta">Brother SM3701 · 200 GSM · 50%</span>
+              <span class="swatch-chip-pill">Side Seam Knit</span>
             </button>
-            <button type="button" class="swatch-chip" data-scenario="2">
-              <span>🧵 Bird-Nesting Defect</span>
-              <span class="chip-tag">Singer 4423 · Underside Loops</span>
+            <button type="button" class="swatch-chip" data-scenario="2" title="Diagnose underside thread looping defect">
+              <span class="swatch-chip-title">🧵 Bird-Nesting Defect</span>
+              <span class="swatch-chip-meta">Singer 4423 · Underside Loops</span>
+              <span class="swatch-chip-pill">Diagnostic Audit</span>
             </button>
-            <button type="button" class="swatch-chip" data-scenario="3">
-              <span>🛡️ Denim Hazard Intercept</span>
-              <span class="chip-tag">Brother SM3701 · 14oz · 70/10 Needle</span>
+            <button type="button" class="swatch-chip" data-scenario="3" title="Trigger needle snap safety guard">
+              <span class="swatch-chip-title">🛡️ 14oz Denim Flat-Felled</span>
+              <span class="swatch-chip-meta">Brother SM3701 · 14oz · 70/10 Needle</span>
+              <span class="swatch-chip-pill">Hazard Intercept</span>
             </button>
-            <button type="button" class="swatch-chip" data-scenario="4">
-              <span>🪡 Silk Chiffon</span>
-              <span class="chip-tag">Janome HD1000 · Rolled Hem</span>
+            <button type="button" class="swatch-chip" data-scenario="4" title="Calibrate delicate sheer chiffon">
+              <span class="swatch-chip-title">🪡 Silk Chiffon</span>
+              <span class="swatch-chip-meta">Janome HD1000 · 45 GSM · Rolled Hem</span>
+              <span class="swatch-chip-pill">Ultra-Delicate</span>
+            </button>
+            <button type="button" class="swatch-chip" data-scenario="5" title="Test heavy workwear canvas">
+              <span class="swatch-chip-title">🥊 Heavy Duck Canvas</span>
+              <span class="swatch-chip-meta">Singer 4423 · 450 GSM · Heavy Seam</span>
+              <span class="swatch-chip-pill">Workwear Heavy</span>
+            </button>
+            <button type="button" class="swatch-chip" data-scenario="6" title="Test tailored suit wool flannel">
+              <span class="swatch-chip-title">🐑 Fine Wool Flannel</span>
+              <span class="swatch-chip-meta">Janome HD1000 · 280 GSM · Bound Seam</span>
+              <span class="swatch-chip-pill">Tailored Suiting</span>
             </button>
           </div>
         </div>
@@ -212,17 +258,28 @@
       <!-- Right Column: Tactile Sewing Machine Knobs & Pattern Trace -->
       <section class="atelier-controls-card">
         
-        <!-- Physical Machine Dial Panel -->
-        <div class="panel-card">
-          <div class="card-header-craft" style="padding:0 0 14px 0; margin-bottom:14px; border-bottom:1px dashed var(--border-stitch);">
-            <h3 class="panel-card-title">
-              <!-- Sewing Machine Icon -->
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-plum)" stroke-width="2" stroke-linecap="round">
-                <rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="7" cy="12" r="2"/><line x1="16" y1="12" x2="16" y2="16"/>
-              </svg>
-              Physical Machine Dials
-            </h3>
-            <span style="font-size:12px; color:var(--text-supporting); font-weight:600;" id="currentMachineLabel">Brother SM3701</span>
+        <!-- Folder 02 // Physical Calibration Stage -->
+        <div class="panel-card" id="folderCalibration">
+          <div class="card-header-craft" style="padding:0 0 14px 0; margin-bottom:14px; border-bottom:1px dashed var(--border-stitch); display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px;">
+            <div>
+              <div style="font-family:var(--font-section); font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:var(--color-cherry); font-weight:700; margin-bottom:2px;">
+                Folder 02 // Physical Calibration Stage
+              </div>
+              <h3 class="panel-card-title" style="margin:0;">
+                <!-- Sewing Machine Icon -->
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-plum)" stroke-width="2" stroke-linecap="round">
+                  <rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="7" cy="12" r="2"/><line x1="16" y1="12" x2="16" y2="16"/>
+                </svg>
+                Physical Machine Dials
+              </h3>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="font-size:12px; color:var(--text-supporting); font-weight:600;" id="currentMachineLabel">Brother SM3701</span>
+              <button type="button" class="btn-reset-defaults" id="btnResetDefaults" title="Reset all dials to current chassis baseline">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                Reset Defaults
+              </button>
+            </div>
           </div>
 
           <!-- Physical Safety Notice Card -->
@@ -236,8 +293,16 @@
           <div class="knobs-stage">
             
             <!-- Upper Tension Rotary Knob (0-9, Buttercup Yellow 4-Hole Button Center) -->
-            <div class="knob-station">
-              <div class="knob-bezel">
+            <div class="knob-station" id="knobStationTension">
+              <div class="knob-bezel" id="bezelTension"
+                   role="slider"
+                   tabindex="0"
+                   aria-label="Upper Thread Tension Dial"
+                   aria-valuemin="0"
+                   aria-valuemax="9"
+                   aria-valuenow="4.0"
+                   aria-valuetext="4.0"
+                   data-param="tension">
                 <div class="knob-rotor" id="rotorTension" style="transform: rotate(-13.3deg);">
                   <svg viewBox="0 0 100 100" class="dial-rotor-svg">
                     <circle cx="50" cy="50" r="47" fill="#FFFFFF" stroke="#D5CBBF" stroke-width="1.5"/>
@@ -293,8 +358,16 @@
             </div>
 
             <!-- Stitch Length Rotary Knob (0-4mm, Cherry Red 4-Hole Button Center) -->
-            <div class="knob-station">
-              <div class="knob-bezel">
+            <div class="knob-station" id="knobStationLength">
+              <div class="knob-bezel" id="bezelLength"
+                   role="slider"
+                   tabindex="0"
+                   aria-label="Stitch Length Dial"
+                   aria-valuemin="0"
+                   aria-valuemax="4"
+                   aria-valuenow="2.5"
+                   aria-valuetext="2.5 mm"
+                   data-param="length">
                 <div class="knob-rotor" id="rotorLength" style="transform: rotate(30deg);">
                   <svg viewBox="0 0 100 100" class="dial-rotor-svg">
                     <circle cx="50" cy="50" r="47" fill="#FFFFFF" stroke="#D5CBBF" stroke-width="1.5"/>
@@ -341,8 +414,16 @@
             </div>
 
             <!-- Stitch Width Rotary Knob (0-5mm, Denim Blue 4-Hole Button Center, Zigzag Icons) -->
-            <div class="knob-station">
-              <div class="knob-bezel">
+            <div class="knob-station" id="knobStationWidth">
+              <div class="knob-bezel" id="bezelWidth"
+                   role="slider"
+                   tabindex="0"
+                   aria-label="Stitch Width Dial"
+                   aria-valuemin="0"
+                   aria-valuemax="5"
+                   aria-valuenow="0.0"
+                   aria-valuetext="0.0 mm"
+                   data-param="width">
                 <div class="knob-rotor" id="rotorWidth" style="transform: rotate(-120deg);">
                   <svg viewBox="0 0 100 100" class="dial-rotor-svg">
                     <circle cx="50" cy="50" r="47" fill="#FFFFFF" stroke="#D5CBBF" stroke-width="1.5"/>
@@ -422,17 +503,17 @@
           </div>
         </div>
 
-        <!-- The Tailor's Reasoning & Tool Trace Drawer (Card 4: Deep Atelier Plum) -->
-        <div class="trace-panel-card">
-          <div class="trace-toggle-bar" id="traceToggleBtn">
+        <!-- Folder 03 // The Tailor's Reasoning & Tool Trace Drawer (Card 4: Deep Atelier Plum) -->
+        <div class="trace-panel-card" id="folderTrace">
+          <div class="trace-toggle-bar" id="traceToggleBtn" role="button" tabindex="0" aria-expanded="false" aria-controls="traceDrawer">
             <span class="trace-toggle-title">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-plum)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-              Tailor's Reasoning &amp; Tool Trace
+              Folder 03 // Tailor's Reasoning &amp; Tool Trace
             </span>
-            <span class="trace-toggle-hint">Click to Inspect ▾</span>
+            <span class="trace-toggle-hint" id="traceToggleHint">Click to Inspect ▾</span>
           </div>
           
-          <div class="trace-drawer" id="traceDrawer">
+          <div class="trace-drawer" id="traceDrawer" style="display: none;">
             <div style="color:var(--color-mint); padding:6px 0; font-family:var(--font-body); font-size:13.5px;">
               Ready for input. Send a message or click a swatch chip to observe step-by-step reasoning, tool invocations, and max-iteration guard enforcement.
             </div>
