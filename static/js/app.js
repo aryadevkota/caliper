@@ -511,7 +511,7 @@ async function handleSubmit(e) {
   appendMessage("user", text);
   userInput.value = "";
   
-  // Show the rolling yarn ball loader! 🧶
+  // Show the rolling yarn ball loader
   showYarnLoader(true);
   btnSubmit.disabled = true;
 
@@ -551,7 +551,7 @@ async function handleSubmit(e) {
 
   } catch (err) {
     console.error("Calibration error:", err);
-    appendMessage("assistant", "⚠️ I encountered an error communicating with the agent. Please verify your local connection.");
+    appendMessage("assistant", "I encountered an error communicating with the agent. Please verify your local connection or model selection.");
   } finally {
     showYarnLoader(false);
     btnSubmit.disabled = false;
@@ -585,18 +585,18 @@ function updateSafety(safety) {
   
   if (severity === "CRITICAL" || severity === "HAZARD") {
     safetyCard.innerHTML = `
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-      <div><strong>🚨 HAZARD INTERCEPTED:</strong> ${escapeHtml(safety.message || "Fabric density exceeds needle limits. Needle upgraded to prevent snapping.")}</div>
+      <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/82.svg" class="safety-badge-icon" alt="Hazard">
+      <div><strong>HAZARD INTERCEPTED:</strong> ${escapeHtml(safety.message || "Fabric density exceeds needle limits. Needle upgraded to prevent snapping.")}</div>
     `;
   } else if (severity === "WARNING") {
     safetyCard.innerHTML = `
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-      <div><strong>⚠️ CAUTION:</strong> ${escapeHtml(safety.message || "Delicate fabric fiber piercing risk.")}</div>
+      <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/82.svg" class="safety-badge-icon" alt="Caution">
+      <div><strong>CAUTION:</strong> ${escapeHtml(safety.message || "Delicate fabric fiber piercing risk.")}</div>
     `;
   } else {
     safetyCard.innerHTML = `
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-      <div><strong>✓ Physical Safety Verified:</strong> ${escapeHtml(safety.message || "All parameters within safe operating thresholds.")}</div>
+      <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/30.svg" class="safety-badge-icon" alt="Safe">
+      <div><strong>Physical Safety Verified:</strong> ${escapeHtml(safety.message || "All parameters within safe operating thresholds.")}</div>
     `;
   }
 }
@@ -613,10 +613,10 @@ function renderTrace(trace) {
           <span>[Step ${step.step}]</span>
           <span>${isAnswer ? "FINAL ANSWER" : (step.tool_name || "REASONING")}</span>
         </div>
-        ${step.thought ? `<div class="step-thought">💭 <strong>Reasoning:</strong> ${escapeHtml(step.thought)}</div>` : ""}
-        ${step.tool_name ? `<div class="step-tool">🛠️ <code>${step.tool_name}(${JSON.stringify(step.tool_args || {})})</code></div>` : ""}
-        ${step.observation ? `<div class="step-obs">📥 <strong>Observation:</strong>\n${escapeHtml(step.observation)}</div>` : ""}
-        ${step.answer ? `<div class="step-answer">✨ <strong>Answer:</strong> ${escapeHtml(step.answer.slice(0, 160))}...</div>` : ""}
+        ${step.thought ? `<div class="step-thought"><img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/94.svg" class="trace-icon" alt="" aria-hidden="true"><strong>Reasoning:</strong> ${escapeHtml(step.thought)}</div>` : ""}
+        ${step.tool_name ? `<div class="step-tool"><img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/1.svg" class="trace-icon" alt="" aria-hidden="true"><code>${step.tool_name}(${JSON.stringify(step.tool_args || {})})</code></div>` : ""}
+        ${step.observation ? `<div class="step-obs"><img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/15.svg" class="trace-icon" alt="" aria-hidden="true"><strong>Observation:</strong>\n${escapeHtml(step.observation)}</div>` : ""}
+        ${step.answer ? `<div class="step-answer"><img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/23.svg" class="trace-icon" alt="" aria-hidden="true"><strong>Answer:</strong> ${escapeHtml(step.answer.slice(0, 160))}...</div>` : ""}
       </div>
     `;
   }).join("");
@@ -632,7 +632,7 @@ function appendMessage(sender, text) {
   if (sender === "user") {
     meta.textContent = "You";
   } else {
-    meta.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="var(--color-cherry)"><path d="M7 2h10v3H7zm0 17h10v3H7zm2-14h6v14H9z"/></svg> Caliper Atelier Assistant`;
+    meta.innerHTML = `<img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/81.svg" class="bubble-notion-icon" style="width:14px; height:14px; object-fit:contain; vertical-align:middle; margin-right:4px;" alt=""> Caliper Atelier Assistant`;
   }
 
   const content = document.createElement("div");

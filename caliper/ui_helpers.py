@@ -156,21 +156,21 @@ def render_dial_dashboard(specs: Dict[str, Any], dials: Dict[str, Any], safety_s
         if severity == "CRITICAL":
             safety_banner = f'''
             <div style="background:rgba(220, 38, 38, 0.15); border:1px solid #ef4444; border-radius:8px; padding:10px 14px; margin-bottom:12px; color:#fca5a5; font-size:12px;">
-              <div style="font-weight:700; color:#f87171; text-transform:uppercase; margin-bottom:2px;">🚨 SAFETY INTERCEPT: CRITICAL DEFLECTION RISK</div>
+              <div style="font-weight:700; color:#f87171; text-transform:uppercase; margin-bottom:2px;">[SAFETY INTERCEPT] CRITICAL DEFLECTION RISK</div>
               <div>{msg}</div>
             </div>
             '''
         elif severity == "WARNING":
             safety_banner = f'''
             <div style="background:rgba(217, 119, 6, 0.15); border:1px solid #f59e0b; border-radius:8px; padding:10px 14px; margin-bottom:12px; color:#fde68a; font-size:12px;">
-              <div style="font-weight:700; color:#fbbf24; text-transform:uppercase; margin-bottom:2px;">⚠️ SAFETY WARNING</div>
+              <div style="font-weight:700; color:#fbbf24; text-transform:uppercase; margin-bottom:2px;">[SAFETY WARNING]</div>
               <div>{msg}</div>
             </div>
             '''
         else:
             safety_banner = f'''
             <div style="background:rgba(16, 185, 129, 0.12); border:1px solid #10b981; border-radius:8px; padding:8px 12px; margin-bottom:12px; color:#a7f3d0; font-size:11px;">
-              <span style="font-weight:700; color:#34d399;">✓ PHYSICAL SAFETY VERIFIED:</span> Safe operating limits confirmed.
+              <span style="font-weight:700; color:#34d399;">[PHYSICAL SAFETY VERIFIED]</span> Safe operating limits confirmed.
             </div>
             '''
             

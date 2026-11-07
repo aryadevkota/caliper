@@ -49,24 +49,15 @@
       </div>
       
       <div class="header-badges">
-        <span class="badge-craft chassis">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
-          50 Indexed Chassis
-        </span>
-        <span class="badge-craft safety">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-          Physics &amp; Safety Guard
-        </span>
-        <span class="badge-craft steps">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-          Max-Steps: 6
-        </span>
+        <span class="header-stamp-tag">MADE WITH CARE · MEASURED WITH JOY</span>
       </div>
     </header>
 
     <!-- Folder 01 // Hardware Chassis Specification & Inference Engine -->
     <section class="manila-folder-card ribbon-folder" id="folderChassis">
       <div class="manila-folder-tab">
+        <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/7.svg" class="dossier-tab-asset" alt="" aria-hidden="true">
+        <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/6.svg" class="folder-binder-clip" alt="" aria-hidden="true">
         <span class="manila-tab-title">Folder 01 // Hardware Chassis</span>
         <span class="manila-tab-spec">Atelier Spec 4980</span>
         <span class="washi-tape top-right" aria-hidden="true"></span>
@@ -75,34 +66,40 @@
       <div class="ribbon-panel">
         <div class="control-field">
           <label class="field-label" for="machineSelect">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-plum)" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/8.svg" class="control-label-icon" alt="" aria-hidden="true">
             Sewing Machine Model (50 Verified Hardware Chassis)
           </label>
-          <select id="machineSelect" class="select-craft">
-            <!-- Populated dynamically via JS -->
-          </select>
+          <div class="select-pill-wrapper">
+            <select id="machineSelect" class="select-craft">
+              <!-- Populated dynamically via JS -->
+            </select>
+          </div>
         </div>
 
         <div class="control-field">
           <label class="field-label" for="providerSelect">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-teal)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+            <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/67.svg" class="control-label-icon" alt="" aria-hidden="true">
             Inference Engine
           </label>
-          <select id="providerSelect" class="select-craft">
-            <option value="auto">Auto (Local Ollama / Fallback)</option>
-            <option value="ollama-llama">Local Ollama (llama3.1:latest)</option>
-            <option value="ollama-qwen">Local Ollama (qwen2.5:0.5b)</option>
-            <option value="deterministic">Deterministic ReAct Engine (Fast / Offline)</option>
-            <option value="gemini">Google Gemini 2.5 Flash</option>
-          </select>
+          <div class="select-pill-wrapper">
+            <select id="providerSelect" class="select-craft">
+              <option value="auto">Auto (Local Ollama / Fallback)</option>
+              <option value="ollama-llama">Local Ollama (llama3.1:latest)</option>
+              <option value="ollama-qwen">Local Ollama (qwen2.5:0.5b)</option>
+              <option value="deterministic">Deterministic ReAct Engine (Fast / Offline)</option>
+              <option value="gemini">Google Gemini 2.5 Flash</option>
+            </select>
+          </div>
         </div>
 
         <div class="control-field">
           <label class="field-label" for="apiKeyInput">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-gold)" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/10.svg" class="control-label-icon" alt="" aria-hidden="true">
             Gemini Key (Optional)
           </label>
-          <input type="password" id="apiKeyInput" class="input-craft" placeholder="AIzaSy... (optional)">
+          <div class="input-pill-wrapper">
+            <input type="password" id="apiKeyInput" class="input-craft" placeholder="AIzaSy... (optional)">
+          </div>
         </div>
       </div>
 
@@ -129,33 +126,13 @@
       <section class="chat-atelier-card">
         <!-- Spiral-bound notebook coil across the top -->
         <div class="notepad-spiral-binding" aria-hidden="true">
-          <span class="spiral-ring"></span>
-          <span class="spiral-ring"></span>
-          <span class="spiral-ring"></span>
-          <span class="spiral-ring"></span>
-          <span class="spiral-ring"></span>
-          <span class="spiral-ring"></span>
-          <span class="spiral-ring"></span>
-          <span class="spiral-ring"></span>
-          <span class="spiral-ring"></span>
-          <span class="spiral-ring"></span>
-          <span class="spiral-ring"></span>
-          <span class="spiral-ring"></span>
-          <span class="spiral-ring"></span>
-          <span class="spiral-ring"></span>
-          <span class="spiral-ring"></span>
-          <span class="spiral-ring"></span>
+          <img src="/static/images/spiral_binding_header.svg" class="spiral-binding-svg" alt="" aria-hidden="true">
         </div>
 
         <div class="card-header-craft">
           <h2 class="card-title-craft">
-            <!-- Vintage Scissors SVG Icon -->
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-plum)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/>
-              <line x1="20" y1="4" x2="8.12" y2="15.88"/>
-              <line x1="14.47" y1="14.48" x2="20" y2="20"/>
-              <line x1="8.12" y1="8.12" x2="12" y2="12"/>
-            </svg>
+            <!-- Vintage Shears Notion -->
+            <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/95.svg" class="header-shears-icon" alt="" aria-hidden="true">
             Atelier Consultation
           </h2>
           <span class="card-header-craft-sub">Conversational Physics &amp; Setup</span>
@@ -163,43 +140,96 @@
 
         <!-- 6-Specimen Tactile Swatch Specimen Drawer -->
         <div class="presets-tray">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
             <span class="tray-title" style="margin-bottom:0;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-gold)" stroke-width="2.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/17.svg" style="width:16px; height:16px; vertical-align:middle; object-fit:contain; margin-right:4px;" alt="" aria-hidden="true">
               Tactile Swatch Specimen Drawer (6 Presets):
             </span>
             <span class="specimen-count-stamp">6 SPECIMENS INDEXED</span>
           </div>
           <div class="swatch-chips-grid">
             <button type="button" class="swatch-chip" data-scenario="1" title="Calibrate stretch knit jersey">
-              <span class="swatch-chip-title">🌸 Stretch Jersey</span>
-              <span class="swatch-chip-meta">Brother SM3701 · 200 GSM · 50%</span>
-              <span class="swatch-chip-pill">Side Seam Knit</span>
+              <div class="swatch-patch-backdrop" aria-hidden="true">
+                <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/2.svg" class="patch-card-bg" alt="">
+              </div>
+              <div class="swatch-patch-body">
+                <div class="swatch-chip-header">
+                  <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/23.svg" class="preset-notion-icon" alt="" aria-hidden="true">
+                  <span class="swatch-chip-title">Stretch Jersey</span>
+                </div>
+                <span class="swatch-chip-meta">Brother SM3701 · 200 GSM · 50%</span>
+                <span class="swatch-chip-pill">Side Seam Knit</span>
+              </div>
             </button>
+
             <button type="button" class="swatch-chip" data-scenario="2" title="Diagnose underside thread looping defect">
-              <span class="swatch-chip-title">🧵 Bird-Nesting Defect</span>
-              <span class="swatch-chip-meta">Singer 4423 · Underside Loops</span>
-              <span class="swatch-chip-pill">Diagnostic Audit</span>
+              <div class="swatch-patch-backdrop" aria-hidden="true">
+                <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/3.svg" class="patch-card-bg" alt="">
+              </div>
+              <div class="swatch-patch-body">
+                <div class="swatch-chip-header">
+                  <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/93.svg" class="preset-notion-icon" alt="" aria-hidden="true">
+                  <span class="swatch-chip-title">Bird-Nesting Defect</span>
+                </div>
+                <span class="swatch-chip-meta">Singer 4423 · Underside Loops</span>
+                <span class="swatch-chip-pill">Diagnostic Audit</span>
+              </div>
             </button>
+
             <button type="button" class="swatch-chip" data-scenario="3" title="Trigger needle snap safety guard">
-              <span class="swatch-chip-title">🛡️ 14oz Denim Flat-Felled</span>
-              <span class="swatch-chip-meta">Brother SM3701 · 14oz · 70/10 Needle</span>
-              <span class="swatch-chip-pill">Hazard Intercept</span>
+              <div class="swatch-patch-backdrop" aria-hidden="true">
+                <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/3.svg" class="patch-card-bg" alt="">
+              </div>
+              <div class="swatch-patch-body">
+                <div class="swatch-chip-header">
+                  <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/74.svg" class="preset-notion-icon" alt="" aria-hidden="true">
+                  <span class="swatch-chip-title">14oz Denim Flat-Felled</span>
+                </div>
+                <span class="swatch-chip-meta">Brother SM3701 · 14oz · 70/10 Needle</span>
+                <span class="swatch-chip-pill hazard-pill">Hazard Intercept</span>
+              </div>
             </button>
+
             <button type="button" class="swatch-chip" data-scenario="4" title="Calibrate delicate sheer chiffon">
-              <span class="swatch-chip-title">🪡 Silk Chiffon</span>
-              <span class="swatch-chip-meta">Janome HD1000 · 45 GSM · Rolled Hem</span>
-              <span class="swatch-chip-pill">Ultra-Delicate</span>
+              <div class="swatch-patch-backdrop" aria-hidden="true">
+                <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/2.svg" class="patch-card-bg" alt="">
+              </div>
+              <div class="swatch-patch-body">
+                <div class="swatch-chip-header">
+                  <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/71.svg" class="preset-notion-icon" alt="" aria-hidden="true">
+                  <span class="swatch-chip-title">Silk Chiffon</span>
+                </div>
+                <span class="swatch-chip-meta">Janome HD1000 · 45 GSM · Rolled Hem</span>
+                <span class="swatch-chip-pill">Ultra-Delicate</span>
+              </div>
             </button>
+
             <button type="button" class="swatch-chip" data-scenario="5" title="Test heavy workwear canvas">
-              <span class="swatch-chip-title">🥊 Heavy Duck Canvas</span>
-              <span class="swatch-chip-meta">Singer 4423 · 450 GSM · Heavy Seam</span>
-              <span class="swatch-chip-pill">Workwear Heavy</span>
+              <div class="swatch-patch-backdrop" aria-hidden="true">
+                <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/3.svg" class="patch-card-bg" alt="">
+              </div>
+              <div class="swatch-patch-body">
+                <div class="swatch-chip-header">
+                  <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/24.svg" class="preset-notion-icon" alt="" aria-hidden="true">
+                  <span class="swatch-chip-title">Heavy Duck Canvas</span>
+                </div>
+                <span class="swatch-chip-meta">Singer 4423 · 450 GSM · Heavy Seam</span>
+                <span class="swatch-chip-pill">Workwear Heavy</span>
+              </div>
             </button>
+
             <button type="button" class="swatch-chip" data-scenario="6" title="Test tailored suit wool flannel">
-              <span class="swatch-chip-title">🐑 Fine Wool Flannel</span>
-              <span class="swatch-chip-meta">Janome HD1000 · 280 GSM · Bound Seam</span>
-              <span class="swatch-chip-pill">Tailored Suiting</span>
+              <div class="swatch-patch-backdrop" aria-hidden="true">
+                <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/2.svg" class="patch-card-bg" alt="">
+              </div>
+              <div class="swatch-patch-body">
+                <div class="swatch-chip-header">
+                  <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/66.svg" class="preset-notion-icon" alt="" aria-hidden="true">
+                  <span class="swatch-chip-title">Fine Wool Flannel</span>
+                </div>
+                <span class="swatch-chip-meta">Janome HD1000 · 280 GSM · Bound Seam</span>
+                <span class="swatch-chip-pill">Tailored Suiting</span>
+              </div>
             </button>
           </div>
         </div>
@@ -208,12 +238,11 @@
         <div class="chat-stream" id="chatStream">
           <div class="chat-bubble assistant">
             <div class="bubble-meta">
-              <!-- Spool Icon in Cherry Red -->
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--color-cherry)"><path d="M7 2h10v3H7zm0 17h10v3H7zm2-14h6v14H9z"/></svg>
+              <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/81.svg" class="bubble-notion-icon" style="width:14px; height:14px; object-fit:contain; vertical-align:middle; margin-right:4px;" alt="">
               Caliper Assistant
             </div>
             <div class="bubble-content">
-              <h3>Welcome to Caliper! 🪡</h3>
+              <h3>Welcome to Caliper!</h3>
               <p>I'm your intelligent sewing machine calibration companion. Tell me what fabric you're working with, any stitch defects you're encountering, or click one of the quick fabric swatches above!</p>
               <p style="margin-top:6px; font-size:13px; color:var(--text-supporting);">
                 <em>I calculate real physical thread tensions scaled to your machine's dial range, recommend needle gauges, and actively intercept broken needle hazards.</em>
@@ -222,7 +251,7 @@
           </div>
         </div>
 
-        <!-- The Rolling Wool Yarn Loading Animation 🧶 -->
+        <!-- The Rolling Wool Yarn Loading Animation -->
         <div class="yarn-loading-container" id="yarnLoader">
           <div class="yarn-ball-wrapper">
             <svg class="yarn-ball-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -246,11 +275,8 @@
         <form class="chat-input-bar" id="chatForm">
           <input type="text" id="userInput" class="input-message" placeholder="Ask about fabric setup, needle sizing, or stitch defects..." autocomplete="off">
           <button type="submit" class="btn-send" id="btnSubmit">
-            <!-- Needle & Thread Send Icon -->
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
-            </svg>
-            Calibrate
+            <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/17.svg" class="btn-send-notion" alt="" aria-hidden="true">
+            CALIBRATE
           </button>
         </form>
       </section>
@@ -266,10 +292,7 @@
                 Folder 02 // Physical Calibration Stage
               </div>
               <h3 class="panel-card-title" style="margin:0;">
-                <!-- Sewing Machine Icon -->
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-plum)" stroke-width="2" stroke-linecap="round">
-                  <rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="7" cy="12" r="2"/><line x1="16" y1="12" x2="16" y2="16"/>
-                </svg>
+                <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/8.svg" style="width:20px; height:20px; vertical-align:middle; margin-right:6px;" alt="" aria-hidden="true">
                 Physical Machine Dials
               </h3>
             </div>
@@ -284,15 +307,19 @@
 
           <!-- Physical Safety Notice Card -->
           <div class="safety-indicator-card safe" id="safetyCard">
-            <!-- Checkmark SVG -->
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/30.svg" class="safety-badge-icon" alt="Safe">
             <div id="safetyCardText">Physical Safety Verified: Machine within safe operating parameters.</div>
           </div>
 
           <!-- THE TACTILE SEWING MACHINE ROTARY KNOBS -->
           <div class="knobs-stage">
+            <!-- Brass Hardware Mounting Screws at 4 Corners -->
+            <span class="dial-corner-screw top-left" aria-hidden="true"></span>
+            <span class="dial-corner-screw top-right" aria-hidden="true"></span>
+            <span class="dial-corner-screw bottom-left" aria-hidden="true"></span>
+            <span class="dial-corner-screw bottom-right" aria-hidden="true"></span>
             
-            <!-- Upper Tension Rotary Knob (0-9, Buttercup Yellow 4-Hole Button Center) -->
+            <!-- Upper Tension Rotary Knob (0-9) -->
             <div class="knob-station" id="knobStationTension">
               <div class="knob-bezel" id="bezelTension"
                    role="slider"
@@ -303,53 +330,9 @@
                    aria-valuenow="4.0"
                    aria-valuetext="4.0"
                    data-param="tension">
+                <img src="/newbrandkit/Sewing%20Machine%20Dial%20Components/Upper%20Tension%20Bezel.svg" class="dial-bezel-graphic" alt="" aria-hidden="true">
                 <div class="knob-rotor" id="rotorTension" style="transform: rotate(-13.3deg);">
-                  <svg viewBox="0 0 100 100" class="dial-rotor-svg">
-                    <circle cx="50" cy="50" r="47" fill="#FFFFFF" stroke="#D5CBBF" stroke-width="1.5"/>
-                    <circle cx="50" cy="50" r="44" fill="none" stroke="#E8DFC8" stroke-width="1" stroke-dasharray="2 2"/>
-                    <!-- Dial Numbers 0 to 9 & Major Ticks -->
-                    <line x1="13.6" y1="71.0" x2="10.2" y2="73.0" stroke="#3D1E28" stroke-width="1.2" stroke-linecap="round"/>
-                    <text x="21.0" y="66.8" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8" font-weight="bold" fill="#3D1E28">0</text>
-                    
-                    <line x1="10.3" y1="52.2" x2="6.6" y2="52.4" stroke="#3D1E28" stroke-width="1.2" stroke-linecap="round"/>
-                    <text x="18.3" y="51.8" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8" font-weight="bold" fill="#3D1E28">1</text>
-                    
-                    <line x1="14.4" y1="33.4" x2="11.0" y2="31.8" stroke="#3D1E28" stroke-width="1.2" stroke-linecap="round"/>
-                    <text x="21.6" y="36.7" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8" font-weight="bold" fill="#3D1E28">2</text>
-                    
-                    <line x1="25.0" y1="18.0" x2="22.6" y2="15.0" stroke="#3D1E28" stroke-width="1.2" stroke-linecap="round"/>
-                    <text x="30.1" y="24.5" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8" font-weight="bold" fill="#3D1E28">3</text>
-                    
-                    <line x1="40.3" y1="9.1" x2="39.4" y2="5.1" stroke="#3D1E28" stroke-width="1.2" stroke-linecap="round"/>
-                    <text x="42.3" y="17.4" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8" font-weight="bold" fill="#3D1E28">4</text>
-                    
-                    <line x1="59.7" y1="9.1" x2="60.6" y2="5.1" stroke="#3D1E28" stroke-width="1.2" stroke-linecap="round"/>
-                    <text x="57.7" y="17.4" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8" font-weight="bold" fill="#3D1E28">5</text>
-                    
-                    <line x1="75.0" y1="18.0" x2="77.4" y2="15.0" stroke="#3D1E28" stroke-width="1.2" stroke-linecap="round"/>
-                    <text x="69.9" y="24.5" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8" font-weight="bold" fill="#3D1E28">6</text>
-                    
-                    <line x1="85.6" y1="33.4" x2="89.0" y2="31.8" stroke="#3D1E28" stroke-width="1.2" stroke-linecap="round"/>
-                    <text x="78.4" y="36.7" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8" font-weight="bold" fill="#3D1E28">7</text>
-                    
-                    <line x1="89.7" y1="52.2" x2="93.4" y2="52.4" stroke="#3D1E28" stroke-width="1.2" stroke-linecap="round"/>
-                    <text x="81.7" y="51.8" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8" font-weight="bold" fill="#3D1E28">8</text>
-                    
-                    <line x1="86.4" y1="71.0" x2="89.8" y2="73.0" stroke="#3D1E28" stroke-width="1.2" stroke-linecap="round"/>
-                    <text x="79.0" y="66.8" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8" font-weight="bold" fill="#3D1E28">9</text>
-
-                    <!-- Center Cap: 4-Hole Buttercup Yellow Resin Button (#DEA458) -->
-                    <circle cx="50" cy="50" r="15" fill="#DEA458" stroke="#B88236" stroke-width="1.2"/>
-                    <circle cx="50" cy="50" r="12" fill="#E5B26F" stroke="#C99347" stroke-width="0.8"/>
-                    <!-- 4 Button Holes -->
-                    <circle cx="46.2" cy="46.2" r="1.6" fill="#3D1E28"/>
-                    <circle cx="53.8" cy="46.2" r="1.6" fill="#3D1E28"/>
-                    <circle cx="46.2" cy="53.8" r="1.6" fill="#3D1E28"/>
-                    <circle cx="53.8" cy="53.8" r="1.6" fill="#3D1E28"/>
-                    <!-- Crossed Thread Stitch (Cherry Red Thread) -->
-                    <line x1="46.2" y1="46.2" x2="53.8" y2="53.8" stroke="#BF1318" stroke-width="1.8" stroke-linecap="round"/>
-                    <line x1="53.8" y1="46.2" x2="46.2" y2="53.8" stroke="#BF1318" stroke-width="1.8" stroke-linecap="round"/>
-                  </svg>
+                  <img src="/newbrandkit/Sewing%20Machine%20Dial%20Components/Upper%20Tension%20Wheel.svg" class="dial-wheel-graphic" alt="" aria-hidden="true">
                 </div>
               </div>
               <span class="knob-label">Upper Tension</span>
@@ -357,7 +340,7 @@
               <span class="knob-range-hint" id="rangeTension">Range: 0 – 9</span>
             </div>
 
-            <!-- Stitch Length Rotary Knob (0-4mm, Cherry Red 4-Hole Button Center) -->
+            <!-- Stitch Length Rotary Knob (0-4mm) -->
             <div class="knob-station" id="knobStationLength">
               <div class="knob-bezel" id="bezelLength"
                    role="slider"
@@ -368,44 +351,9 @@
                    aria-valuenow="2.5"
                    aria-valuetext="2.5 mm"
                    data-param="length">
+                <img src="/newbrandkit/Sewing%20Machine%20Dial%20Components/Stitch%20Length%20Bezel.svg" class="dial-bezel-graphic" alt="" aria-hidden="true">
                 <div class="knob-rotor" id="rotorLength" style="transform: rotate(30deg);">
-                  <svg viewBox="0 0 100 100" class="dial-rotor-svg">
-                    <circle cx="50" cy="50" r="47" fill="#FFFFFF" stroke="#D5CBBF" stroke-width="1.5"/>
-                    <circle cx="50" cy="50" r="44" fill="none" stroke="#E8DFC8" stroke-width="1" stroke-dasharray="2 2"/>
-                    <!-- Major Numbers 0 to 4 -->
-                    <line x1="13.6" y1="71.0" x2="10.2" y2="73.0" stroke="#3D1E28" stroke-width="1.4" stroke-linecap="round"/>
-                    <text x="21.0" y="66.8" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8.5" font-weight="bold" fill="#3D1E28">0</text>
-                    
-                    <line x1="13.6" y1="29.0" x2="10.2" y2="27.0" stroke="#3D1E28" stroke-width="1.4" stroke-linecap="round"/>
-                    <text x="21.0" y="33.2" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8.5" font-weight="bold" fill="#3D1E28">1</text>
-                    
-                    <line x1="50.0" y1="8.0" x2="50.0" y2="4.0" stroke="#3D1E28" stroke-width="1.4" stroke-linecap="round"/>
-                    <text x="50.0" y="16.5" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8.5" font-weight="bold" fill="#3D1E28">2</text>
-                    
-                    <line x1="86.4" y1="29.0" x2="89.8" y2="27.0" stroke="#3D1E28" stroke-width="1.4" stroke-linecap="round"/>
-                    <text x="79.0" y="33.2" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8.5" font-weight="bold" fill="#3D1E28">3</text>
-                    
-                    <line x1="86.4" y1="71.0" x2="89.8" y2="73.0" stroke="#3D1E28" stroke-width="1.4" stroke-linecap="round"/>
-                    <text x="79.0" y="66.8" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8.5" font-weight="bold" fill="#3D1E28">4</text>
-
-                    <!-- Half Step Ticks -->
-                    <line x1="8.0" y1="50.0" x2="4.0" y2="50.0" stroke="#79785B" stroke-width="1.0" stroke-linecap="round"/>
-                    <line x1="29.0" y1="13.6" x2="27.0" y2="10.2" stroke="#79785B" stroke-width="1.0" stroke-linecap="round"/>
-                    <line x1="71.0" y1="13.6" x2="73.0" y2="10.2" stroke="#79785B" stroke-width="1.0" stroke-linecap="round"/>
-                    <line x1="92.0" y1="50.0" x2="96.0" y2="50.0" stroke="#79785B" stroke-width="1.0" stroke-linecap="round"/>
-
-                    <!-- Center Cap: 4-Hole Cherry Red Resin Button (#BF1318) -->
-                    <circle cx="50" cy="50" r="15" fill="#BF1318" stroke="#8B0C10" stroke-width="1.2"/>
-                    <circle cx="50" cy="50" r="12" fill="#CC252A" stroke="#9E1014" stroke-width="0.8"/>
-                    <!-- 4 Button Holes -->
-                    <circle cx="46.2" cy="46.2" r="1.6" fill="#3D1E28"/>
-                    <circle cx="53.8" cy="46.2" r="1.6" fill="#3D1E28"/>
-                    <circle cx="46.2" cy="53.8" r="1.6" fill="#3D1E28"/>
-                    <circle cx="53.8" cy="53.8" r="1.6" fill="#3D1E28"/>
-                    <!-- Crossed Thread Stitch (Pure White Thread) -->
-                    <line x1="46.2" y1="46.2" x2="53.8" y2="53.8" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"/>
-                    <line x1="53.8" y1="46.2" x2="46.2" y2="53.8" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"/>
-                  </svg>
+                  <img src="/newbrandkit/Sewing%20Machine%20Dial%20Components/Stitch%20Length%20Wheel.svg" class="dial-wheel-graphic" alt="" aria-hidden="true">
                 </div>
               </div>
               <span class="knob-label">Stitch Length</span>
@@ -413,7 +361,7 @@
               <span class="knob-range-hint" id="rangeLength">Range: 0 – 4mm</span>
             </div>
 
-            <!-- Stitch Width Rotary Knob (0-5mm, Denim Blue 4-Hole Button Center, Zigzag Icons) -->
+            <!-- Stitch Width Rotary Knob (0-5mm) -->
             <div class="knob-station" id="knobStationWidth">
               <div class="knob-bezel" id="bezelWidth"
                    role="slider"
@@ -424,45 +372,9 @@
                    aria-valuenow="0.0"
                    aria-valuetext="0.0 mm"
                    data-param="width">
+                <img src="/newbrandkit/Sewing%20Machine%20Dial%20Components/Stitch%20Width%20Bezel.svg" class="dial-bezel-graphic" alt="" aria-hidden="true">
                 <div class="knob-rotor" id="rotorWidth" style="transform: rotate(-120deg);">
-                  <svg viewBox="0 0 100 100" class="dial-rotor-svg">
-                    <circle cx="50" cy="50" r="47" fill="#FFFFFF" stroke="#D5CBBF" stroke-width="1.5"/>
-                    <circle cx="50" cy="50" r="44" fill="none" stroke="#E8DFC8" stroke-width="1" stroke-dasharray="2 2"/>
-                    <!-- Major Numbers 0 to 5 -->
-                    <line x1="13.6" y1="71.0" x2="10.2" y2="73.0" stroke="#3D1E28" stroke-width="1.4" stroke-linecap="round"/>
-                    <text x="21.0" y="66.8" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8.5" font-weight="bold" fill="#3D1E28">0</text>
-                    <!-- Straight Line Stitch Icon next to 0 -->
-                    <line x1="12.0" y1="62.0" x2="12.0" y2="57.0" stroke="#1F435B" stroke-width="1.5" stroke-linecap="round"/>
-                    
-                    <line x1="10.1" y1="37.0" x2="6.3" y2="35.8" stroke="#3D1E28" stroke-width="1.4" stroke-linecap="round"/>
-                    <text x="18.1" y="39.7" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8.5" font-weight="bold" fill="#3D1E28">1</text>
-                    
-                    <line x1="32.9" y1="11.5" x2="31.3" y2="7.9" stroke="#3D1E28" stroke-width="1.4" stroke-linecap="round"/>
-                    <text x="36.4" y="19.4" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8.5" font-weight="bold" fill="#3D1E28">2</text>
-                    
-                    <line x1="67.1" y1="11.5" x2="68.7" y2="7.9" stroke="#3D1E28" stroke-width="1.4" stroke-linecap="round"/>
-                    <text x="63.6" y="19.4" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8.5" font-weight="bold" fill="#3D1E28">3</text>
-                    
-                    <line x1="89.9" y1="37.0" x2="93.7" y2="35.8" stroke="#3D1E28" stroke-width="1.4" stroke-linecap="round"/>
-                    <text x="81.9" y="39.7" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8.5" font-weight="bold" fill="#3D1E28">4</text>
-                    
-                    <line x1="86.4" y1="71.0" x2="89.8" y2="73.0" stroke="#3D1E28" stroke-width="1.4" stroke-linecap="round"/>
-                    <text x="79.0" y="66.8" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8.5" font-weight="bold" fill="#3D1E28">5</text>
-                    <!-- Zigzag Stitch Icon next to 5 -->
-                    <polyline points="85,60 87,58 89,61 91,58 93,60" fill="none" stroke="#1F435B" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-
-                    <!-- Center Cap: 4-Hole Denim Blue Button (#1F435B) -->
-                    <circle cx="50" cy="50" r="15" fill="#1F435B" stroke="#132B3B" stroke-width="1.2"/>
-                    <circle cx="50" cy="50" r="12" fill="#2B5978" stroke="#19384E" stroke-width="0.8"/>
-                    <!-- 4 Button Holes -->
-                    <circle cx="46.2" cy="46.2" r="1.6" fill="#132B3B"/>
-                    <circle cx="53.8" cy="46.2" r="1.6" fill="#132B3B"/>
-                    <circle cx="46.2" cy="53.8" r="1.6" fill="#132B3B"/>
-                    <circle cx="53.8" cy="53.8" r="1.6" fill="#132B3B"/>
-                    <!-- Crossed Thread Stitch (Pure White Thread) -->
-                    <line x1="46.2" y1="46.2" x2="53.8" y2="53.8" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"/>
-                    <line x1="53.8" y1="46.2" x2="46.2" y2="53.8" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"/>
-                  </svg>
+                  <img src="/newbrandkit/Sewing%20Machine%20Dial%20Components/Stitch%20Width%20Wheel.svg" class="dial-wheel-graphic" alt="" aria-hidden="true">
                 </div>
               </div>
               <span class="knob-label">Stitch Width</span>
@@ -476,8 +388,7 @@
           <div class="spec-cards-grid">
             <div class="spec-mini-card">
               <span class="mini-card-label">
-                <!-- Thread Zigzag Icon -->
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--color-cherry)" stroke-width="2"><polyline points="2 12 7 6 12 18 17 6 22 12"/></svg>
+                <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/5.svg" class="mini-card-icon" alt="" aria-hidden="true">
                 Stitch Type
               </span>
               <span class="mini-card-value" id="badgeStitchType">Straight</span>
@@ -485,8 +396,7 @@
             
             <div class="spec-mini-card">
               <span class="mini-card-label">
-                <!-- Needle Icon -->
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--color-teal)" stroke-width="2"><line x1="5" y1="19" x2="19" y2="5"/><path d="M19 5l-4 0"/><path d="M19 5l0 4"/></svg>
+                <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/81.svg" class="mini-card-icon" alt="" aria-hidden="true">
                 Needle Gauge
               </span>
               <span class="mini-card-value" id="badgeNeedle">75/11 Ballpoint</span>
@@ -494,8 +404,7 @@
             
             <div class="spec-mini-card">
               <span class="mini-card-label">
-                <!-- Foot Icon -->
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--color-gold)" stroke-width="2"><rect x="4" y="6" width="16" height="12" rx="2"/></svg>
+                <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/79.svg" class="mini-card-icon" alt="" aria-hidden="true">
                 Presser Foot
               </span>
               <span class="mini-card-value" id="badgeFoot">Snap-on Foot J</span>
@@ -503,14 +412,17 @@
           </div>
         </div>
 
-        <!-- Folder 03 // The Tailor's Reasoning & Tool Trace Drawer (Card 4: Deep Atelier Plum) -->
+        <!-- Folder 03 // Agent Logs (Card 4: Deep Atelier Plum) -->
         <div class="trace-panel-card" id="folderTrace">
           <div class="trace-toggle-bar" id="traceToggleBtn" role="button" tabindex="0" aria-expanded="false" aria-controls="traceDrawer">
             <span class="trace-toggle-title">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-plum)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-              Folder 03 // Tailor's Reasoning &amp; Tool Trace
+              <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/54.svg" class="trace-pushpin-icon" alt="" aria-hidden="true">
+              Folder 03 // Agent Logs
             </span>
-            <span class="trace-toggle-hint" id="traceToggleHint">Click to Inspect ▾</span>
+            <div class="trace-bar-right">
+              <span class="trace-pill-tag">AGENT LOGS</span>
+              <span class="trace-toggle-hint" id="traceToggleHint">Click to Inspect ▾</span>
+            </div>
           </div>
           
           <div class="trace-drawer" id="traceDrawer" style="display: none;">
