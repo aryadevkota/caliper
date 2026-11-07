@@ -39,6 +39,8 @@ Thumbs.db
 *.swo
 
 # Project Temporary & Scratch Files
+~$*
+*.tmp
 objects/
 logs/
 *.log
