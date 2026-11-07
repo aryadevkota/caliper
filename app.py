@@ -29,8 +29,10 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 ASSETS_DIR = os.path.join(BASE_DIR, "assets")
 TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
+NEWBRANDKIT_DIR = os.path.join(BASE_DIR, "newbrandkit")
 
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+app.mount("/newbrandkit", StaticFiles(directory=NEWBRANDKIT_DIR), name="newbrandkit")
 templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 class CalibrateRequest(BaseModel):
@@ -44,6 +46,13 @@ async def get_logo():
     logo_path = os.path.join(ASSETS_DIR, "caliper_logo.png")
     if os.path.exists(logo_path):
         return FileResponse(logo_path, media_type="image/png")
+    return JSONResponse(status_code=404, content={"error": "Logo not found"})
+
+@app.get("/assets/caliper_logo.svg")
+async def get_logo_svg():
+    logo_path = os.path.join(ASSETS_DIR, "caliper_logo.svg")
+    if os.path.exists(logo_path):
+        return FileResponse(logo_path, media_type="image/svg+xml")
     return JSONResponse(status_code=404, content={"error": "Logo not found"})
 
 INDEX_FILE = os.path.join(TEMPLATES_DIR, "index.html")

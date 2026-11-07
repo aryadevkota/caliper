@@ -1,18 +1,47 @@
-# Virtual Environment
+# Environments & Secrets
+.env
+.env.*
+*.env
+*.pem
+*.key
+*.token
+*.secret
+credentials.json
+*client_secret*.json
+
+# Virtual Environments
 .venv/
 venv/
 ENV/
+env/
 
-# Python cache
+# Python Cache & Bytecode
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
+*.egg
+*.egg-info/
+dist/
+build/
 
-# IDEs & System
+# Operating System & IDE
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 .idea/
 .vscode/
+*.swp
+*.swo
 
-# Penpot unpack scratch
+# Project Temporary & Scratch Files
 objects/
+logs/
+*.log
+*.zip
+cis4394-agentic-ai-coursematerials/
+newbrandkit/Logo/Caliper Logo.orig.svg

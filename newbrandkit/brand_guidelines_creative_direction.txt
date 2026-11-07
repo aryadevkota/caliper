@@ -1,0 +1,168 @@
+# Brand Guidelines & Creative Direction: Caliper
+
+
+
+## Brand Identity & Tagline
+
+- Official Brand Name: Caliper
+
+- Official Tagline: "The Sewing & Calibration Atelier"
+
+
+
+## Brand Philosophy & Aesthetic Movement
+
+Caliper is a whimsical, nostalgic maker’s atelier and tactile scrapbook workshop. It marries the playful, tactile charm of textile craft (stitched patchwork, running stitches, button hardware, ribbon spools, paperclips) with the loving precision of a tailor's studio. It feels physical, hand-assembled, and storybook-inspired — like stepping into a vintage haberdashery or French confectionery workshop.
+
+
+
+## Core Visual Metaphor: The Maker's Workbench
+
+Every visual layout should look like an open, tactile workspace rather than a flat digital screen:
+
+- Manila and pastel workshop file folders with rounded tabs replace rigid digital boxes.
+
+- A spiral-bound or tear-away lined paper pad serves as the conversational area, accented with washi tape, memo slips, and pinned fabric swatches.
+
+- Whimsical, hand-drawn dials with circular rotation arrows and stitched button centers replace sterile mechanical knobs.
+
+- Soft powder blue and white vertical awning stripes frame banners and header borders, providing an artisanal boutique feel.
+
+- Pure crisp white (#FFFFFF) provides a clean, breathable foundation that keeps the whimsical collage elements feeling light, airy, and modern.
+
+
+
+## Palette & Color Story
+
+- Base Canvas: Pure Studio White (#FFFFFF) for clean, open, high-breathability backdrops.
+
+- Primary Soft Accent: Powder Blue (#BFD7EA) for awning stripes, soft ribbon bands, and gentle container tints.
+
+- Boutique Warmth: Confectioner's Blush Pink (#FAD2E1) for active folder tabs, playful stickers, and memo slips.
+
+- Natural Fiber Tones: Sage Olive (#79785B) and Sewing Teal (#397772) for organic foliage tags, thimbles, and safety check marks.
+
+- Deep Ink Grounding: Atelier Plum / Espresso (#3D1E28) for hand-drawn ink sketches, strong typography, and borders.
+
+- Signature Sparks: Cherry Red (#BF1318) and Buttercup Gold (#DEA458) reserved for stitched thread needles, pearl-head pins, and button centers.
+
+
+
+### Color Combinations & Theme Cards
+
+Apply these four calibrated color pairings across your layouts to maintain contrast, atmosphere, and visual hierarchy:
+
+
+
+#### Card 1: Crisp Atelier White (Primary App & Folder Workspace)
+
+- Background: #FFFFFF (Crisp Studio White)
+
+- Elements & Borders: #D5CBBF (Basting Stitch) and #E8DFC8 (Manila Cardstock)
+
+- Text Main: #241E1C (Thread Charcoal)
+
+- Text Supporting: #5A524D (Pencil Lead Gray)
+
+- Text Details / Accents: #BF1318 (Cherry Thread Red)
+
+
+
+#### Card 2: Powder Blue Ribbon (Header, Navigation & Awning Striping)
+
+- Background: #BFD7EA (Powder Blue) paired with #FFFFFF (Crisp White stripes)
+
+- Elements & Buttons: #FFFFFF (Surface cards) and #397772 (Sewing Teal)
+
+- Text Main: #1F435B (Denim Indigo)
+
+- Text Supporting: #397772 (Sewing Teal)
+
+- Text Details / Accents: #BF1318 (Cherry Pin Red)
+
+
+
+#### Card 3: Confectioner's Blush (Notepad Chat & Fabric Swatch Notes)
+
+- Background: #FAD2E1 (Confectioner's Blush Pink)
+
+- Elements & Containers: #FFFFFF (Paper Sheet) and #F3CFD3 (Border line)
+
+- Text Main: #3D1E28 (Atelier Plum)
+
+- Text Supporting: #79785B (Sage Olive)
+
+- Text Details / Accents: #DEA458 (Buttercup Yellow tape & button pins)
+
+
+
+#### Card 4: Deep Atelier Plum (High-Contrast Drawer & Display Surfaces)
+
+- Background: #3D1E28 (Deep Plum Espresso)
+
+- Elements & Containers: #CDE3D0 (Mint / Celadon) and #FAD2E1 (Blush Pink)
+
+- Text Main: #FFFFFF (Pure White)
+
+- Text Supporting: #CDE3D0 (Mint Celadon)
+
+- Text Details / Accents: #DEA458 (Buttercup Gold readout values)
+
+
+
+## Texture & Pattern Balance: The Gingham Rule
+
+- The gingham check pattern is sacred and exclusive: it belongs strictly to the fabric letters of the official Caliper logo.
+
+- Never cover whole cards, headers, or backgrounds in repeating gingham patterns.
+
+- Complement the logo with clean, subtle textures: vertical awning stripes, fine dashed running stitches, faint blueprint grid lines, and smooth cardstock.
+
+
+
+## Official Canva Brand Kit Typography Hierarchy
+
+Use the official Caliper typography system exactly as mapped in the brand kit:
+
+- Title: Oslo Stitch (tactile stitched-outline typography for celebratory headers, hero badges, and callouts like "SEW IT!").
+
+- Subtitle: Autography (flowing, expressive cursive script for the official tagline "The Sewing & Calibration Atelier", maker endorsements, and signature flourishes).
+
+- Heading: Photography (distinctive, expressive display font for primary feature titles and collection banners).
+
+- Subheading: Christmas (charming, decorative display font for secondary labels, section intros, and workshop indices).
+
+- Section Header: Pastel Crayon (textured, handcrafted crayon sans-serif for clear structure and section navigation).
+
+- Body: Jupiteroid (clean, friendly, approachable casual hand-drawn font for narrative paragraphs and comfortable reading).
+
+- Quote: Jupiteroid (consistent casual handwritten styling for sticky notes, pattern instructions, and marginal comments).
+
+- Caption: Jupiteroid (legible, compact casual font for machine models, gauge sizes, and technical calibration parameters).
+
+
+
+## Illustration & Collage Art Direction
+
+- Line Art Style: Loose, expressive monoline ink drawings (vintage sewing machines, scissors, thread spools, needles).
+
+- Physical Hardware: Realistic or illustrated 4-hole resin buttons, pearl-headed straight pins, paperclips, and black wire binder clips holding paper layers together.
+
+- Tactile Depth: Layer elements with slight organic rotational tilts (1° to 2°) and soft, diffused drop shadows to mimic pieces of paper resting on a table.
+
+
+
+## Creative Do's and Don'ts
+
+- DO celebrate the charm of handmade imperfections, stitches, and physical stationery.
+
+- DO keep plenty of white space so playful elements have room to breathe.
+
+- DO use the exact provided Caliper logo asset without modifying or retyping its letters.
+
+- DON'T use cold corporate tech blues, neon cyber gradients, or dark-mode hacker palettes.
+
+- DON'T overload layouts with busy plaid/gingham wallpapers.
+
+- DON'T use stiff, generic stock photography or sterile enterprise icons.
+

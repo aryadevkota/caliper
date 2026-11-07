@@ -1,10 +1,11 @@
 /**
- * Caliper Atelier Frontend Application
- * Interactivity, Tactile Knob Physics, Rolling Yarn Loader, and API Streaming
+ * Caliper: The Sewing & Calibration Atelier
+ * Tactile Knob Physics, Rolling Yarn Loader, Web Audio Tactile Detents, and API Streaming
  */
 
 let allMachines = [];
 let currentMachine = null;
+let audioContext = null;
 
 // DOM Elements
 const machineSelect = document.getElementById("machineSelect");
@@ -32,7 +33,6 @@ const badgeStitchType = document.getElementById("badgeStitchType");
 const badgeNeedle = document.getElementById("badgeNeedle");
 const badgeFoot = document.getElementById("badgeFoot");
 const safetyCard = document.getElementById("safetyCard");
-const safetyCardText = document.getElementById("safetyCardText");
 const currentMachineLabel = document.getElementById("currentMachineLabel");
 
 // Chassis spec elements
@@ -43,6 +43,66 @@ const specBobbin = document.getElementById("specBobbin");
 const specNeedle = document.getElementById("specNeedle");
 const specFoot = document.getElementById("specFoot");
 const specSpeed = document.getElementById("specSpeed");
+
+/**
+ * Tactile Mechanical Audio Click Generator (Web Audio API)
+ * Synthesizes a crisp, physical sewing machine dial/switch detent click.
+ */
+function playTactileClick() {
+  try {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+    if (!audioContext) {
+      audioContext = new AudioCtx();
+    }
+    if (audioContext.state === "suspended") {
+      audioContext.resume();
+    }
+
+    const t = audioContext.currentTime;
+
+    // 1. Transient burst: high-frequency noise spike
+    const bufferSize = Math.floor(audioContext.sampleRate * 0.005); // 5ms
+    const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+    const output = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      output[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.2));
+    }
+    const noise = audioContext.createBufferSource();
+    noise.buffer = buffer;
+
+    const noiseFilter = audioContext.createBiquadFilter();
+    noiseFilter.type = "bandpass";
+    noiseFilter.frequency.setValueAtTime(2600, t);
+    noiseFilter.Q.setValueAtTime(3.0, t);
+
+    const noiseGain = audioContext.createGain();
+    noiseGain.gain.setValueAtTime(0.35, t);
+    noiseGain.gain.exponentialRampToValueAtTime(0.001, t + 0.006);
+
+    noise.connect(noiseFilter);
+    noiseFilter.connect(noiseGain);
+    noiseGain.connect(audioContext.destination);
+    noise.start(t);
+
+    // 2. Resonant mechanical latch ping
+    const osc = audioContext.createOscillator();
+    const oscGain = audioContext.createGain();
+    osc.type = "triangle";
+    osc.frequency.setValueAtTime(880, t);
+    osc.frequency.exponentialRampToValueAtTime(360, t + 0.022);
+
+    oscGain.gain.setValueAtTime(0.2, t);
+    oscGain.gain.exponentialRampToValueAtTime(0.0001, t + 0.03);
+
+    osc.connect(oscGain);
+    oscGain.connect(audioContext.destination);
+    osc.start(t);
+    osc.stop(t + 0.032);
+  } catch (err) {
+    // Ignore if audio permissions not yet granted
+  }
+}
 
 // Initialize application
 async function init() {
@@ -69,18 +129,26 @@ async function init() {
   }
 
   // Setup Event Listeners
-  machineSelect.addEventListener("change", (e) => selectMachine(e.target.value));
+  machineSelect.addEventListener("change", (e) => {
+    playTactileClick();
+    selectMachine(e.target.value);
+  });
+
   chatForm.addEventListener("submit", handleSubmit);
   
   // Trace drawer toggle
   traceToggleBtn.addEventListener("click", () => {
+    playTactileClick();
     const isHidden = traceDrawer.style.display === "none";
     traceDrawer.style.display = isHidden ? "flex" : "none";
   });
 
   // Preset chip clicks
   document.querySelectorAll(".swatch-chip").forEach(chip => {
-    chip.addEventListener("click", () => handleScenarioClick(chip.dataset.scenario));
+    chip.addEventListener("click", () => {
+      playTactileClick();
+      handleScenarioClick(chip.dataset.scenario);
+    });
   });
 }
 
@@ -103,16 +171,27 @@ async function selectMachine(machineId) {
     rangeLength.textContent = `Range: ${currentMachine.stitch_length_min_mm} – ${currentMachine.stitch_length_max_mm}mm`;
     rangeWidth.textContent = `Range: ${currentMachine.stitch_width_min_mm} – ${currentMachine.stitch_width_max_mm}mm`;
 
-    // Reset baseline knob positions
-    rotateKnob(rotorTension, currentMachine.tension_default || 4.0, currentMachine.tension_min, currentMachine.tension_max);
-    valTension.textContent = (currentMachine.tension_default || 4.0).toFixed(1);
+    // Reset baseline knob positions with smooth physical spin
+    const baseTension = currentMachine.tension_default || 4.0;
+    rotateKnob(rotorTension, baseTension, currentMachine.tension_min, currentMachine.tension_max);
+    valTension.textContent = parseFloat(baseTension).toFixed(1);
+
+    rotateKnob(rotorLength, 2.5, currentMachine.stitch_length_min_mm, currentMachine.stitch_length_max_mm);
+    valLength.textContent = "2.5 mm";
+
+    rotateKnob(rotorWidth, 0.0, currentMachine.stitch_width_min_mm, currentMachine.stitch_width_max_mm);
+    valWidth.textContent = "0.0 mm";
   } catch (err) {
     console.error("Error selecting machine:", err);
   }
 }
 
-// Calculate angle and rotate the physical knob smoothly
+/**
+ * Calculate rotation angle and rotate the physical knob smoothly.
+ * Angle sweeps smoothly across 240 degrees (-120deg to +120deg).
+ */
 function rotateKnob(rotorElem, value, minVal, maxVal) {
+  if (!rotorElem) return;
   const val = parseFloat(value) || 0;
   const min = parseFloat(minVal) || 0;
   const max = parseFloat(maxVal) || (min + 9);
@@ -131,7 +210,9 @@ async function handleSubmit(e) {
   const text = userInput.value.trim();
   if (!text) return;
 
-  // Add user bubble
+  playTactileClick();
+
+  // Add user bubble (Confectioner's Blush memo note)
   appendMessage("user", text);
   userInput.value = "";
   
@@ -158,7 +239,7 @@ async function handleSubmit(e) {
     // Add assistant bubble
     appendMessage("assistant", data.final_answer || "Calibration complete.");
 
-    // Update Dials & Knobs
+    // Update Dials & Knobs with smooth physical spin
     if (data.dials) {
       updateDials(data.dials, currentMachine);
     }
@@ -217,16 +298,25 @@ function updateSafety(safety) {
   const severity = safety.severity || "SAFE";
   safetyCard.className = `safety-indicator-card ${severity.toLowerCase()}`;
   
-  if (severity === "CRITICAL") {
-    safetyCardText.innerHTML = `<strong>🚨 HAZARD INTERCEPTED:</strong> ${safety.message || "Fabric density exceeds needle limits. Needle upgraded to prevent snapping."}`;
+  if (severity === "CRITICAL" || severity === "HAZARD") {
+    safetyCard.innerHTML = `
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <div><strong>🚨 HAZARD INTERCEPTED:</strong> ${escapeHtml(safety.message || "Fabric density exceeds needle limits. Needle upgraded to prevent snapping.")}</div>
+    `;
   } else if (severity === "WARNING") {
-    safetyCardText.innerHTML = `<strong>⚠️ CAUTION:</strong> ${safety.message || "Delicate fabric fiber piercing risk."}`;
+    safetyCard.innerHTML = `
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <div><strong>⚠️ CAUTION:</strong> ${escapeHtml(safety.message || "Delicate fabric fiber piercing risk.")}</div>
+    `;
   } else {
-    safetyCardText.innerHTML = `✓ <strong>Physical Safety Verified:</strong> All parameters within safe operating thresholds.`;
+    safetyCard.innerHTML = `
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      <div><strong>✓ Physical Safety Verified:</strong> All parameters within safe operating thresholds.</div>
+    `;
   }
 }
 
-// Render Step-by-Step Execution Trace
+// Render Step-by-Step Execution Trace in Deep Plum Cardstock Drawer
 function renderTrace(trace) {
   if (!trace || trace.length === 0) return;
 
@@ -241,7 +331,7 @@ function renderTrace(trace) {
         ${step.thought ? `<div class="step-thought">💭 <strong>Reasoning:</strong> ${escapeHtml(step.thought)}</div>` : ""}
         ${step.tool_name ? `<div class="step-tool">🛠️ <code>${step.tool_name}(${JSON.stringify(step.tool_args || {})})</code></div>` : ""}
         ${step.observation ? `<div class="step-obs">📥 <strong>Observation:</strong>\n${escapeHtml(step.observation)}</div>` : ""}
-        ${step.answer ? `<div style="color:var(--brand-burgundy); margin-top:4px;">✨ <strong>Answer:</strong> ${escapeHtml(step.answer.slice(0, 140))}...</div>` : ""}
+        ${step.answer ? `<div class="step-answer">✨ <strong>Answer:</strong> ${escapeHtml(step.answer.slice(0, 160))}...</div>` : ""}
       </div>
     `;
   }).join("");
@@ -257,7 +347,7 @@ function appendMessage(sender, text) {
   if (sender === "user") {
     meta.textContent = "You";
   } else {
-    meta.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="#8E1B26"><path d="M7 2h10v3H7zm0 17h10v3H7zm2-14h6v14H9z"/></svg> Caliper Atelier Assistant`;
+    meta.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="var(--color-cherry)"><path d="M7 2h10v3H7zm0 17h10v3H7zm2-14h6v14H9z"/></svg> Caliper Atelier Assistant`;
   }
 
   const content = document.createElement("div");
@@ -284,6 +374,7 @@ function showYarnLoader(show) {
 
 // Preset Scenario Handler
 async function handleScenarioClick(scenarioId) {
+  playTactileClick();
   if (scenarioId === "1") {
     // Scenario 1: Stretch Jersey on Brother SM3701
     machineSelect.value = "brother_sm3701";

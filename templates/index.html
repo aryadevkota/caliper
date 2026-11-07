@@ -3,11 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Caliper — Universal Sewing Machine Setup & Calibration Agent</title>
-  <link rel="icon" type="image/png" href="/assets/caliper_logo.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+  <title>Caliper — The Sewing &amp; Calibration Atelier</title>
+  <link rel="icon" type="image/svg+xml" href="/newbrandkit/Logo/Caliper Logo.svg">
   <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
@@ -17,37 +14,40 @@
     <!-- Header with Authentic Caliper Brand Logo -->
     <header class="atelier-header">
       <div class="brand-wrapper">
-        <img src="/assets/caliper_logo.png" alt="Caliper Logo" class="brand-logo-img">
+        <img src="/newbrandkit/Logo/Caliper Logo.svg" alt="Caliper Logo" class="brand-logo-img">
         <div class="brand-title-group">
-          <span class="brand-subtitle">The Atelier Sewing & Calibration Companion</span>
+          <div class="brand-title-row">
+            <span class="brand-subtitle">The Sewing &amp; Calibration Atelier</span>
+            <span class="brand-slogan-badge">SEW IT!</span>
+          </div>
           <span class="brand-tagline">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8E1B26" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-            Tuned for your fabric weight, machine dial bounds & thread mechanics
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-teal)" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            Tuned for your fabric weight, machine dial bounds &amp; thread mechanics
           </span>
         </div>
       </div>
       
       <div class="header-badges">
-        <span class="badge-craft burgundy">
+        <span class="badge-craft chassis">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
           50 Indexed Chassis
         </span>
-        <span class="badge-craft sage">
+        <span class="badge-craft safety">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-          Physics & Safety Guard
+          Physics &amp; Safety Guard
         </span>
-        <span class="badge-craft honey">
+        <span class="badge-craft steps">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
           Max-Steps: 6
         </span>
       </div>
     </header>
 
-    <!-- Machine Selector & Controls Ribbon -->
+    <!-- Machine Selector & Controls Ribbon (Tailor's Manila Pattern Envelope Metaphor) -->
     <section class="ribbon-panel">
       <div class="control-field">
         <label class="field-label" for="machineSelect">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8E1B26" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-plum)" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
           Sewing Machine Model (50 Verified Hardware Chassis)
         </label>
         <select id="machineSelect" class="select-craft">
@@ -57,7 +57,7 @@
 
       <div class="control-field">
         <label class="field-label" for="providerSelect">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8E1B26" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-teal)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
           Inference Engine
         </label>
         <select id="providerSelect" class="select-craft">
@@ -71,7 +71,7 @@
 
       <div class="control-field">
         <label class="field-label" for="apiKeyInput">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8E1B26" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-gold)" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
           Gemini Key (Optional)
         </label>
         <input type="password" id="apiKeyInput" class="input-craft" placeholder="AIzaSy... (optional)">
@@ -81,7 +81,7 @@
       <div class="machine-chassis-strip" id="machineChassisStrip">
         <div class="chassis-highlight">
           <span id="chassisName">Brother SM3701</span>
-          <span style="font-size:11px; background:#F8E5E7; color:#8E1B26; padding:2px 8px; border-radius:12px; font-weight:600;" id="chassisCategory">MECHANICAL</span>
+          <span class="chassis-category-pill" id="chassisCategory">MECHANICAL</span>
         </div>
         <div class="chassis-specs-list">
           <div class="chassis-spec-item">Tension: <strong id="specTension">0.0 – 9.0</strong></div>
@@ -93,15 +93,35 @@
       </div>
     </section>
 
-    <!-- Workspace: 2-Column Split -->
+    <!-- Workspace: 2-Column Split (1.15fr / 0.85fr) -->
     <main class="atelier-workspace">
       
-      <!-- Left Column: The Sewing Assistant Chat -->
+      <!-- Left Column: The Sewing Assistant Chat (The Workshop Lined Notepad) -->
       <section class="chat-atelier-card">
+        <!-- Spiral-bound notebook coil across the top -->
+        <div class="notepad-spiral-binding" aria-hidden="true">
+          <span class="spiral-ring"></span>
+          <span class="spiral-ring"></span>
+          <span class="spiral-ring"></span>
+          <span class="spiral-ring"></span>
+          <span class="spiral-ring"></span>
+          <span class="spiral-ring"></span>
+          <span class="spiral-ring"></span>
+          <span class="spiral-ring"></span>
+          <span class="spiral-ring"></span>
+          <span class="spiral-ring"></span>
+          <span class="spiral-ring"></span>
+          <span class="spiral-ring"></span>
+          <span class="spiral-ring"></span>
+          <span class="spiral-ring"></span>
+          <span class="spiral-ring"></span>
+          <span class="spiral-ring"></span>
+        </div>
+
         <div class="card-header-craft">
           <h2 class="card-title-craft">
             <!-- Vintage Scissors SVG Icon -->
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8E1B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-plum)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/>
               <line x1="20" y1="4" x2="8.12" y2="15.88"/>
               <line x1="14.47" y1="14.48" x2="20" y2="20"/>
@@ -109,13 +129,13 @@
             </svg>
             Atelier Consultation
           </h2>
-          <span style="font-size:11.5px; color:var(--text-muted);">Conversational Physics & Setup</span>
+          <span class="card-header-craft-sub">Conversational Physics &amp; Setup</span>
         </div>
 
-        <!-- Quick Fabric Swatch Preset Chips -->
+        <!-- Quick Fabric Swatch Preset Chips (Pinned Fabric Swatches) -->
         <div class="presets-tray">
           <span class="tray-title">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9C9289" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-gold)" stroke-width="2.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
             Quick Starter Scenarios (Proposal Deliverables):
           </span>
           <div class="swatch-chips">
@@ -138,46 +158,45 @@
           </div>
         </div>
 
-        <!-- Chat Conversation Stream -->
+        <!-- Chat Conversation Stream with Faint Notebook Ruling -->
         <div class="chat-stream" id="chatStream">
           <div class="chat-bubble assistant">
             <div class="bubble-meta">
-              <!-- Spool Icon -->
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="#8E1B26"><path d="M7 2h10v3H7zm0 17h10v3H7zm2-14h6v14H9z"/></svg>
+              <!-- Spool Icon in Cherry Red -->
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--color-cherry)"><path d="M7 2h10v3H7zm0 17h10v3H7zm2-14h6v14H9z"/></svg>
               Caliper Assistant
             </div>
             <div class="bubble-content">
               <h3>Welcome to Caliper! 🪡</h3>
               <p>I'm your intelligent sewing machine calibration companion. Tell me what fabric you're working with, any stitch defects you're encountering, or click one of the quick fabric swatches above!</p>
-              <p style="margin-top:6px; font-size:12px; color:var(--text-secondary);">
+              <p style="margin-top:6px; font-size:13px; color:var(--text-supporting);">
                 <em>I calculate real physical thread tensions scaled to your machine's dial range, recommend needle gauges, and actively intercept broken needle hazards.</em>
               </p>
             </div>
           </div>
         </div>
 
-        <!-- The Cute Rolling Yarn Ball Loading Animation 🧶 -->
+        <!-- The Rolling Wool Yarn Loading Animation 🧶 -->
         <div class="yarn-loading-container" id="yarnLoader">
           <div class="yarn-ball-wrapper">
-            <!-- Animated SVG Yarn Ball with winding wool texture -->
             <svg class="yarn-ball-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- Base Wool Sphere -->
-              <circle cx="32" cy="32" r="28" fill="#8E1B26"/>
-              <!-- Wool Wraps / Ribbons -->
-              <path d="M12 24 C 20 12, 44 14, 52 28" stroke="#C24D59" stroke-width="4.5" stroke-linecap="round"/>
-              <path d="M8 36 C 18 48, 46 48, 54 32" stroke="#E8929A" stroke-width="4" stroke-linecap="round"/>
-              <path d="M22 10 C 38 18, 42 46, 26 54" stroke="#A82C38" stroke-width="4.5" stroke-linecap="round"/>
-              <path d="M38 12 C 48 28, 30 50, 16 46" stroke="#F5CCD1" stroke-width="3" stroke-linecap="round"/>
-              <circle cx="34" cy="30" r="4" fill="#FFECEF"/>
+              <!-- Base Wool Sphere in Cherry Red -->
+              <circle cx="32" cy="32" r="28" fill="#BF1318"/>
+              <!-- Wool Wraps / Ribbons in Blush Pink and Powder Blue -->
+              <path d="M12 24 C 20 12, 44 14, 52 28" stroke="#FAD2E1" stroke-width="4.5" stroke-linecap="round"/>
+              <path d="M8 36 C 18 48, 46 48, 54 32" stroke="#BFD7EA" stroke-width="4" stroke-linecap="round"/>
+              <path d="M22 10 C 38 18, 42 46, 26 54" stroke="#FCEDEE" stroke-width="4.5" stroke-linecap="round"/>
+              <path d="M38 12 C 48 28, 30 50, 16 46" stroke="#D4E6F1" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="34" cy="30" r="4" fill="#FFFFFF"/>
             </svg>
           </div>
           <div class="yarn-status-box">
-            <span class="yarn-status-title">Rolling yarn & spinning dial calibration...</span>
-            <span class="yarn-status-subtitle">Evaluating fabric GSM density, tension curve & needle safety</span>
+            <span class="yarn-status-title">Rolling yarn &amp; spinning dial calibration...</span>
+            <span class="yarn-status-subtitle">Evaluating fabric GSM density, tension curve &amp; needle safety</span>
           </div>
         </div>
 
-        <!-- Chat Input Form -->
+        <!-- Chat Input Bar & Stitched Send Button -->
         <form class="chat-input-bar" id="chatForm">
           <input type="text" id="userInput" class="input-message" placeholder="Ask about fabric setup, needle sizing, or stitch defects..." autocomplete="off">
           <button type="submit" class="btn-send" id="btnSubmit">
@@ -195,15 +214,15 @@
         
         <!-- Physical Machine Dial Panel -->
         <div class="panel-card">
-          <div class="card-header-craft" style="padding:0 0 14px 0; margin-bottom:14px;">
-            <h3 class="card-title-craft">
+          <div class="card-header-craft" style="padding:0 0 14px 0; margin-bottom:14px; border-bottom:1px dashed var(--border-stitch);">
+            <h3 class="panel-card-title">
               <!-- Sewing Machine Icon -->
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8E1B26" stroke-width="2" stroke-linecap="round">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-plum)" stroke-width="2" stroke-linecap="round">
                 <rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="7" cy="12" r="2"/><line x1="16" y1="12" x2="16" y2="16"/>
               </svg>
               Physical Machine Dials
             </h3>
-            <span style="font-size:11px; color:var(--text-muted);" id="currentMachineLabel">Brother SM3701</span>
+            <span style="font-size:12px; color:var(--text-supporting); font-weight:600;" id="currentMachineLabel">Brother SM3701</span>
           </div>
 
           <!-- Physical Safety Notice Card -->
@@ -216,12 +235,56 @@
           <!-- THE TACTILE SEWING MACHINE ROTARY KNOBS -->
           <div class="knobs-stage">
             
-            <!-- Upper Tension Rotary Knob -->
+            <!-- Upper Tension Rotary Knob (0-9, Buttercup Yellow 4-Hole Button Center) -->
             <div class="knob-station">
               <div class="knob-bezel">
-                <div class="knob-rotor" id="rotorTension" style="transform: rotate(0deg);">
-                  <div class="knob-pointer-line"></div>
-                  <div class="knob-center-cap"></div>
+                <div class="knob-rotor" id="rotorTension" style="transform: rotate(-13.3deg);">
+                  <svg viewBox="0 0 100 100" class="dial-rotor-svg">
+                    <circle cx="50" cy="50" r="47" fill="#FFFFFF" stroke="#D5CBBF" stroke-width="1.5"/>
+                    <circle cx="50" cy="50" r="44" fill="none" stroke="#E8DFC8" stroke-width="1" stroke-dasharray="2 2"/>
+                    <!-- Dial Numbers 0 to 9 & Major Ticks -->
+                    <line x1="13.6" y1="71.0" x2="10.2" y2="73.0" stroke="#3D1E28" stroke-width="1.2" stroke-linecap="round"/>
+                    <text x="21.0" y="66.8" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8" font-weight="bold" fill="#3D1E28">0</text>
+                    
+                    <line x1="10.3" y1="52.2" x2="6.6" y2="52.4" stroke="#3D1E28" stroke-width="1.2" stroke-linecap="round"/>
+                    <text x="18.3" y="51.8" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8" font-weight="bold" fill="#3D1E28">1</text>
+                    
+                    <line x1="14.4" y1="33.4" x2="11.0" y2="31.8" stroke="#3D1E28" stroke-width="1.2" stroke-linecap="round"/>
+                    <text x="21.6" y="36.7" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8" font-weight="bold" fill="#3D1E28">2</text>
+                    
+                    <line x1="25.0" y1="18.0" x2="22.6" y2="15.0" stroke="#3D1E28" stroke-width="1.2" stroke-linecap="round"/>
+                    <text x="30.1" y="24.5" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8" font-weight="bold" fill="#3D1E28">3</text>
+                    
+                    <line x1="40.3" y1="9.1" x2="39.4" y2="5.1" stroke="#3D1E28" stroke-width="1.2" stroke-linecap="round"/>
+                    <text x="42.3" y="17.4" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8" font-weight="bold" fill="#3D1E28">4</text>
+                    
+                    <line x1="59.7" y1="9.1" x2="60.6" y2="5.1" stroke="#3D1E28" stroke-width="1.2" stroke-linecap="round"/>
+                    <text x="57.7" y="17.4" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8" font-weight="bold" fill="#3D1E28">5</text>
+                    
+                    <line x1="75.0" y1="18.0" x2="77.4" y2="15.0" stroke="#3D1E28" stroke-width="1.2" stroke-linecap="round"/>
+                    <text x="69.9" y="24.5" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8" font-weight="bold" fill="#3D1E28">6</text>
+                    
+                    <line x1="85.6" y1="33.4" x2="89.0" y2="31.8" stroke="#3D1E28" stroke-width="1.2" stroke-linecap="round"/>
+                    <text x="78.4" y="36.7" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8" font-weight="bold" fill="#3D1E28">7</text>
+                    
+                    <line x1="89.7" y1="52.2" x2="93.4" y2="52.4" stroke="#3D1E28" stroke-width="1.2" stroke-linecap="round"/>
+                    <text x="81.7" y="51.8" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8" font-weight="bold" fill="#3D1E28">8</text>
+                    
+                    <line x1="86.4" y1="71.0" x2="89.8" y2="73.0" stroke="#3D1E28" stroke-width="1.2" stroke-linecap="round"/>
+                    <text x="79.0" y="66.8" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8" font-weight="bold" fill="#3D1E28">9</text>
+
+                    <!-- Center Cap: 4-Hole Buttercup Yellow Resin Button (#DEA458) -->
+                    <circle cx="50" cy="50" r="15" fill="#DEA458" stroke="#B88236" stroke-width="1.2"/>
+                    <circle cx="50" cy="50" r="12" fill="#E5B26F" stroke="#C99347" stroke-width="0.8"/>
+                    <!-- 4 Button Holes -->
+                    <circle cx="46.2" cy="46.2" r="1.6" fill="#3D1E28"/>
+                    <circle cx="53.8" cy="46.2" r="1.6" fill="#3D1E28"/>
+                    <circle cx="46.2" cy="53.8" r="1.6" fill="#3D1E28"/>
+                    <circle cx="53.8" cy="53.8" r="1.6" fill="#3D1E28"/>
+                    <!-- Crossed Thread Stitch (Cherry Red Thread) -->
+                    <line x1="46.2" y1="46.2" x2="53.8" y2="53.8" stroke="#BF1318" stroke-width="1.8" stroke-linecap="round"/>
+                    <line x1="53.8" y1="46.2" x2="46.2" y2="53.8" stroke="#BF1318" stroke-width="1.8" stroke-linecap="round"/>
+                  </svg>
                 </div>
               </div>
               <span class="knob-label">Upper Tension</span>
@@ -229,12 +292,47 @@
               <span class="knob-range-hint" id="rangeTension">Range: 0 – 9</span>
             </div>
 
-            <!-- Stitch Length Rotary Knob -->
+            <!-- Stitch Length Rotary Knob (0-4mm, Cherry Red 4-Hole Button Center) -->
             <div class="knob-station">
               <div class="knob-bezel">
-                <div class="knob-rotor" id="rotorLength" style="transform: rotate(-30deg);">
-                  <div class="knob-pointer-line"></div>
-                  <div class="knob-center-cap"></div>
+                <div class="knob-rotor" id="rotorLength" style="transform: rotate(30deg);">
+                  <svg viewBox="0 0 100 100" class="dial-rotor-svg">
+                    <circle cx="50" cy="50" r="47" fill="#FFFFFF" stroke="#D5CBBF" stroke-width="1.5"/>
+                    <circle cx="50" cy="50" r="44" fill="none" stroke="#E8DFC8" stroke-width="1" stroke-dasharray="2 2"/>
+                    <!-- Major Numbers 0 to 4 -->
+                    <line x1="13.6" y1="71.0" x2="10.2" y2="73.0" stroke="#3D1E28" stroke-width="1.4" stroke-linecap="round"/>
+                    <text x="21.0" y="66.8" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8.5" font-weight="bold" fill="#3D1E28">0</text>
+                    
+                    <line x1="13.6" y1="29.0" x2="10.2" y2="27.0" stroke="#3D1E28" stroke-width="1.4" stroke-linecap="round"/>
+                    <text x="21.0" y="33.2" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8.5" font-weight="bold" fill="#3D1E28">1</text>
+                    
+                    <line x1="50.0" y1="8.0" x2="50.0" y2="4.0" stroke="#3D1E28" stroke-width="1.4" stroke-linecap="round"/>
+                    <text x="50.0" y="16.5" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8.5" font-weight="bold" fill="#3D1E28">2</text>
+                    
+                    <line x1="86.4" y1="29.0" x2="89.8" y2="27.0" stroke="#3D1E28" stroke-width="1.4" stroke-linecap="round"/>
+                    <text x="79.0" y="33.2" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8.5" font-weight="bold" fill="#3D1E28">3</text>
+                    
+                    <line x1="86.4" y1="71.0" x2="89.8" y2="73.0" stroke="#3D1E28" stroke-width="1.4" stroke-linecap="round"/>
+                    <text x="79.0" y="66.8" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8.5" font-weight="bold" fill="#3D1E28">4</text>
+
+                    <!-- Half Step Ticks -->
+                    <line x1="8.0" y1="50.0" x2="4.0" y2="50.0" stroke="#79785B" stroke-width="1.0" stroke-linecap="round"/>
+                    <line x1="29.0" y1="13.6" x2="27.0" y2="10.2" stroke="#79785B" stroke-width="1.0" stroke-linecap="round"/>
+                    <line x1="71.0" y1="13.6" x2="73.0" y2="10.2" stroke="#79785B" stroke-width="1.0" stroke-linecap="round"/>
+                    <line x1="92.0" y1="50.0" x2="96.0" y2="50.0" stroke="#79785B" stroke-width="1.0" stroke-linecap="round"/>
+
+                    <!-- Center Cap: 4-Hole Cherry Red Resin Button (#BF1318) -->
+                    <circle cx="50" cy="50" r="15" fill="#BF1318" stroke="#8B0C10" stroke-width="1.2"/>
+                    <circle cx="50" cy="50" r="12" fill="#CC252A" stroke="#9E1014" stroke-width="0.8"/>
+                    <!-- 4 Button Holes -->
+                    <circle cx="46.2" cy="46.2" r="1.6" fill="#3D1E28"/>
+                    <circle cx="53.8" cy="46.2" r="1.6" fill="#3D1E28"/>
+                    <circle cx="46.2" cy="53.8" r="1.6" fill="#3D1E28"/>
+                    <circle cx="53.8" cy="53.8" r="1.6" fill="#3D1E28"/>
+                    <!-- Crossed Thread Stitch (Pure White Thread) -->
+                    <line x1="46.2" y1="46.2" x2="53.8" y2="53.8" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"/>
+                    <line x1="53.8" y1="46.2" x2="46.2" y2="53.8" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"/>
+                  </svg>
                 </div>
               </div>
               <span class="knob-label">Stitch Length</span>
@@ -242,12 +340,48 @@
               <span class="knob-range-hint" id="rangeLength">Range: 0 – 4mm</span>
             </div>
 
-            <!-- Stitch Width Rotary Knob -->
+            <!-- Stitch Width Rotary Knob (0-5mm, Denim Blue 4-Hole Button Center, Zigzag Icons) -->
             <div class="knob-station">
               <div class="knob-bezel">
-                <div class="knob-rotor" id="rotorWidth" style="transform: rotate(-90deg);">
-                  <div class="knob-pointer-line"></div>
-                  <div class="knob-center-cap"></div>
+                <div class="knob-rotor" id="rotorWidth" style="transform: rotate(-120deg);">
+                  <svg viewBox="0 0 100 100" class="dial-rotor-svg">
+                    <circle cx="50" cy="50" r="47" fill="#FFFFFF" stroke="#D5CBBF" stroke-width="1.5"/>
+                    <circle cx="50" cy="50" r="44" fill="none" stroke="#E8DFC8" stroke-width="1" stroke-dasharray="2 2"/>
+                    <!-- Major Numbers 0 to 5 -->
+                    <line x1="13.6" y1="71.0" x2="10.2" y2="73.0" stroke="#3D1E28" stroke-width="1.4" stroke-linecap="round"/>
+                    <text x="21.0" y="66.8" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8.5" font-weight="bold" fill="#3D1E28">0</text>
+                    <!-- Straight Line Stitch Icon next to 0 -->
+                    <line x1="12.0" y1="62.0" x2="12.0" y2="57.0" stroke="#1F435B" stroke-width="1.5" stroke-linecap="round"/>
+                    
+                    <line x1="10.1" y1="37.0" x2="6.3" y2="35.8" stroke="#3D1E28" stroke-width="1.4" stroke-linecap="round"/>
+                    <text x="18.1" y="39.7" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8.5" font-weight="bold" fill="#3D1E28">1</text>
+                    
+                    <line x1="32.9" y1="11.5" x2="31.3" y2="7.9" stroke="#3D1E28" stroke-width="1.4" stroke-linecap="round"/>
+                    <text x="36.4" y="19.4" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8.5" font-weight="bold" fill="#3D1E28">2</text>
+                    
+                    <line x1="67.1" y1="11.5" x2="68.7" y2="7.9" stroke="#3D1E28" stroke-width="1.4" stroke-linecap="round"/>
+                    <text x="63.6" y="19.4" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8.5" font-weight="bold" fill="#3D1E28">3</text>
+                    
+                    <line x1="89.9" y1="37.0" x2="93.7" y2="35.8" stroke="#3D1E28" stroke-width="1.4" stroke-linecap="round"/>
+                    <text x="81.9" y="39.7" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8.5" font-weight="bold" fill="#3D1E28">4</text>
+                    
+                    <line x1="86.4" y1="71.0" x2="89.8" y2="73.0" stroke="#3D1E28" stroke-width="1.4" stroke-linecap="round"/>
+                    <text x="79.0" y="66.8" text-anchor="middle" dominant-baseline="central" font-family="'Jupiteroid', sans-serif" font-size="8.5" font-weight="bold" fill="#3D1E28">5</text>
+                    <!-- Zigzag Stitch Icon next to 5 -->
+                    <polyline points="85,60 87,58 89,61 91,58 93,60" fill="none" stroke="#1F435B" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+
+                    <!-- Center Cap: 4-Hole Denim Blue Button (#1F435B) -->
+                    <circle cx="50" cy="50" r="15" fill="#1F435B" stroke="#132B3B" stroke-width="1.2"/>
+                    <circle cx="50" cy="50" r="12" fill="#2B5978" stroke="#19384E" stroke-width="0.8"/>
+                    <!-- 4 Button Holes -->
+                    <circle cx="46.2" cy="46.2" r="1.6" fill="#132B3B"/>
+                    <circle cx="53.8" cy="46.2" r="1.6" fill="#132B3B"/>
+                    <circle cx="46.2" cy="53.8" r="1.6" fill="#132B3B"/>
+                    <circle cx="53.8" cy="53.8" r="1.6" fill="#132B3B"/>
+                    <!-- Crossed Thread Stitch (Pure White Thread) -->
+                    <line x1="46.2" y1="46.2" x2="53.8" y2="53.8" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"/>
+                    <line x1="53.8" y1="46.2" x2="46.2" y2="53.8" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"/>
+                  </svg>
                 </div>
               </div>
               <span class="knob-label">Stitch Width</span>
@@ -257,12 +391,12 @@
 
           </div>
 
-          <!-- Sewing Hardware Readout Badges (Needle, Foot, Stitch) -->
+          <!-- Sewing Hardware Readout Badges (Pinned Tailor's Fabric Tags) -->
           <div class="spec-cards-grid">
-            <div class="spec-mini-card active-stitch">
+            <div class="spec-mini-card">
               <span class="mini-card-label">
                 <!-- Thread Zigzag Icon -->
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8E1B26" stroke-width="2"><polyline points="2 12 7 6 12 18 17 6 22 12"/></svg>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--color-cherry)" stroke-width="2"><polyline points="2 12 7 6 12 18 17 6 22 12"/></svg>
                 Stitch Type
               </span>
               <span class="mini-card-value" id="badgeStitchType">Straight</span>
@@ -271,7 +405,7 @@
             <div class="spec-mini-card">
               <span class="mini-card-label">
                 <!-- Needle Icon -->
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8E1B26" stroke-width="2"><line x1="5" y1="19" x2="19" y2="5"/><path d="M19 5l-4 0"/><path d="M19 5l0 4"/></svg>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--color-teal)" stroke-width="2"><line x1="5" y1="19" x2="19" y2="5"/><path d="M19 5l-4 0"/><path d="M19 5l0 4"/></svg>
                 Needle Gauge
               </span>
               <span class="mini-card-value" id="badgeNeedle">75/11 Ballpoint</span>
@@ -280,7 +414,7 @@
             <div class="spec-mini-card">
               <span class="mini-card-label">
                 <!-- Foot Icon -->
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8E1B26" stroke-width="2"><rect x="4" y="6" width="16" height="12" rx="2"/></svg>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--color-gold)" stroke-width="2"><rect x="4" y="6" width="16" height="12" rx="2"/></svg>
                 Presser Foot
               </span>
               <span class="mini-card-value" id="badgeFoot">Snap-on Foot J</span>
@@ -288,18 +422,18 @@
           </div>
         </div>
 
-        <!-- The Tailor's Pattern Trace (Milestone I Requirement) -->
+        <!-- The Tailor's Reasoning & Tool Trace Drawer (Card 4: Deep Atelier Plum) -->
         <div class="trace-panel-card">
           <div class="trace-toggle-bar" id="traceToggleBtn">
             <span class="trace-toggle-title">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8E1B26" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-              Tailor's Reasoning & Tool Trace (Milestone I)
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-plum)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              Tailor's Reasoning &amp; Tool Trace
             </span>
-            <span style="font-size:11px; color:var(--brand-burgundy); font-weight:600;">Click to Inspect ▾</span>
+            <span class="trace-toggle-hint">Click to Inspect ▾</span>
           </div>
           
           <div class="trace-drawer" id="traceDrawer">
-            <div style="color:var(--text-muted); font-size:11px; padding:8px;">
+            <div style="color:var(--color-mint); padding:6px 0; font-family:var(--font-body); font-size:13.5px;">
               Ready for input. Send a message or click a swatch chip to observe step-by-step reasoning, tool invocations, and max-iteration guard enforcement.
             </div>
           </div>
