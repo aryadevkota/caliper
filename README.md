@@ -52,7 +52,7 @@ Caliper replaces generic flat web dashboards with a physical, whimsical workshop
 - **Title (`Oslo Stitch`):** Celebratory callouts and the stitched `"SEW IT!"` slogan badge.
 - **Subtitle (`Autography`):** Flowing cursive script for the brand tagline: *"The Sewing & Calibration Atelier"*.
 - **Heading (`Photography`):** Atelier Consultation, Physical Machine Dials, and Tailor's Reasoning headers.
-- **Subheading (`Christmas`):** Chassis highlights, scenario headers, and section intros.
+- **Subheading (`Biro Script`):** Fluid cursive script for chassis highlights, scenario headers, and section intros.
 - **Section Header (`Pastel Crayon`):** Form labels, knob titles, and mini-tag badges.
 - **Body (`Jupiteroid`):** Chat messages, input controls, chassis specs, and digital readouts.
 - **Code (`SF Mono` / monospace):** Step tool calls, JSON arguments, and execution traces.
@@ -135,7 +135,7 @@ caliper/
 │   │   ├── Title/                               # Oslo Stitch DEMO.otf
 │   │   ├── Subtitle/                            # Autography.otf
 │   │   ├── Heading/                             # Photography.otf
-│   │   ├── Subheading/                          # Christmas.otf
+│   │   ├── Subheading/                          # Biro_Script_reduced.otf
 │   │   ├── Section Header/                      # pastel crayon.ttf
 │   │   └── Body/                                # Jupiteroid-Regular.ttf
 │   ├── Logo/                                    # Caliper Logo.svg & Caliper Logo.png

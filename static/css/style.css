@@ -34,6 +34,18 @@
 }
 
 @font-face {
+  font-family: 'Biro Script';
+  src: url('/newbrandkit/Fonts/Subheading/Biro_Script_reduced.otf') format('opentype'),
+       url('/newbrandkit/Fonts/Subheading/Biro_Script_reduced.ttf') format('truetype'),
+       url('/static/fonts/Subheading/Biro_Script_reduced.otf') format('opentype'),
+       url('/static/fonts/Subheading/Biro_Script_reduced.ttf') format('truetype'),
+       url('../fonts/Subheading/Biro_Script_reduced.otf') format('opentype'),
+       url('../fonts/Subheading/Biro_Script_reduced.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'Christmas';
   src: url('/newbrandkit/Fonts/Subheading/Christmas.otf') format('opentype'),
        url('/static/fonts/Subheading/Christmas.otf') format('opentype'),
@@ -68,7 +80,7 @@
   --font-title: 'Oslo Stitch', cursive, sans-serif;
   --font-subtitle: 'Autography', cursive;
   --font-heading: 'Photography', display, sans-serif;
-  --font-subheading: 'Christmas', display, serif;
+  --font-subheading: 'Biro Script', cursive, sans-serif;
   --font-section-header: 'Pastel Crayon', sans-serif;
   --font-body: 'Jupiteroid', system-ui, sans-serif;
   --font-code: 'SF Mono', Menlo, Monaco, monospace;
