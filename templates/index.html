@@ -53,74 +53,83 @@
       </div>
     </header>
 
-    <!-- Sewing Machine Catalog (Top Folder) -->
-    <section class="manila-folder-card ribbon-folder" id="folderChassis">
-      <div class="folder-tab-bar">
-        <div class="folder-tab-left">
-          <img src="/static/images/atelier_folders/107_tab.svg" class="tab-bg-img" alt="" aria-hidden="true">
-          <div class="tab-label-group">
-            <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/6.svg" class="folder-binder-clip" alt="" aria-hidden="true">
-            <span class="manila-tab-title">Sewing Machine Catalog</span>
-            <span class="manila-tab-spec">50 Verified Models</span>
-          </div>
-        </div>
-        <div class="folder-right-note">
-          <img src="/static/images/atelier_folders/110_blush_note.svg" class="note-bg-img" alt="" aria-hidden="true">
-        </div>
+    <!-- Sewing Machine Catalog (Two-Column Atelier Workbench Stage) -->
+    <section class="catalog-workbench-card" id="folderChassis">
+      <div class="catalog-machine-hero">
+        <img src="/Users/rdevkota/Downloads/SewingMachineCatalog/sewing_machine_hero.png" class="machine-hero-img" alt="Illustrated Atelier Sewing Machine with Draped Floral Textile">
       </div>
-
-      <div class="ribbon-panel">
-        <div class="control-field">
-          <label class="field-label" for="machineSelect">
-            <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/8.svg" class="control-label-icon" alt="" aria-hidden="true">
-            Sewing Machine Model (50 Verified Models)
-          </label>
-          <div class="select-pill-wrapper">
-            <select id="machineSelect" class="select-craft">
-              <!-- Populated dynamically via JS -->
-            </select>
+      <div class="catalog-controls-hero">
+        <div class="catalog-scrap-title">Sewing Machine Catalog</div>
+        <div class="model-dropdown-pill">
+          <select id="machineSelect" class="model-select-input">
+            <!-- Populated dynamically via JS -->
+          </select>
+          <div class="dropdown-chevron-icon" aria-hidden="true"></div>
+        </div>
+        <div class="catalog-specs-stack">
+          <div class="spec-pill-row">
+            <div class="spec-symbol-col">
+              <img src="/Users/rdevkota/Downloads/SewingMachineCatalog/TensionSymbol.svg" class="spec-symbol-img tension-symbol-img" alt="" aria-hidden="true">
+            </div>
+            <div class="spec-pill-card">
+              <span class="spec-pill-label">Tension:</span>
+              <span class="spec-pill-val" id="specTension">0.0 – 9.0</span>
+            </div>
+          </div>
+          <div class="spec-pill-row">
+            <div class="spec-symbol-col">
+              <img src="/Users/rdevkota/Downloads/SewingMachineCatalog/BobbinSymbol.svg" class="spec-symbol-img bobbin-symbol-img" alt="" aria-hidden="true">
+            </div>
+            <div class="spec-pill-card">
+              <span class="spec-pill-label">Bobbin:</span>
+              <span class="spec-pill-val" id="specBobbin">Top Drop-in (Class 15 / SA156)</span>
+            </div>
+          </div>
+          <div class="spec-pill-row">
+            <div class="spec-symbol-col">
+              <img src="/Users/rdevkota/Downloads/SewingMachineCatalog/NeedleSystemSymbol.svg" class="spec-symbol-img needle-symbol-img" alt="" aria-hidden="true">
+            </div>
+            <div class="spec-pill-card">
+              <span class="spec-pill-label">Needle System:</span>
+              <span class="spec-pill-val" id="specNeedle">130/705 H (65–110)</span>
+            </div>
+          </div>
+          <div class="spec-pill-row">
+            <div class="spec-symbol-col">
+              <img src="/Users/rdevkota/Downloads/SewingMachineCatalog/PresserFootSymbol.svg" class="spec-symbol-img foot-symbol-img" alt="" aria-hidden="true">
+            </div>
+            <div class="spec-pill-card">
+              <span class="spec-pill-label">Presser Foot:</span>
+              <span class="spec-pill-val" id="specFoot">Snap-on (Low Shank)</span>
+            </div>
+          </div>
+          <div class="spec-pill-row">
+            <div class="spec-symbol-col">
+              <img src="/Users/rdevkota/Downloads/SewingMachineCatalog/clock_gauge.png" class="spec-symbol-img speed-symbol-img" alt="" aria-hidden="true">
+            </div>
+            <div class="spec-pill-card">
+              <span class="spec-pill-label">Speed:</span>
+              <span class="spec-pill-val" id="specSpeed">800 SPM</span>
+            </div>
           </div>
         </div>
-
-        <div class="control-field">
-          <label class="field-label" for="providerSelect">
-            <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/67.svg" class="control-label-icon" alt="" aria-hidden="true">
-            Inference Engine
-          </label>
-          <div class="select-pill-wrapper">
-            <select id="providerSelect" class="select-craft">
-              <option value="auto">Auto (Local Ollama / Fallback)</option>
-              <option value="ollama-llama">Local Ollama (llama3.1:latest)</option>
-              <option value="ollama-qwen">Local Ollama (qwen2.5:0.5b)</option>
-              <option value="deterministic">Deterministic ReAct Engine (Fast / Offline)</option>
+        <div class="catalog-secondary-bar">
+          <div class="secondary-control-item">
+            <label class="secondary-control-label" for="providerSelect">Engine:</label>
+            <select id="providerSelect" class="secondary-select-input">
+              <option value="auto">Auto (Local / Fallback)</option>
+              <option value="ollama-llama">Local Ollama (llama3.1)</option>
+              <option value="ollama-qwen">Local Ollama (qwen2.5)</option>
+              <option value="deterministic">Deterministic ReAct (Fast / Offline)</option>
               <option value="gemini">Google Gemini 2.5 Flash</option>
             </select>
           </div>
-        </div>
-
-        <div class="control-field">
-          <label class="field-label" for="apiKeyInput">
-            <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/10.svg" class="control-label-icon" alt="" aria-hidden="true">
-            Gemini Key (Optional)
-          </label>
-          <div class="input-pill-wrapper">
-            <input type="password" id="apiKeyInput" class="input-craft" placeholder="AIzaSy... (optional)">
+          <div class="secondary-control-item">
+            <label class="secondary-control-label" for="apiKeyInput">Key:</label>
+            <input type="password" id="apiKeyInput" class="secondary-key-input" placeholder="AIzaSy... (optional)">
           </div>
-        </div>
-      </div>
-
-      <!-- Selected Machine Catalog Spec Strip -->
-      <div class="machine-chassis-strip" id="machineChassisStrip">
-        <div class="chassis-highlight">
-          <span id="chassisName">Brother SM3701</span>
-          <span class="chassis-category-pill" id="chassisCategory">MECHANICAL</span>
-        </div>
-        <div class="chassis-specs-list">
-          <div class="chassis-spec-item">Tension: <strong id="specTension">0.0 – 9.0</strong></div>
-          <div class="chassis-spec-item">Bobbin: <strong id="specBobbin">Top Drop-in (Class 15)</strong></div>
-          <div class="chassis-spec-item">Needle System: <strong id="specNeedle">130/705 H (65-110)</strong></div>
-          <div class="chassis-spec-item">Presser Foot: <strong id="specFoot">Snap-on Low Shank</strong></div>
-          <div class="chassis-spec-item">Speed: <strong id="specSpeed">800 SPM</strong></div>
+          <span id="chassisName" style="display:none;">Brother SM3701</span>
+          <span id="chassisCategory" style="display:none;">MECHANICAL</span>
         </div>
       </div>
     </section>
@@ -130,127 +139,86 @@
       
       <!-- Left Column: The Sewing Assistant Chat (The Workshop Lined Notepad) -->
       <section class="chat-atelier-card">
-        <!-- Spiral-bound notebook coil across the top -->
-        <div class="notepad-spiral-binding" aria-hidden="true">
-          <img src="/static/images/spiral_binding_header.svg" class="spiral-binding-svg" alt="" aria-hidden="true">
-        </div>
-
-        <div class="card-header-craft">
-          <div class="card-header-left">
-            <img src="/static/images/atelier_folders/106.svg" class="chat-dossier-clip" alt="" aria-hidden="true">
-            <h2 class="card-title-craft">
-              <!-- Vintage Shears Notion -->
-              <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/95.svg" class="header-shears-icon" alt="" aria-hidden="true">
-              Atelier Consultation
-            </h2>
-          </div>
-          <div class="card-header-actions">
-            <span class="card-header-craft-sub">Conversational Physics &amp; Setup</span>
-            <button type="button" class="btn-expand-chat" id="btnExpandChat" title="Toggle expand chat height" aria-label="Expand Chat View">
-              <svg class="expand-icon-svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="15 3 21 3 21 9"></polyline>
-                <polyline points="9 21 3 21 3 15"></polyline>
-                <line x1="21" y1="3" x2="14" y2="10"></line>
-                <line x1="3" y1="21" x2="10" y2="14"></line>
-              </svg>
-              <span id="expandChatText">Expand View</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Collapsible Sample Prompts Drawer -->
-        <div class="presets-tray" id="samplePromptsTray">
-          <div class="presets-tray-header" id="samplePromptsToggle" role="button" tabindex="0" aria-expanded="true" aria-controls="samplePromptsGrid">
-            <span class="tray-title">
-              <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/17.svg" class="tray-title-icon" alt="" aria-hidden="true">
-              Sample Prompts
-            </span>
-            <div class="tray-header-actions">
-              <span class="tray-toggle-hint" id="promptsToggleHint">Collapse ▾</span>
+        <!-- Authentic Wooden Workbench Slab (.atelier-wood-slab) with 6 Tactile Linen Swatches -->
+        <div class="atelier-wood-slab">
+          <!-- Centered Clipped Header Scrap -->
+          <div class="wood-slab-header">
+            <div class="atelier-scrap-header">
+              <img src="/Users/rdevkota/Desktop/Caliper_AgenticAI-FinalTermProject/newbrandkit/AccentsGraphicsElements/AssetsSVGs/14.svg" class="atelier-scrap-clip" alt="" aria-hidden="true">
+              <span class="atelier-slip-title">ATELIER CONSULTATION</span>
+            </div>
+            <div class="wood-slab-actions">
+              <button type="button" class="btn-expand-chat" id="btnExpandChat" title="Toggle expand chat height" aria-label="Expand Chat View">
+                <svg class="expand-icon-svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <polyline points="9 21 3 21 3 15"></polyline>
+                  <line x1="21" y1="3" x2="14" y2="10"></line>
+                  <line x1="3" y1="21" x2="10" y2="14"></line>
+                </svg>
+                <span id="expandChatText">Expand View</span>
+              </button>
             </div>
           </div>
-          <div class="swatch-chips-grid" id="samplePromptsGrid">
+
+          <!-- The 2-Column Fabric Swatch Grid -->
+          <div class="swatch-grid" id="samplePromptsGrid">
+            <!-- Card 1: Stretch Jersey -->
             <button type="button" class="swatch-chip" data-scenario="1" title="Calibrate stretch knit jersey">
-              <div class="swatch-patch-backdrop" aria-hidden="true">
-                <img src="/static/images/fabric_cards/3.svg" class="patch-card-bg" alt="">
-              </div>
-              <div class="swatch-patch-body">
-                <div class="swatch-chip-header">
-                  <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/23.svg" class="preset-notion-icon" alt="" aria-hidden="true">
-                  <span class="swatch-chip-title">Stretch Jersey</span>
-                </div>
-                <span class="swatch-chip-meta">Brother SM3701 · 200 GSM · 50%</span>
-                <span class="swatch-chip-pill">Side Seam Knit</span>
+              <img src="/Users/rdevkota/Downloads/AssetsSVGs (2)/3.svg" class="swatch-bg-svg" alt="Stretch Jersey Swatch" style="width: 100%; height: 100%; object-fit: contain; pointer-events: none;">
+              <div class="swatch-text-overlay swatch-patch-body">
+                <span class="swatch-title">STRETCH JERSEY</span>
+                <span class="swatch-specs">Brother SM3701 · 200 GSM · 50%</span>
+                <span class="swatch-style swatch-script">SIDE SEAM KNIT</span>
               </div>
             </button>
 
-            <button type="button" class="swatch-chip" data-scenario="2" title="Diagnose underside thread looping defect">
-              <div class="swatch-patch-backdrop" aria-hidden="true">
-                <img src="/static/images/fabric_cards/4.svg" class="patch-card-bg" alt="">
-              </div>
-              <div class="swatch-patch-body">
-                <div class="swatch-chip-header">
-                  <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/93.svg" class="preset-notion-icon" alt="" aria-hidden="true">
-                  <span class="swatch-chip-title">Bird-Nesting Defect</span>
-                </div>
-                <span class="swatch-chip-meta">Singer 4423 · Underside Loops</span>
-                <span class="swatch-chip-pill">Diagnostic Audit</span>
-              </div>
-            </button>
-
-            <button type="button" class="swatch-chip" data-scenario="3" title="Trigger needle snap safety guard">
-              <div class="swatch-patch-backdrop" aria-hidden="true">
-                <img src="/static/images/fabric_cards/5.svg" class="patch-card-bg" alt="">
-              </div>
-              <div class="swatch-patch-body">
-                <div class="swatch-chip-header">
-                  <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/74.svg" class="preset-notion-icon" alt="" aria-hidden="true">
-                  <span class="swatch-chip-title">14oz Denim Flat-Felled</span>
-                </div>
-                <span class="swatch-chip-meta">Brother SM3701 · 14oz · 70/10 Needle</span>
-                <span class="swatch-chip-pill hazard-pill">Hazard Intercept</span>
-              </div>
-            </button>
-
+            <!-- Card 2: Silk Chiffon -->
             <button type="button" class="swatch-chip" data-scenario="4" title="Calibrate delicate sheer chiffon">
-              <div class="swatch-patch-backdrop" aria-hidden="true">
-                <img src="/static/images/fabric_cards/6.svg" class="patch-card-bg" alt="">
-              </div>
-              <div class="swatch-patch-body">
-                <div class="swatch-chip-header">
-                  <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/71.svg" class="preset-notion-icon" alt="" aria-hidden="true">
-                  <span class="swatch-chip-title">Silk Chiffon</span>
-                </div>
-                <span class="swatch-chip-meta">Janome HD1000 · 45 GSM · Rolled Hem</span>
-                <span class="swatch-chip-pill">Ultra-Delicate</span>
+              <img src="/Users/rdevkota/Downloads/AssetsSVGs (2)/4.svg" class="swatch-bg-svg" alt="Silk Chiffon Swatch" style="width: 100%; height: 100%; object-fit: contain; pointer-events: none;">
+              <div class="swatch-text-overlay swatch-patch-body">
+                <span class="swatch-title">SILK CHIFFON</span>
+                <span class="swatch-specs">Janome HD1000 · 45 GSM</span>
+                <span class="swatch-style swatch-script">ULTRA-DELICATE</span>
               </div>
             </button>
 
+            <!-- Card 3: Denim Flat-Felled -->
+            <button type="button" class="swatch-chip" data-scenario="3" title="Trigger needle snap safety guard">
+              <img src="/Users/rdevkota/Downloads/AssetsSVGs (2)/5.svg" class="swatch-bg-svg" alt="Denim Flat-Felled Swatch" style="width: 100%; height: 100%; object-fit: contain; pointer-events: none;">
+              <div class="swatch-text-overlay swatch-patch-body">
+                <span class="swatch-title">DENIM FLAT-FELLED</span>
+                <span class="swatch-specs">Brother SM3701 · 70/10 needle</span>
+                <span class="swatch-style swatch-script">HAZARD INTERCEPT</span>
+              </div>
+            </button>
+
+            <!-- Card 4: Bird-Nesting Defect -->
+            <button type="button" class="swatch-chip" data-scenario="2" title="Diagnose underside thread looping defect">
+              <img src="/Users/rdevkota/Downloads/AssetsSVGs (2)/6.svg" class="swatch-bg-svg" alt="Bird-Nesting Defect Swatch" style="width: 100%; height: 100%; object-fit: contain; pointer-events: none;">
+              <div class="swatch-text-overlay swatch-patch-body">
+                <span class="swatch-title">BIRD-NESTING DEFECT</span>
+                <span class="swatch-specs">Singer 4423 · Underside Loops</span>
+                <span class="swatch-style swatch-script">DIAGNOSTIC AUDIT</span>
+              </div>
+            </button>
+
+            <!-- Card 5: Heavy Duck Canvas -->
             <button type="button" class="swatch-chip" data-scenario="5" title="Test heavy workwear canvas">
-              <div class="swatch-patch-backdrop" aria-hidden="true">
-                <img src="/static/images/fabric_cards/7.svg" class="patch-card-bg" alt="">
-              </div>
-              <div class="swatch-patch-body">
-                <div class="swatch-chip-header">
-                  <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/24.svg" class="preset-notion-icon" alt="" aria-hidden="true">
-                  <span class="swatch-chip-title">Heavy Duck Canvas</span>
-                </div>
-                <span class="swatch-chip-meta">Singer 4423 · 450 GSM · Heavy Seam</span>
-                <span class="swatch-chip-pill">Workwear Heavy</span>
+              <img src="/Users/rdevkota/Downloads/AssetsSVGs (2)/7.svg" class="swatch-bg-svg" alt="Heavy Duck Canvas Swatch" style="width: 100%; height: 100%; object-fit: contain; pointer-events: none;">
+              <div class="swatch-text-overlay swatch-patch-body">
+                <span class="swatch-title">HEAVY DUCK CANVAS</span>
+                <span class="swatch-specs">Singer 4423 · 450 GSM · Heavy Seam</span>
+                <span class="swatch-style swatch-script">WORKWEAR HEAVY</span>
               </div>
             </button>
 
+            <!-- Card 6: Fine Wool Flannel -->
             <button type="button" class="swatch-chip" data-scenario="6" title="Test tailored suit wool flannel">
-              <div class="swatch-patch-backdrop" aria-hidden="true">
-                <img src="/static/images/fabric_cards/4.svg" class="patch-card-bg" alt="">
-              </div>
-              <div class="swatch-patch-body">
-                <div class="swatch-chip-header">
-                  <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/66.svg" class="preset-notion-icon" alt="" aria-hidden="true">
-                  <span class="swatch-chip-title">Fine Wool Flannel</span>
-                </div>
-                <span class="swatch-chip-meta">Janome HD1000 · 280 GSM · Bound Seam</span>
-                <span class="swatch-chip-pill">Tailored Suiting</span>
+              <img src="/Users/rdevkota/Downloads/AssetsSVGs (2)/3.svg" class="swatch-bg-svg" alt="Fine Wool Flannel Swatch" style="width: 100%; height: 100%; object-fit: contain; pointer-events: none;">
+              <div class="swatch-text-overlay swatch-patch-body">
+                <span class="swatch-title">FINE WOOL FLANNEL</span>
+                <span class="swatch-specs">Janome HD1000 · 280 GSM · Bound Seam</span>
+                <span class="swatch-style swatch-script">TAILORED SUITING</span>
               </div>
             </button>
           </div>
@@ -312,7 +280,7 @@
             <img src="/static/images/atelier_folders/109_tab.svg" class="cal-tab-bg" alt="" aria-hidden="true">
             <div class="cal-label-group">
               <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/8.svg" class="cal-tab-icon" alt="" aria-hidden="true">
-              <span class="cal-tab-title">Physical Calibration Stage</span>
+              <span class="cal-tab-title">Calibration</span>
             </div>
           </div>
 
