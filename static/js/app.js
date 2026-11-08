@@ -389,6 +389,46 @@ async function init() {
 
   chatForm.addEventListener("submit", handleSubmit);
 
+  // Collapsible Sample Prompts Drawer
+  const samplePromptsToggle = document.getElementById("samplePromptsToggle");
+  const samplePromptsGrid = document.getElementById("samplePromptsGrid");
+  const promptsToggleHint = document.getElementById("promptsToggleHint");
+
+  if (samplePromptsToggle && samplePromptsGrid) {
+    const togglePrompts = () => {
+      rotaryAudio.playSwitch();
+      const isCollapsed = samplePromptsGrid.classList.toggle("collapsed");
+      samplePromptsToggle.setAttribute("aria-expanded", !isCollapsed);
+      if (promptsToggleHint) {
+        promptsToggleHint.textContent = isCollapsed ? "Expand ▸" : "Collapse ▾";
+      }
+    };
+
+    samplePromptsToggle.addEventListener("click", togglePrompts);
+    samplePromptsToggle.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        togglePrompts();
+      }
+    });
+  }
+
+  // Expandable Chat View Toggle
+  const btnExpandChat = document.getElementById("btnExpandChat");
+  const chatCard = document.querySelector(".chat-atelier-card");
+  const expandChatText = document.getElementById("expandChatText");
+
+  if (btnExpandChat && chatCard) {
+    btnExpandChat.addEventListener("click", () => {
+      rotaryAudio.playSwitch();
+      const isExpanded = chatCard.classList.toggle("expanded");
+      btnExpandChat.setAttribute("aria-expanded", isExpanded);
+      if (expandChatText) {
+        expandChatText.textContent = isExpanded ? "Collapse View" : "Expand View";
+      }
+    });
+  }
+
   // Trace Drawer Toggle
   if (traceToggleBtn) {
     traceToggleBtn.addEventListener("click", () => {
@@ -409,7 +449,7 @@ async function init() {
     });
   }
 
-  // Reset to Chassis Defaults Button
+  // Reset to Baseline Defaults Button
   if (btnResetDefaults) {
     btnResetDefaults.addEventListener("click", () => {
       rotaryAudio.playSwitch();
@@ -427,7 +467,7 @@ async function init() {
         badgeStitchType.textContent = "Straight";
         badgeNeedle.textContent = `${currentMachine.min_needle_size_eu || 75}/${currentMachine.min_needle_size_us || 11} Universal`;
         badgeFoot.textContent = currentMachine.presser_foot_system || "Snap-on Foot";
-        updateSafety({ severity: "SAFE", message: "Physical Safety Verified: Reset to chassis baseline." });
+        updateSafety({ severity: "SAFE", message: "Physical Safety Verified: Reset to catalog baseline." });
 
         // Clear active chip states
         document.querySelectorAll(".swatch-chip").forEach(c => c.classList.remove("active"));

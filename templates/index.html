@@ -53,21 +53,27 @@
       </div>
     </header>
 
-    <!-- Folder 01 // Hardware Chassis Specification & Inference Engine -->
+    <!-- Sewing Machine Catalog (Top Folder) -->
     <section class="manila-folder-card ribbon-folder" id="folderChassis">
-      <div class="manila-folder-tab">
-        <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/7.svg" class="dossier-tab-asset" alt="" aria-hidden="true">
-        <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/6.svg" class="folder-binder-clip" alt="" aria-hidden="true">
-        <span class="manila-tab-title">Folder 01 // Hardware Chassis</span>
-        <span class="manila-tab-spec">Atelier Spec 4980</span>
-        <span class="washi-tape top-right" aria-hidden="true"></span>
+      <div class="folder-tab-bar">
+        <div class="folder-tab-left">
+          <img src="/static/images/atelier_folders/107_tab.svg" class="tab-bg-img" alt="" aria-hidden="true">
+          <div class="tab-label-group">
+            <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/6.svg" class="folder-binder-clip" alt="" aria-hidden="true">
+            <span class="manila-tab-title">Sewing Machine Catalog</span>
+            <span class="manila-tab-spec">50 Verified Models</span>
+          </div>
+        </div>
+        <div class="folder-right-note">
+          <img src="/static/images/atelier_folders/110_blush_note.svg" class="note-bg-img" alt="" aria-hidden="true">
+        </div>
       </div>
 
       <div class="ribbon-panel">
         <div class="control-field">
           <label class="field-label" for="machineSelect">
             <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/8.svg" class="control-label-icon" alt="" aria-hidden="true">
-            Sewing Machine Model (50 Verified Hardware Chassis)
+            Sewing Machine Model (50 Verified Models)
           </label>
           <div class="select-pill-wrapper">
             <select id="machineSelect" class="select-craft">
@@ -103,7 +109,7 @@
         </div>
       </div>
 
-      <!-- Selected Machine Hardware Chassis Spec Strip -->
+      <!-- Selected Machine Catalog Spec Strip -->
       <div class="machine-chassis-strip" id="machineChassisStrip">
         <div class="chassis-highlight">
           <span id="chassisName">Brother SM3701</span>
@@ -130,27 +136,43 @@
         </div>
 
         <div class="card-header-craft">
-          <h2 class="card-title-craft">
-            <!-- Vintage Shears Notion -->
-            <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/95.svg" class="header-shears-icon" alt="" aria-hidden="true">
-            Atelier Consultation
-          </h2>
-          <span class="card-header-craft-sub">Conversational Physics &amp; Setup</span>
+          <div class="card-header-left">
+            <img src="/static/images/atelier_folders/106.svg" class="chat-dossier-clip" alt="" aria-hidden="true">
+            <h2 class="card-title-craft">
+              <!-- Vintage Shears Notion -->
+              <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/95.svg" class="header-shears-icon" alt="" aria-hidden="true">
+              Atelier Consultation
+            </h2>
+          </div>
+          <div class="card-header-actions">
+            <span class="card-header-craft-sub">Conversational Physics &amp; Setup</span>
+            <button type="button" class="btn-expand-chat" id="btnExpandChat" title="Toggle expand chat height" aria-label="Expand Chat View">
+              <svg class="expand-icon-svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <polyline points="9 21 3 21 3 15"></polyline>
+                <line x1="21" y1="3" x2="14" y2="10"></line>
+                <line x1="3" y1="21" x2="10" y2="14"></line>
+              </svg>
+              <span id="expandChatText">Expand View</span>
+            </button>
+          </div>
         </div>
 
-        <!-- 6-Specimen Tactile Swatch Specimen Drawer -->
-        <div class="presets-tray">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
-            <span class="tray-title" style="margin-bottom:0;">
-              <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/17.svg" style="width:16px; height:16px; vertical-align:middle; object-fit:contain; margin-right:4px;" alt="" aria-hidden="true">
-              Tactile Swatch Specimen Drawer (6 Presets):
+        <!-- Collapsible Sample Prompts Drawer -->
+        <div class="presets-tray" id="samplePromptsTray">
+          <div class="presets-tray-header" id="samplePromptsToggle" role="button" tabindex="0" aria-expanded="true" aria-controls="samplePromptsGrid">
+            <span class="tray-title">
+              <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/17.svg" class="tray-title-icon" alt="" aria-hidden="true">
+              Sample Prompts
             </span>
-            <span class="specimen-count-stamp">6 SPECIMENS INDEXED</span>
+            <div class="tray-header-actions">
+              <span class="tray-toggle-hint" id="promptsToggleHint">Collapse ▾</span>
+            </div>
           </div>
-          <div class="swatch-chips-grid">
+          <div class="swatch-chips-grid" id="samplePromptsGrid">
             <button type="button" class="swatch-chip" data-scenario="1" title="Calibrate stretch knit jersey">
               <div class="swatch-patch-backdrop" aria-hidden="true">
-                <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/2.svg" class="patch-card-bg" alt="">
+                <img src="/static/images/fabric_cards/3.svg" class="patch-card-bg" alt="">
               </div>
               <div class="swatch-patch-body">
                 <div class="swatch-chip-header">
@@ -164,7 +186,7 @@
 
             <button type="button" class="swatch-chip" data-scenario="2" title="Diagnose underside thread looping defect">
               <div class="swatch-patch-backdrop" aria-hidden="true">
-                <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/3.svg" class="patch-card-bg" alt="">
+                <img src="/static/images/fabric_cards/4.svg" class="patch-card-bg" alt="">
               </div>
               <div class="swatch-patch-body">
                 <div class="swatch-chip-header">
@@ -178,7 +200,7 @@
 
             <button type="button" class="swatch-chip" data-scenario="3" title="Trigger needle snap safety guard">
               <div class="swatch-patch-backdrop" aria-hidden="true">
-                <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/3.svg" class="patch-card-bg" alt="">
+                <img src="/static/images/fabric_cards/5.svg" class="patch-card-bg" alt="">
               </div>
               <div class="swatch-patch-body">
                 <div class="swatch-chip-header">
@@ -192,7 +214,7 @@
 
             <button type="button" class="swatch-chip" data-scenario="4" title="Calibrate delicate sheer chiffon">
               <div class="swatch-patch-backdrop" aria-hidden="true">
-                <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/2.svg" class="patch-card-bg" alt="">
+                <img src="/static/images/fabric_cards/6.svg" class="patch-card-bg" alt="">
               </div>
               <div class="swatch-patch-body">
                 <div class="swatch-chip-header">
@@ -206,7 +228,7 @@
 
             <button type="button" class="swatch-chip" data-scenario="5" title="Test heavy workwear canvas">
               <div class="swatch-patch-backdrop" aria-hidden="true">
-                <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/3.svg" class="patch-card-bg" alt="">
+                <img src="/static/images/fabric_cards/7.svg" class="patch-card-bg" alt="">
               </div>
               <div class="swatch-patch-body">
                 <div class="swatch-chip-header">
@@ -220,7 +242,7 @@
 
             <button type="button" class="swatch-chip" data-scenario="6" title="Test tailored suit wool flannel">
               <div class="swatch-patch-backdrop" aria-hidden="true">
-                <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/2.svg" class="patch-card-bg" alt="">
+                <img src="/static/images/fabric_cards/4.svg" class="patch-card-bg" alt="">
               </div>
               <div class="swatch-patch-body">
                 <div class="swatch-chip-header">
@@ -284,26 +306,29 @@
       <!-- Right Column: Tactile Sewing Machine Knobs & Pattern Trace -->
       <section class="atelier-controls-card">
         
-        <!-- Folder 02 // Physical Calibration Stage -->
-        <div class="panel-card" id="folderCalibration">
-          <div class="card-header-craft" style="padding:0 0 14px 0; margin-bottom:14px; border-bottom:1px dashed var(--border-stitch); display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px;">
-            <div>
-              <div style="font-family:var(--font-section); font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:var(--color-cherry); font-weight:700; margin-bottom:2px;">
-                Folder 02 // Physical Calibration Stage
-              </div>
-              <h3 class="panel-card-title" style="margin:0;">
-                <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/8.svg" style="width:20px; height:20px; vertical-align:middle; margin-right:6px;" alt="" aria-hidden="true">
-                Physical Machine Dials
-              </h3>
-            </div>
-            <div style="display:flex; align-items:center; gap:8px;">
-              <span style="font-size:12px; color:var(--text-supporting); font-weight:600;" id="currentMachineLabel">Brother SM3701</span>
-              <button type="button" class="btn-reset-defaults" id="btnResetDefaults" title="Reset all dials to current chassis baseline">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-                Reset Defaults
-              </button>
+        <!-- Physical Calibration Stage -->
+        <div class="cal-folder-wrapper" id="folderCalibration">
+          <div class="cal-tab-bar">
+            <img src="/static/images/atelier_folders/109_tab.svg" class="cal-tab-bg" alt="" aria-hidden="true">
+            <div class="cal-label-group">
+              <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/8.svg" class="cal-tab-icon" alt="" aria-hidden="true">
+              <span class="cal-tab-title">Physical Calibration Stage</span>
             </div>
           </div>
+
+          <div class="panel-card">
+            <div class="card-header-craft" style="padding:0 0 14px 0; margin-bottom:14px; border-bottom:1px dashed var(--border-stitch); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+              <h3 class="panel-card-title" style="margin:0;">
+                Physical Machine Dials
+              </h3>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:12px; color:var(--text-supporting); font-weight:600;" id="currentMachineLabel">Brother SM3701</span>
+                <button type="button" class="btn-reset-defaults" id="btnResetDefaults" title="Reset all dials to catalog baseline">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                  Reset Defaults
+                </button>
+              </div>
+            </div>
 
           <!-- Physical Safety Notice Card -->
           <div class="safety-indicator-card safe" id="safetyCard">
@@ -410,24 +435,25 @@
               <span class="mini-card-value" id="badgeFoot">Snap-on Foot J</span>
             </div>
           </div>
+          </div>
         </div>
 
-        <!-- Folder 03 // Agent Logs (Card 4: Deep Atelier Plum) -->
+        <!-- Agent Logs -->
         <div class="trace-panel-card" id="folderTrace">
           <div class="trace-toggle-bar" id="traceToggleBtn" role="button" tabindex="0" aria-expanded="false" aria-controls="traceDrawer">
-            <span class="trace-toggle-title">
-              <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/54.svg" class="trace-pushpin-icon" alt="" aria-hidden="true">
-              Folder 03 // Agent Logs
-            </span>
+            <div class="trace-left">
+              <img src="/static/images/atelier_folders/108.svg" class="trace-blue-card-icon" alt="" aria-hidden="true">
+              <span class="trace-toggle-title">Agent Logs</span>
+            </div>
             <div class="trace-bar-right">
-              <span class="trace-pill-tag">AGENT LOGS</span>
+              <span class="trace-pill-tag">REASONING TRACE</span>
               <span class="trace-toggle-hint" id="traceToggleHint">Click to Inspect ▾</span>
             </div>
           </div>
           
           <div class="trace-drawer" id="traceDrawer" style="display: none;">
             <div style="color:var(--color-mint); padding:6px 0; font-family:var(--font-body); font-size:13.5px;">
-              Ready for input. Send a message or click a swatch chip to observe step-by-step reasoning, tool invocations, and max-iteration guard enforcement.
+              Ready for input. Send a message or click a sample prompt to observe step-by-step reasoning, tool invocations, and safety guard enforcement.
             </div>
           </div>
         </div>
