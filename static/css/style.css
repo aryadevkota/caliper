@@ -1322,13 +1322,13 @@ body::before {
 
 .cal-label-group {
   position: absolute;
-  left: 180px;  /* Manually tuned for visual tab center */
-  top: 15px;    /* Manually tuned for vertical center */
-  width: 140px; 
+  left: 48px; /* Nudged right from 32px */
+  top: 15px;
+  width: 160px; /* Increased width to accommodate both icon and text */
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  gap: 8px; /* Added spacing between icon and text */
   z-index: 2;
 }
 
@@ -1336,16 +1336,17 @@ body::before {
   width: 18px;
   height: 18px;
   object-fit: contain;
-  flex-shrink: 0;
+  flex-shrink: 0; /* Ensures the icon is not compressed */
 }
 
-.cal-tab-title {
+.cal-tab-title,
+span.cal-tab-title {
   font-family: var(--font-section);
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #333333; /* Charcoal Black */
+  color: #36454F; /* Charcoal */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
