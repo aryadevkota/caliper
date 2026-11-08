@@ -327,6 +327,14 @@ body::before {
   margin-top: 2px;
 }
 
+.brand-tagline-pin {
+  width: 14px;
+  height: 18px;
+  object-fit: contain;
+  flex-shrink: 0;
+  display: inline-block;
+}
+
 /* Authentic Stamped Tag (Hidden) */
 .header-stamp-tag {
   display: none;
