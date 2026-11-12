@@ -187,11 +187,14 @@
   padding: 0;
 }
 
-/* Strict Directive 1: Master Page Background Pure #FFFFFF + D5CBBF Ruled Grid */
+/* Master Page Background: Caliper First Layer Brand Background SVG with #FFFFFF Fallback */
 body {
   background-color: #FFFFFF !important;
-  background-image: radial-gradient(#D5CBBF 0.85px, transparent 0.85px);
-  background-size: 22px 22px;
+  background-image: url('/newbrandkit/WebsiteFirstLayerBackground.svg');
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover;
+  background-attachment: scroll;
   color: var(--text-primary);
   font-family: var(--font-body);
   font-size: 15px;
