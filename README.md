@@ -4,7 +4,7 @@
   <img src="assets/caliper_logo.svg" alt="Caliper Logo" width="380"/>
   <p><strong>A thoughtful sewing machine setup, tension calibration, and fabric safety companion</strong></p>
   <p>
-    <em>CIS 4394: Agentic AI — Final Term Project</em><br>
+    <em>CIS 4394 Final Term Project</em><br>
     <strong>Arya Devkota</strong> · Georgia State University · Fall 2026
   </p>
   <p>
