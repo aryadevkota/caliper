@@ -8,7 +8,7 @@ Aesthetic Craft-Inspired Atelier UI with Tactile Rotary Dials & Rolling Yarn Loa
 
 import os
 import sys
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, List
 from pydantic import BaseModel
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
@@ -66,6 +66,8 @@ class CalibrateRequest(BaseModel):
     machine_id: Optional[str] = "brother_sm3701"
     provider: Optional[str] = "auto"
     api_key: Optional[str] = ""
+    history: Optional[List[Dict[str, str]]] = []
+    current_dials: Optional[Dict[str, Any]] = None
 
 @app.get("/assets/caliper_logo.png")
 async def get_logo():
@@ -183,6 +185,8 @@ async def run_calibration(req: CalibrateRequest):
         max_steps=6,
         machine_override=req.machine_id,
         api_key=api_key_clean,
+        history=req.history,
+        current_dials=req.current_dials,
     )
 
     # Intercept guardrail rejections with safe baseline dials and warning status
@@ -208,8 +212,32 @@ async def run_calibration(req: CalibrateRequest):
             "machine_specs": specs,
         }
 
-    # Extract updated dials
-    dials = extract_dial_settings(result.final_answer)
+    # If clarifying question needed, preserve current dial positions
+    if result.stopped_reason == "needs_clarification":
+        curr = req.current_dials or {}
+        dials = {
+            "tension": curr.get("tension") if curr.get("tension") is not None else specs.get("tension_default", 4.0),
+            "stitch_length": curr.get("length") if curr.get("length") is not None else curr.get("stitch_length", 2.5),
+            "stitch_width": curr.get("width") if curr.get("width") is not None else curr.get("stitch_width", 0.0),
+            "needle": curr.get("needle") or "Current Needle",
+            "foot": curr.get("foot") or "Current Presser Foot",
+            "stitch_type": curr.get("stitch_type") or "Current Stitch",
+        }
+        safety = {
+            "severity": "SAFE",
+            "message": "Awaiting fabric and setup clarification before adjusting dials.",
+        }
+        return {
+            "final_answer": result.final_answer,
+            "trace": result.trace,
+            "dials": dials,
+            "safety": safety,
+            "stopped_reason": result.stopped_reason,
+            "machine_specs": specs,
+        }
+
+    # Extract updated dials: prioritize result.dials, then trace/final_answer
+    dials = result.dials if result.dials and any(result.dials.values()) else extract_dial_settings(result)
 
     # Fallback to specs baseline for missing dial fields
     if dials.get("tension") is None:

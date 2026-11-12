@@ -7,6 +7,7 @@
 // Global State
 let allMachines = [];
 let currentMachine = null;
+let chatHistory = [];
 
 // Audio Synthesizer Class
 class RotaryAudio {
@@ -482,6 +483,7 @@ async function init() {
     btnResetDefaults.addEventListener("click", () => {
       rotaryAudio.playSwitch();
       setTimeout(() => rotaryAudio.playDetent(1.15), 110);
+      chatHistory = [];
 
       if (currentMachine) {
         const defTension = currentMachine.tension_default !== undefined ? currentMachine.tension_default : 4.0;
@@ -588,7 +590,13 @@ async function handleSubmit(e) {
       message: text,
       machine_id: machineSelect.value,
       provider: providerSelect.value,
-      api_key: apiKeyInput.value.trim()
+      api_key: apiKeyInput.value.trim(),
+      history: chatHistory.slice(-6),
+      current_dials: {
+        tension: dialState.tension.value,
+        length: dialState.length.value,
+        width: dialState.width.value
+      }
     };
 
     const res = await fetch("/api/calibrate", {
@@ -600,11 +608,21 @@ async function handleSubmit(e) {
     const data = await res.json();
     
     // Add assistant bubble
-    appendMessage("assistant", data.final_answer || "Calibration complete.");
+    const finalAnswer = data.final_answer || "Calibration complete.";
+    appendMessage("assistant", finalAnswer);
 
-    // Update Dials & Knobs with smooth physical spin
-    if (data.dials) {
-      updateDials(data.dials);
+    // Track multi-turn conversation history (last 6 messages)
+    chatHistory.push({ role: "user", content: text });
+    chatHistory.push({ role: "assistant", content: finalAnswer });
+    if (chatHistory.length > 6) {
+      chatHistory = chatHistory.slice(-6);
+    }
+
+    // Update Dials & Knobs with smooth physical spin (unless clarifying question)
+    if (data.stopped_reason !== "needs_clarification") {
+      if (data.dials) {
+        updateDials(data.dials);
+      }
     }
 
     // Update Safety Status
@@ -728,6 +746,7 @@ function showYarnLoader(show) {
 // 6-Specimen Preset Scenario Handler
 async function handleScenarioClick(scenarioId) {
   rotaryAudio.playSwitch();
+  chatHistory = [];
 
   // Mark clicked chip as active
   document.querySelectorAll(".swatch-chip").forEach(chip => {

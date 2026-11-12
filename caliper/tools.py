@@ -221,6 +221,55 @@ def diagnose_stitch_defect(
         for note in diag["machine_context"]:
             lines.append(f"  * {note}")
 
+    # Recommended dial settings for defect
+    dial_def = float(machine_specs.get("tension_default", 4.0)) if machine_specs else 4.0
+    cat = diag.get("defect_category", "")
+    if cat == "bird-nesting":
+        t_val = 5.0
+        l_val = 2.5
+        w_val = 0.0
+        n_rec = "80/12 Universal"
+        f_rec = "Standard J / All-purpose"
+    elif cat == "seam-puckering":
+        # If user states current tension, lower from that setting; otherwise lower from default
+        t_match = re.search(r"tension\s*(?:is|at|=|set to)?\s*([0-9]+(?:\.[0-9]+)?)", symptom, re.IGNORECASE)
+        if t_match:
+            try:
+                curr_t = float(t_match.group(1))
+                t_val = round(max(1.0, curr_t - 1.5), 1)
+            except ValueError:
+                t_val = max(0.0, dial_def - 1.0)
+        else:
+            t_val = max(0.0, dial_def - 1.0)
+        l_val = 2.5
+        w_val = 0.0
+        n_rec = "65/9 or 70/10 Microtex"
+        f_rec = "Standard J / All-purpose"
+    elif cat == "skipped-stitches":
+        t_val = dial_def
+        l_val = 2.5
+        w_val = 0.0
+        n_rec = "75/11 Ballpoint / Stretch"
+        f_rec = "Standard J / All-purpose"
+    elif cat == "needle-breakage":
+        t_val = dial_def
+        l_val = 3.0
+        w_val = 0.0
+        n_rec = "100/16 or 110/18 Jeans/Denim"
+        f_rec = "Standard J / All-purpose"
+    else:
+        t_val = dial_def
+        l_val = 2.5
+        w_val = 0.0
+        n_rec = "80/12 Universal"
+        f_rec = "Standard J / All-purpose"
+
+    lines.append(f"- Upper Tension Dial: {t_val:.1f}")
+    lines.append(f"- Stitch Length: {l_val:.1f} mm")
+    lines.append(f"- Stitch Width: {w_val:.1f} mm")
+    lines.append(f"- Needle Recommendation: {n_rec}")
+    lines.append(f"- Presser Foot: {f_rec}")
+
     return "\n".join(lines)
 
 
