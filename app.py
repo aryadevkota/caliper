@@ -16,6 +16,12 @@ from fastapi.responses import HTMLResponse, FileResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 import uvicorn
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env"))
+except ImportError:
+    pass
+
 from caliper.hardware_db import list_all_machines, get_machine, load_machines
 from caliper.agent import run_agent, extract_dial_settings
 
@@ -139,6 +145,29 @@ async def run_calibration(req: CalibrateRequest):
         model=engine_model,
         max_steps=6,
     )
+
+    # Intercept guardrail rejections with safe baseline dials and warning status
+    if result.stopped_reason == "blocked_by_guardrail":
+        dials = {
+            "tension": specs.get("tension_default", 4.0),
+            "stitch_length": 2.5,
+            "stitch_width": 0.0,
+            "needle": "Default / Baseline",
+            "foot": "Standard Presser Foot",
+            "stitch_type": "Straight",
+        }
+        safety = {
+            "severity": "WARNING",
+            "message": "Request blocked by Caliper security & safety guardrails.",
+        }
+        return {
+            "final_answer": result.final_answer,
+            "trace": result.trace,
+            "dials": dials,
+            "safety": safety,
+            "stopped_reason": result.stopped_reason,
+            "machine_specs": specs,
+        }
 
     # Extract updated dials
     dials = extract_dial_settings(result.final_answer)

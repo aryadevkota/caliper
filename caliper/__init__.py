@@ -11,6 +11,13 @@ from caliper.agent import (
     extract_dial_settings,
     run_agent,
 )
+from caliper.guardrails import (
+    GuardrailDecision,
+    evaluate_input,
+    sanitize_output,
+    validate_tool_call,
+    wrap_untrusted_query,
+)
 from caliper.hardware_db import (
     get_machine,
     list_all_machines,
@@ -52,4 +59,10 @@ __all__ = [
     "CaliperAgent",
     "run_agent",
     "extract_dial_settings",
+    # Guardrails
+    "GuardrailDecision",
+    "evaluate_input",
+    "wrap_untrusted_query",
+    "validate_tool_call",
+    "sanitize_output",
 ]
