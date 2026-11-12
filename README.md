@@ -139,6 +139,12 @@ python3 -m unittest discover -s tests -v
 ```
 All 45 tests across hardware specs, physics calibration, multi-turn history, and security guardrails pass in `~0.05 seconds`.
 
+### 5. Run the pass^k (k = 3) Evaluation Harness
+```bash
+python3 evals/run_passk_eval.py
+```
+Runs repeated executions ($k = 3$ trials per case across 14 test cases, 42 trials total) comparing single-run accuracy (`pass@1`) against strict all-trial consistency (`pass^k`). Results are saved to [`caliper_eval_results.xlsx`](caliper_eval_results.xlsx) with side-by-side category summaries and complete trial logs.
+
 ---
 
 ## 🏗️ Project Architecture
@@ -147,6 +153,7 @@ All 45 tests across hardware specs, physics calibration, multi-turn history, and
 caliper/
 ├── app.py                                       # FastAPI Web Server & API Router (Port 7860)
 ├── caliper_cli.py                               # Standalone CLI Interface with Multi-Provider Support
+├── caliper_eval_results.xlsx                    # Pass^k Evaluation Results (3 Sheets, 42 Trials)
 ├── render.yaml                                  # 1-Click Render Cloud Deployment Blueprint
 ├── Procfile                                     # Cloud Process Starter
 ├── START_HERE_MAC.command                       # 1-Click macOS Localhost Launcher
@@ -156,6 +163,8 @@ caliper/
 ├── MILESTONE_I_REPORT.md                        # Milestone Deliverable Report & Trace Analysis
 ├── caliper_sewing_machines_hardware_specs.xlsx  # 50 Sewing Machine Hardware Specs Database
 ├── assets/                                      # Application Previews & Verification Captures
+├── evals/                                       # Pass^k Evaluation Harness
+│   └── run_passk_eval.py                        # Automated Pass^k (k=3) Test Suite & Excel Exporter
 ├── caliper/                                     # Core Agentic Calibration & Physics Engine
 │   ├── __init__.py                              # Public API exports
 │   ├── hardware_db.py                           # 50-Machine Catalog & Fuzzy Chassis Matcher
@@ -212,5 +221,6 @@ The agent directly queries `caliper_sewing_machines_hardware_specs.xlsx`, contai
 
 - **Live Application:** [http://127.0.0.1:7860](http://127.0.0.1:7860)
 - **GitHub Repository:** [https://github.com/aryadevkota/caliper](https://github.com/aryadevkota/caliper)
+- **Pass^k Evaluation Results:** See [`caliper_eval_results.xlsx`](caliper_eval_results.xlsx) (14 cases, $k = 3$, 42 runs, side-by-side pass@1 vs pass^3).
 - **Execution Trace & Analysis Report:** See [`MILESTONE_I_REPORT.md`](MILESTONE_I_REPORT.md).
 - **Original Project Proposal:** See [`DevkotaArya_ProjectProposal-AgenticAI.pdf`](DevkotaArya_ProjectProposal-AgenticAI.pdf).
