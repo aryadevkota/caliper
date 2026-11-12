@@ -1,7 +1,7 @@
 # Caliper: The Sewing & Calibration Atelier
 
 <div align="center">
-  <img src="newbrandkit/Logo/Caliper Logo.svg" alt="Caliper Logo" width="380"/>
+  <img src="assets/caliper_logo.svg" alt="Caliper Logo" width="380"/>
   <p><strong>Universal Mechanical Sewing Machine Setup, Real-Time Physics Calibration & Safety Verification Agent</strong></p>
   <p>
     <em>CIS 4394: Agentic AI — Final Term Project</em><br>
@@ -59,32 +59,62 @@ Caliper replaces generic flat web dashboards with a physical, whimsical workshop
 
 ---
 
-## 🚀 Quickstart: Run Caliper Locally
+## 🚀 Quick Start: Launch Caliper
 
-### 1. Environment Setup
+### Option 1: 1-Click Launch from `.zip` (Recommended for Graders & Offline Users)
+If you downloaded the Caliper project archive `.zip` from GitHub or Canvas:
+1. **Extract** the downloaded `.zip` archive on your computer.
+2. **Double-click** the launcher for your operating system:
+   * **Windows:** Double-click [`START_HERE_WINDOWS.bat`](START_HERE_WINDOWS.bat)
+   * **macOS:** Double-click [`START_HERE_MAC.command`](START_HERE_MAC.command)
+3. The launcher will automatically provision an isolated `.venv`, install production dependencies from `requirements.txt`, launch the FastAPI server, pre-load the 50-machine hardware database, and automatically open your default browser to:
+   👉 **[http://127.0.0.1:7860](http://127.0.0.1:7860)**
+
+> [!TIP]
+> **macOS Gatekeeper / `.zip` Extraction Permissions Fallback:**  
+> If macOS blocks double-clicking with *"START_HERE_MAC.command cannot be opened"* due to Gatekeeper quarantine or stripped execute bits from archive extraction, simply open your Terminal, navigate to the extracted folder, and run:
+> ```bash
+> bash START_HERE_MAC.command
+> ```
+
+---
+
+### Option 2: 1-Click Cloud Deployment on Render
+Deploy your own live, server-side Caliper web application on **Render's Free Tier ($0)** using the included [`render.yaml`](render.yaml) Blueprint:
+1. Fork or push this repository to GitHub.
+2. In the [Render Dashboard](https://dashboard.render.com/), click **New +** → **Blueprint**.
+3. Select your repository. Render automatically reads `render.yaml`, provisions the Python 3.11 web service (`caliper-atelier`), installs `requirements.txt`, and configures health monitoring via `/api/machines`.
+4. Enter your `GEMINI_API_KEY` when prompted in the Render dashboard.
+
+---
+
+### Option 3: Manual Developer Setup (Git Clone)
 ```bash
 # Clone the repository
 git clone https://github.com/aryadevkota/caliper.git
 cd caliper
 
-# Activate the virtual environment
-source .venv/bin/activate
+# Create and activate virtual environment
+python3 -m venv .venv
+source .venv/bin/activate    # On Windows: .venv\Scripts\activate
 
-# Install dependencies
+# Install runtime dependencies
 pip install -r requirements.txt
-```
 
-### 2. Launch the Localhost Web Atelier (Recommended)
-```bash
+# Launch web server
 python app.py
 ```
-Open your browser to:
-👉 **[http://127.0.0.1:7860](http://127.0.0.1:7860)**
+Open your browser to: **[http://127.0.0.1:7860](http://127.0.0.1:7860)**  
+*(To expose on your local Wi-Fi for mobile/tablet testing: `LAN=1 python app.py`)*
 
-*To expose on your local network (e.g. tablet or mobile testing on same Wi-Fi):*
-```bash
-LAN=1 python app.py
-```
+---
+
+### 🔑 Zero-Config LLM & Offline Modes
+* **Zero API Key Needed (Offline ReAct):** Caliper ships with an embedded **Deterministic ReAct Engine** that calculates true mechanical tension curves, stitch dimensions, and safety limits entirely offline with **0 API keys and 0 external dependencies**.
+* **Google Gemini 2.5 Flash:** Select *Google Gemini 2.5 Flash* in the UI and enter your API key directly in the **`Key:`** input field (or provide `GEMINI_API_KEY` in `.env` / Render).
+* **Local Ollama:** Select *Local Ollama (llama3.1)* or *Local Ollama (qwen2.5)* to run on your local hardware via Ollama.
+
+---
 
 ### 3. Run the Command-Line Agent (CLI)
 Test the agent on real inputs directly from your terminal:
@@ -103,11 +133,11 @@ python caliper_cli.py --safety "14oz heavy denim flat-felled seam with 70/10 nee
 python caliper_cli.py "Janome HD1000, silk chiffon 45 GSM rolled hem"
 ```
 
-### 4. Run the Automated Test Suite (28 Tests)
+### 4. Run the Automated Test Suite (45 Tests)
 ```bash
-python -m unittest discover -s tests -v
+python3 -m unittest discover -s tests -v
 ```
-All 28 tests pass in `~0.04 seconds`.
+All 45 tests across hardware specs, physics calibration, multi-turn history, and security guardrails pass in `~0.05 seconds`.
 
 ---
 
@@ -117,41 +147,41 @@ All 28 tests pass in `~0.04 seconds`.
 caliper/
 ├── app.py                                       # FastAPI Web Server & API Router (Port 7860)
 ├── caliper_cli.py                               # Standalone CLI Interface with Multi-Provider Support
+├── render.yaml                                  # 1-Click Render Cloud Deployment Blueprint
+├── Procfile                                     # Cloud Process Starter
+├── START_HERE_MAC.command                       # 1-Click macOS Localhost Launcher
+├── START_HERE_WINDOWS.bat                       # 1-Click Windows Localhost Launcher
+├── requirements.txt                             # Lightweight Production Dependencies
+├── requirements-dev.txt                         # Local Testing & Verification Dependencies
 ├── MILESTONE_I_REPORT.md                        # Milestone Deliverable Report & Trace Analysis
 ├── caliper_sewing_machines_hardware_specs.xlsx  # 50 Sewing Machine Hardware Specs Database
-├── assets/
-│   ├── caliper_logo.svg                         # Vector Brand Logo Asset
-│   ├── caliper_logo.png                         # High-Res Patchwork Brand Logo
-│   └── ...                                      # Visual Reference Captures
-├── caliper/
+├── assets/                                      # Application Previews & Verification Captures
+├── caliper/                                     # Core Agentic Calibration & Physics Engine
 │   ├── __init__.py                              # Public API exports
 │   ├── hardware_db.py                           # 50-Machine Catalog & Fuzzy Chassis Matcher
 │   ├── mechanics.py                             # Thread Tension Physics, Diagnostics & Safety
+│   ├── guardrails.py                            # Input/Output Deflection & Injection Guardrails
 │   ├── tools.py                                 # 4 Agent Tools & Schemas (Ollama / Gemini)
 │   ├── agent.py                                 # ReAct Loop with Strict MAX_STEPS=6 Guard
 │   └── ui_helpers.py                            # SVG Rotary Dials & HTML Visualizer
-├── newbrandkit/
-│   ├── Fonts/                                   # 6 Official Brand Fonts (.otf / .ttf)
-│   │   ├── Title/                               # Oslo Stitch DEMO.otf
-│   │   ├── Subtitle/                            # Autography.otf
-│   │   ├── Heading/                             # Photography.otf
-│   │   ├── Subheading/                          # Biro_Script_reduced.otf
-│   │   ├── Section Header/                      # pastel crayon.ttf
-│   │   └── Body/                                # Jupiteroid-Regular.ttf
-│   ├── Logo/                                    # Caliper Logo.svg & Caliper Logo.png
-│   ├── Sewing Machine Dial Components/          # Illustrated Bezel & Wheel Components
-│   └── AccentsGraphicsElements/                 # Decorative Stitch & Haberdashery Assets
 ├── static/
-│   ├── css/
-│   │   └── style.css                            # Atelier Brand Design System & CSS Animations
-│   ├── js/
-│   │   └── app.js                               # Dial Physics, Web Audio Detents & API Streaming
-│   └── fonts/                                   # Bundled Web Font Assets
+│   ├── atelier_assets/                          # Consolidated Shippable Brand & Catalog Assets
+│   │   ├── brand/                               # Caliper Logo, Background & Emblems
+│   │   ├── catalog/                             # Hero Machine, Gauge & Symbol Assets
+│   │   ├── dials/                               # Rotary Dial Bezels & Rotors
+│   │   ├── folders/                             # Tab & Drawer Cardstock Graphics
+│   │   ├── fonts/                               # 6 Bundled Brand Web Fonts (.otf / .ttf)
+│   │   ├── icons/                               # Active Haberdashery Accent SVGs
+│   │   └── swatches/                            # Fabric Texture Specimen SVGs
+│   ├── css/style.css                            # Atelier Brand Design System & CSS Animations
+│   └── js/app.js                                # Dial Physics, Web Audio Detents & API Streaming
 ├── templates/
 │   └── index.html                               # Semantic Workshop Atelier Single-Page Interface
 └── tests/
     ├── test_mechanics.py                        # 16 Hardware, Physics & Defect Unit Tests
-    └── test_agent.py                            # 12 Integration, Tool & Guardrail Tests
+    ├── test_agent.py                            # 12 Integration, Tool & Guardrail Tests
+    ├── test_conversational_upgrades.py          # Multi-Turn Context & Clarification Tests
+    └── test_guardrails_hardened.py              # Prompt Injection & Input Hardening Tests
 ```
 
 ---
