@@ -263,6 +263,6 @@ async def run_calibration(req: CalibrateRequest):
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 7860))
-    host = "0.0.0.0" if os.environ.get("LAN") else "127.0.0.1"
-    print(f"[Caliper] Starting Caliper Atelier Web Application on http://127.0.0.1:{port}")
+    host = os.environ.get("HOST", "0.0.0.0" if (os.environ.get("LAN") or os.environ.get("RENDER") or "PORT" in os.environ) else "127.0.0.1")
+    print(f"[Caliper] Starting Caliper Atelier Web Application on http://{host}:{port}")
     uvicorn.run(app, host=host, port=port, log_level="info")
