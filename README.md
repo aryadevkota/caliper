@@ -31,36 +31,6 @@ Caliper turns sewing machine setup from trial-and-error guesswork into a calm, t
 
 ---
 
-## 🎨 Design & Workbench Details
-
-Caliper is designed to feel like a physical sewing table rather than a standard dashboard:
-
-| Atelier Detail | Look & Feel |
-| :--- | :--- |
-| **Top Awning Border** | Alternating Powder Blue (`#BFD7EA`) and White (`#FFFFFF`) stripe along the top edge. |
-| **Logo & Tagline** | Patchwork SVG logo paired with "The Sewing & Calibration Atelier" in Autography and the stitched "SEW IT!" badge in Oslo Stitch. |
-| **Machine Catalog** | Illustrated machine stage with hardware readout pills and a soft Powder Blue focus glow. |
-| **Consultation Notebook** | Lined notepad chat with subtle notebook ruling (`repeating-linear-gradient`) and Confectioner's Blush user notes (`#FAD2E1`). |
-| **Sample Swatches** | Six quick-start fabric scenarios styled as pinked fabric swatches on a wooden workbench slab. |
-| **Rolling Yarn Loader** | Animated Cherry Red (`#BF1318`) yarn ball with Blush Pink (`#FAD2E1`) and Powder Blue (`#BFD7EA`) wraps while thinking. |
-| **Stitched Calibrate Button** | Cherry Red patch button with a dashed running-stitch border and soft press motion. |
-| **Interactive Rotary Dials** | Draggable sewing machine dials for Upper Tension, Stitch Length, and Stitch Width that spin smoothly into place. |
-| **Pinned Spec Tags** | Stitch Type, Needle Gauge, and Presser Foot displayed on pinned fabric tags with brass pin heads. |
-| **Agent Logs Drawer** | Deep Atelier Plum (`#3D1E28`) drawer with Mint Green step badges (`#CDE3D0`) showing each reasoning step and tool check. |
-| **Web Audio Clicks** | Subtle mechanical ratchet clicks synthesized in the browser as you turn dials or switch machines. |
-
-### Typography
-
-- **Title (Oslo Stitch):** Playful stitched accents and the "SEW IT!" badge.
-- **Subtitle (Autography):** Flowing script for "The Sewing & Calibration Atelier".
-- **Heading (Photography):** Section headers for Consultation, Physical Machine Dials, and Agent Logs.
-- **Subheading (Biro Script):** Handwritten notes on fabric swatch cards.
-- **Section Header (Pastel Crayon):** Labels, dial titles, and small badges.
-- **Body (Jupiteroid):** Chat messages, specs, and dial readouts.
-- **Code (SF Mono / monospace):** Tool calls and trace logs.
-
----
-
 ## 🚀 Quick Start: Launch Caliper
 
 ### Option 1: 1-Click Launch from .zip (Easiest for Local Testing)
