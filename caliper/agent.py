@@ -226,16 +226,19 @@ class CaliperAgent:
         provider: str = "auto",
         model: Optional[str] = None,
         max_steps: int = MAX_STEPS,
+        api_key: Optional[str] = None,
     ):
         """
         Args:
             provider: 'auto', 'ollama', 'gemini', or 'fallback'/'deterministic'.
             model: Model name override (e.g. 'llama3.1:latest', 'qwen2.5:0.5b', 'gemini-2.5-flash').
             max_steps: Maximum loop iterations (default MAX_STEPS = 6).
+            api_key: Optional Gemini API key passed cleanly without mutating os.environ.
         """
         self.provider = (provider or "auto").lower().strip()
         self.model = model
         self.max_steps = min(max(1, max_steps), MAX_STEPS)
+        self.api_key = api_key.strip() if api_key and api_key.strip() else None
 
     def run(
         self,
@@ -309,7 +312,7 @@ class CaliperAgent:
             return "ollama"
 
         # Auto detection:
-        if os.environ.get("GEMINI_API_KEY"):
+        if self.api_key or os.environ.get("GEMINI_API_KEY"):
             return "gemini"
 
         if self._check_ollama_available():
@@ -585,7 +588,7 @@ class CaliperAgent:
         from google import genai
         from google.genai import types
 
-        api_key = os.environ.get("GEMINI_API_KEY")
+        api_key = self.api_key or os.environ.get("GEMINI_API_KEY")
         client = genai.Client(api_key=api_key) if api_key else genai.Client()
         model_name = self.model or DEFAULT_GEMINI_MODEL
 
@@ -990,9 +993,15 @@ def run_agent(
     defect_mode: bool = False,
     safety_mode: bool = False,
     machine_override: Optional[str] = None,
+    api_key: Optional[str] = None,
 ) -> AgentResult:
     """Convenience function to instantiate and run the CaliperAgent."""
-    agent = CaliperAgent(provider=provider, model=model, max_steps=max_steps)
+    agent = CaliperAgent(
+        provider=provider,
+        model=model,
+        max_steps=max_steps,
+        api_key=api_key,
+    )
     return agent.run(
         goal=goal,
         defect_mode=defect_mode,

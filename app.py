@@ -24,6 +24,7 @@ except ImportError:
 
 from caliper.hardware_db import list_all_machines, get_machine, load_machines
 from caliper.agent import run_agent, extract_dial_settings
+from caliper.guardrails import evaluate_input, MAX_INPUT_LENGTH
 
 # Pre-load the 50-machine hardware database
 load_machines()
@@ -111,10 +112,46 @@ async def run_calibration(req: CalibrateRequest):
     # Attach machine context if not in query
     specs = get_machine(req.machine_id or "brother_sm3701") or {}
     machine_name = f"{specs.get('brand', '')} {specs.get('model_name', '')}".strip()
-    
+
+    # Pre-flight input evaluation on raw query BEFORE appending machine context
+    guardrail_decision = evaluate_input(query)
+    if not guardrail_decision.allowed:
+        dials = {
+            "tension": specs.get("tension_default", 4.0),
+            "stitch_length": 2.5,
+            "stitch_width": 0.0,
+            "needle": "Default / Baseline",
+            "foot": "Standard Presser Foot",
+            "stitch_type": "Straight",
+        }
+        safety = {
+            "severity": "WARNING",
+            "message": "Request blocked by Caliper security & safety guardrails.",
+        }
+        return {
+            "final_answer": guardrail_decision.refusal_message,
+            "trace": [{
+                "step": 1,
+                "thought": f"Guardrail intercepted {guardrail_decision.category}: {guardrail_decision.reason}",
+                "tool_name": "guardrail_check",
+                "tool_args": {"category": guardrail_decision.category},
+                "observation": "BLOCKED",
+                "answer": guardrail_decision.refusal_message,
+            }],
+            "dials": dials,
+            "safety": safety,
+            "stopped_reason": "blocked_by_guardrail",
+            "machine_specs": specs,
+        }
+
+    # Safely attach machine context if not already in query without exceeding MAX_INPUT_LENGTH
     brand_keywords = ["brother", "singer", "janome", "juki", "bernette", "baby lock"]
-    if machine_name and not any(k in query.lower() for k in brand_keywords):
-        query_with_context = f"{query} on my {machine_name}"
+    machine_suffix = f" on my {machine_name}" if machine_name else ""
+    if machine_suffix and not any(k in query.lower() for k in brand_keywords):
+        if len(query) + len(machine_suffix) <= MAX_INPUT_LENGTH:
+            query_with_context = f"{query}{machine_suffix}"
+        else:
+            query_with_context = query
     else:
         query_with_context = query
 
@@ -125,8 +162,6 @@ async def run_calibration(req: CalibrateRequest):
     p = (req.provider or "auto").lower()
     if "gemini" in p:
         engine_provider = "gemini"
-        if req.api_key and req.api_key.strip():
-            os.environ["GEMINI_API_KEY"] = req.api_key.strip()
     elif "deterministic" in p:
         engine_provider = "deterministic"
     elif "llama" in p:
@@ -138,12 +173,16 @@ async def run_calibration(req: CalibrateRequest):
     else:
         engine_provider = "auto"
 
-    # Execute Caliper Agent with strict MAX_STEPS = 6 guard
+    api_key_clean = req.api_key.strip() if req.api_key and req.api_key.strip() else None
+
+    # Execute Caliper Agent with strict MAX_STEPS = 6 guard and clean api_key
     result = run_agent(
         goal=query_with_context,
         provider=engine_provider,
         model=engine_model,
         max_steps=6,
+        machine_override=req.machine_id,
+        api_key=api_key_clean,
     )
 
     # Intercept guardrail rejections with safe baseline dials and warning status

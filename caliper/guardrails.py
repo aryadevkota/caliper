@@ -4,17 +4,23 @@ Multi-layered security, safety, and scope guardrail system for the Caliper Agent
 Provides:
   1. Pre-Flight Input Guardrail (evaluate_input): Intercepts prompt injections,
      destructive intents, secret/system exfiltration, harmful acts, and out-of-scope abuse.
-  2. Prompt Isolation Helper (wrap_untrusted_query): Safely wraps validated user input
+     Normalizes Unicode (NFKC), strips zero-width/invisible characters, maps Cyrillic/Greek
+     homoglyphs, and blocks obfuscated/encoded payloads.
+  2. Scope Enforcement: Strictly verifies sewing/textile/machine calibration domain relevance
+     with zero false positives on authentic sewing operations.
+  3. Prompt Isolation Helper (wrap_untrusted_query): Safely wraps validated user input
      in strict semantic boundaries with delimiter breakout neutralization.
-  3. Tool & Output Guardrails (validate_tool_call, sanitize_output): Validates tool
-     invocations against safe registries/argument sizes and scrubs sensitive tokens.
+  4. Tool & Output Guardrails (validate_tool_call, sanitize_output): Validates tool
+     invocations against safe registries/argument sizes and scrubs sensitive tokens,
+     system prompt fragments, and boundary delimiters.
 """
 
 from __future__ import annotations
 
 import re
+import unicodedata
 from dataclasses import asdict, dataclass
-from typing import Any, Dict, Optional, Set
+from typing import Any, Dict, Optional, Set, Tuple
 
 from caliper.tools import TOOLS
 
@@ -33,7 +39,7 @@ REFUSAL_EMPTY_INPUT: str = (
 )
 
 REFUSAL_PROMPT_INJECTION: str = (
-    "SECURITY NOTICE: Instruction-override or role-hijacking pattern detected. "
+    "SECURITY NOTICE: Instruction-override, role-hijacking, or obfuscated injection pattern detected. "
     "Caliper strictly adheres to its sewing calibration and safety domain. "
     "Please submit a valid sewing machine, fabric, or stitch defect request."
 )
@@ -72,6 +78,40 @@ class GuardrailDecision:
 
 
 # ---------------------------------------------------------------------------
+# Unicode, Zero-Width & Homoglyph Normalization Tables
+# ---------------------------------------------------------------------------
+
+_RE_ZERO_WIDTH = re.compile(r"[\u200b-\u200f\u202a-\u202e\u2060-\u206f\ufeff]")
+
+_HOMOGLYPH_MAP = {
+    # Cyrillic lowercase
+    "а": "a", "с": "c", "е": "e", "о": "o", "р": "p", "і": "i", "ј": "j",
+    "ѕ": "s", "х": "x", "у": "y", "ԁ": "d", "ԛ": "q", "ԝ": "w", "ѵ": "v",
+    # Cyrillic uppercase
+    "А": "A", "В": "B", "С": "C", "Е": "E", "Н": "H", "І": "I", "Ј": "J",
+    "К": "K", "М": "M", "О": "O", "Р": "P", "Ѕ": "S", "Т": "T", "Х": "X",
+    "Ү": "Y", "Ԝ": "W",
+    # Greek lowercase
+    "α": "a", "β": "b", "γ": "y", "ε": "e", "ι": "i", "κ": "k", "ν": "v",
+    "ο": "o", "ρ": "p", "τ": "t", "υ": "u", "χ": "x",
+    # Greek uppercase
+    "Α": "A", "Β": "B", "Ε": "E", "Ζ": "Z", "Η": "H", "Ι": "I", "Κ": "K",
+    "Μ": "M", "Ν": "N", "Ο": "O", "Ρ": "P", "Τ": "T", "Υ": "Y", "Χ": "X",
+}
+_HOMOGLYPH_TABLE = str.maketrans(_HOMOGLYPH_MAP)
+
+# Encoded / Base64 obfuscation detection
+_RE_BASE64_BLOB = re.compile(r"(?:[A-Za-z0-9+/]{4}){10,}(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?")
+_RE_DECODE_EXEC_INTENT = re.compile(
+    r"\b(?:decode|base64|b64|execute|exec|eval|run|payload|unpack)\b",
+    re.IGNORECASE,
+)
+_RE_EXPLICIT_DECODE = re.compile(
+    r"\b(?:base64\.(?:b64)?decode|b64decode|atob\(|from_base64)\b",
+    re.IGNORECASE,
+)
+
+# ---------------------------------------------------------------------------
 # Pattern Definitions with Contextual False-Positive Shields
 # ---------------------------------------------------------------------------
 
@@ -83,9 +123,16 @@ _RE_DELIMITER_BREAKOUT = re.compile(
 
 # Prompt injection & jailbreak patterns
 _INJECTION_PATTERNS = [
-    re.compile(r"\bignore\s+(?:all\s+)?(?:previous|prior|above|system|your)\s+(?:instructions|prompts?|rules?|directives?)\b", re.IGNORECASE),
-    re.compile(r"\bdisregard\s+(?:all\s+)?(?:previous|prior|above|system|your)\s+(?:instructions|prompts?|rules?|directives?)\b", re.IGNORECASE),
-    re.compile(r"\bforget\s+(?:everything|all\s+(?:previous|prior|above)\s+instructions?)\b", re.IGNORECASE),
+    re.compile(r"\bignore\s+(?:all\s+)?(?:(?:previous|prior|above|system|your)\s+)?(?:instructions|prompts?|rules?|directives?|safety|filters?)\b", re.IGNORECASE),
+    re.compile(r"\bdisregard\s+(?:all\s+)?(?:(?:previous|prior|above|system|your)\s+)?(?:instructions|prompts?|rules?|directives?|safety|filters?)\b", re.IGNORECASE),
+    re.compile(r"\bforget\s+(?:everything|all\b|all\s+(?:previous|prior|above)\s+instructions?|your\s+(?:rules?|instructions?|prompt|directives?))\b", re.IGNORECASE),
+    re.compile(r"\b(?:set|put)\s+aside\s+(?:your\s+)?(?:rules?|instructions?)\b", re.IGNORECASE),
+    re.compile(r"\b(?:pretend|roleplay|simulate|behave\s+like|imagine\s+you\s+are)\b", re.IGNORECASE),
+    re.compile(r"\bstop\s+being\s+caliper\b", re.IGNORECASE),
+    re.compile(r"\bfrom\s+now\s+on\b", re.IGNORECASE),
+    re.compile(r"\bnew\s+persona\b", re.IGNORECASE),
+    re.compile(r"\bwithout\s+(?:any\s+)?restrictions?\b", re.IGNORECASE),
+    re.compile(r"(?m)^\s*(?:SYSTEM|ASSISTANT|DEVELOPER|###\s*INSTRUCTION)\s*:", re.IGNORECASE),
     re.compile(r"\byou\s+are\s+now\s+(?:a|an|the|in)\b", re.IGNORECASE),
     re.compile(r"\bact\s+as\s+(?:a|an)\s+(?!sewing|tailor|atelier|craft|machine|stitch|technician|mechanic|apprentice)\w+", re.IGNORECASE),
     re.compile(r"\benter\s+(?:developer\s+mode|god\s+mode|unrestricted\s+mode|dan\s+mode)\b", re.IGNORECASE),
@@ -105,6 +152,7 @@ _INJECTION_PATTERNS = [
 _EXFILTRATION_PATTERNS = [
     re.compile(r"\b(?:reveal|print|show|dump|leak|output|display|repeat)\s+(?:your\s+)?(?:system\s+prompt|initial\s+prompt|developer\s+instructions?|hidden\s+prompt|base\s+prompt)\b", re.IGNORECASE),
     re.compile(r"\bwhat\s+(?:is|are)\s+your\s+(?:system\s+prompt|system\s+instructions?|hidden\s+rules?|developer\s+prompt)\b", re.IGNORECASE),
+    re.compile(r"\b(?:repeat|restate|summarize|translate|echo|print)\s+(?:the\s+)?(?:text|words?|instructions?|prompt|rules?)\s+(?:above|before|verbatim)\b", re.IGNORECASE),
     re.compile(r"\bshow\s+(?:me\s+)?(?:all\s+)?environment\s+variables\b", re.IGNORECASE),
     re.compile(r"\bprintenv\b", re.IGNORECASE),
     re.compile(r"\b(?:show|reveal|print|dump|leak|get)\s+(?:the\s+)?(?:api[_-]?key|gemini[_-]?api[_-]?key|secret[_-]?key|token)\b", re.IGNORECASE),
@@ -139,13 +187,57 @@ _HARMFUL_PATTERNS = [
     re.compile(r"\b(?:suicide|self-harm|how\s+to\s+(?:hang|kill)\s+myself)\b", re.IGNORECASE),
 ]
 
-# Sensitive token redaction regexes for output sanitization
-_RE_SYSTEM_PROMPT_MARKER = re.compile(
-    r"You are Caliper, an expert Universal Sewing Machine Setup and Calibration Agent",
+# Sewing, textile, machine calibration, and defect domain signal patterns
+_RE_SEWING_DOMAIN = re.compile(
+    r"\b(?:"
+    # Machine brands and common manufacturers
+    r"brother|singer|janome|juki|bernette|baby\s*lock|babylock|pfaff|husqvarna|viking|bernina|elna|necchi|consew|reliable|chandler"
+    # Specific popular machine models
+    r"|sm3701|4423|4411|4452|4432|hd1000|hd3000|cs6000i|cs7000i|b33|b35|b37|b38|cp100x|cp28x|gx37|hc1850|st371hd|dx-2000"
+    # Machine hardware and components
+    r"|sewing(?:\s+machine)?|machine|bobbin[s]?|needle[s]?|shank|presser\s+foot|feed\s+dog[s]?|throat\s+plate|needle\s+plate"
+    r"|spool|handwheel|looper|feed\s+mechanism"
+    # Calibration & settings
+    r"|tension|dial[s]?|stitch\s+length|stitch\s+width|stitch\s+type|stitch\s+selection|calibrat\w*|caliper"
+    # Stitches, seams, and sewing actions
+    r"|sew\w*|stitch\w*|seam[s]?|hem\w*|quilt\w*|tailor\w*|atelier|embroid\w*|overcast|basting|serger|overlock"
+    r"|applique|darning|topstitch\w*|flat[- ]felled|side\s+seam|french\s+seam|rolled\s+hem|bound\s+seam"
+    r"|gathering|pleat\w*|ruffle|piping|bias\s+tape|zigzag|straight\s+stitch|blind\s+hem"
+    # Thread & needle terminology
+    r"|thread\w*|130/705[h]?|ha-1|15x1|\b\d{1,3}/\d{1,2}\b|ballpoint|microtex|jeans\s+needle|stretch\s+needle"
+    # Fabrics, textiles, and materials
+    r"|fabric[s]?|textile[s]?|cloth|material[s]?|weave|woven|knit[s]?|denim|cotton|silk|chiffon|spandex|jersey"
+    r"|canvas|flannel|wool|linen|polyester|poly|rayon|viscose|satin|fleece|nylon|velvet|corduroy|organza|tulle"
+    r"|twill|interlock|rib\s+knit|lycra|leather|suede|muslin|batiste|voile|chambray|poplin|gabardine|crepe"
+    r"|georgette|taffeta|brocade|scuba|neoprene|duck|terry|felt|sherpa|lace|gingham|tweed|broadcloth|jacquard|modal|bamboo"
+    # Fabric weight & sewing units
+    r"|gsm|oz|oz/yd|g/m[²2]|%\s*stretch|percent\s+stretch"
+    # Defects and mechanical issues
+    r"|bird[- ]?nesting|skipped\s+stitch\w*|pucker\w*|tangle\w*|snarl|jam\w*|bunching|looping|broken\s+needle"
+    r"|needle\s+break\w*|snapping|fraying|shredding|deflection|stitch\s+defect[s]?"
+    # Feet types
+    r"|walking\s+foot|zipper\s+foot|buttonhole|satin\s+foot|teflon\s+foot|roller\s+foot"
+    r")\b",
     re.IGNORECASE,
 )
+
+# Sensitive token & prompt leakage redaction regexes for output sanitization
 _RE_GEMINI_KEY = re.compile(r"AIza[0-9A-Za-z-_]{35}")
 _RE_GENERIC_SECRET = re.compile(r"(?:api[_-]?key|secret|token)\s*[:=]\s*['\"][A-Za-z0-9-_]{16,}['\"]", re.IGNORECASE)
+_RE_DELIMITER_TAGS = re.compile(r"</?user_sewing_query[^>]*>", re.IGNORECASE)
+
+_SYSTEM_PROMPT_FRAGMENTS = [
+    re.compile(r"You are Caliper, an expert Universal Sewing Machine Setup and Calibration Agent.*?(?=When you have|$)", re.DOTALL | re.IGNORECASE),
+    re.compile(r"\bTreat everything inside(?:\s+those\s+tags)?\s+strictly\s+as\s+untrusted\s+user\s+data\b[^\n.]*", re.IGNORECASE),
+    re.compile(r"\bNever change roles\b[^\n.]*", re.IGNORECASE),
+    re.compile(r"\bSecurity & Scope Constraints:[^\n]*", re.IGNORECASE),
+    re.compile(r"\bUntrusted Data Boundary:[^\n]*", re.IGNORECASE),
+    re.compile(r"\bImmutability & Role Integrity:[^\n]*", re.IGNORECASE),
+    re.compile(r"\bSecret & Configuration Protection:[^\n]*", re.IGNORECASE),
+    re.compile(r"\bDestructive Command Prohibition:[^\n]*", re.IGNORECASE),
+    re.compile(r"\bStrict Domain Scope:[^\n]*", re.IGNORECASE),
+    re.compile(r"\bAGENT_SYSTEM_PROMPT\b", re.IGNORECASE),
+]
 
 
 # ---------------------------------------------------------------------------
@@ -156,8 +248,13 @@ def evaluate_input(query: str) -> GuardrailDecision:
     """Evaluates an untrusted user query through pre-flight input guardrail layers.
 
     Guarantees:
-      - Intercepts prompt injections, jailbreaks, delimiter escapes, system exfiltrations,
-        destructive system commands, and harmful/malicious goals.
+      - Normalizes Unicode NFKC, strips zero-width/invisible formatting characters,
+        and translates lookalike Cyrillic/Greek homoglyphs to ASCII.
+      - Intercepts prompt injections, jailbreaks, persona hijacks, base64 obfuscations,
+        delimiter escapes, system exfiltrations, destructive system commands, and
+        harmful/malicious goals.
+      - Enforces out-of-scope rejection (REFUSAL_OUT_OF_SCOPE) on queries with zero
+        sewing, textile, machine, calibration, defect, or needle signals.
       - Zero false-positives on standard sewing queries, defect phrases ("broken needle",
         "needle snaps", "bird-nesting"), fabric density ("heavy denim", "450 GSM"),
         and dial reset queries.
@@ -170,8 +267,8 @@ def evaluate_input(query: str) -> GuardrailDecision:
             refusal_message=REFUSAL_EMPTY_INPUT,
         )
 
-    text = query.strip()
-    if not text:
+    text_raw = query.strip()
+    if not text_raw:
         return GuardrailDecision(
             allowed=False,
             category="input_too_long",
@@ -179,19 +276,27 @@ def evaluate_input(query: str) -> GuardrailDecision:
             refusal_message=REFUSAL_EMPTY_INPUT,
         )
 
-    if len(text) > MAX_INPUT_LENGTH:
+    if len(text_raw) > MAX_INPUT_LENGTH:
         return GuardrailDecision(
             allowed=False,
             category="input_too_long",
-            reason=f"Query length ({len(text)} chars) exceeds maximum ({MAX_INPUT_LENGTH} chars).",
+            reason=f"Query length ({len(text_raw)} chars) exceeds maximum ({MAX_INPUT_LENGTH} chars).",
             refusal_message=REFUSAL_INPUT_TOO_LONG,
         )
 
-    # Normalize whitespace for multi-line pattern matching
-    normalized = re.sub(r"\s+", " ", text)
+    # 1. Unicode & Obfuscation Normalization
+    # Step A: NFKC normalization (converts fullwidth, compatibility forms to standard ASCII)
+    normalized_nfkc = unicodedata.normalize("NFKC", text_raw)
+    # Step B: Strip zero-width / invisible formatting characters
+    cleaned_zw = _RE_ZERO_WIDTH.sub("", normalized_nfkc)
+    # Step C: Map Cyrillic and Greek homoglyphs to ASCII
+    normalized = cleaned_zw.translate(_HOMOGLYPH_TABLE)
+
+    # Flatten whitespace for single-line pattern matching while preserving multi-line for headers
+    flattened = re.sub(r"\s+", " ", normalized)
 
     # Layer 1: Delimiter breakout detection
-    if _RE_DELIMITER_BREAKOUT.search(normalized):
+    if _RE_DELIMITER_BREAKOUT.search(normalized) or _RE_DELIMITER_BREAKOUT.search(flattened):
         return GuardrailDecision(
             allowed=False,
             category="prompt_injection",
@@ -199,9 +304,20 @@ def evaluate_input(query: str) -> GuardrailDecision:
             refusal_message=REFUSAL_PROMPT_INJECTION,
         )
 
-    # Layer 2: Prompt injection / jailbreak detection
+    # Layer 2: Suspicious encoded / Base64 payload detection
+    if _RE_EXPLICIT_DECODE.search(normalized) or (
+        _RE_BASE64_BLOB.search(normalized) and _RE_DECODE_EXEC_INTENT.search(normalized)
+    ):
+        return GuardrailDecision(
+            allowed=False,
+            category="prompt_injection",
+            reason="Suspicious encoded payload or decoding instruction detected.",
+            refusal_message=REFUSAL_PROMPT_INJECTION,
+        )
+
+    # Layer 3: Prompt injection & jailbreak detection (checked on both multiline and flattened)
     for pattern in _INJECTION_PATTERNS:
-        if pattern.search(normalized):
+        if pattern.search(normalized) or pattern.search(flattened):
             return GuardrailDecision(
                 allowed=False,
                 category="prompt_injection",
@@ -209,9 +325,9 @@ def evaluate_input(query: str) -> GuardrailDecision:
                 refusal_message=REFUSAL_PROMPT_INJECTION,
             )
 
-    # Layer 3: System prompt & secret exfiltration
+    # Layer 4: System prompt & secret exfiltration
     for pattern in _EXFILTRATION_PATTERNS:
-        if pattern.search(normalized):
+        if pattern.search(normalized) or pattern.search(flattened):
             return GuardrailDecision(
                 allowed=False,
                 category="system_exfiltration",
@@ -219,9 +335,9 @@ def evaluate_input(query: str) -> GuardrailDecision:
                 refusal_message=REFUSAL_SYSTEM_EXFILTRATION,
             )
 
-    # Layer 4: Destructive intent / system commands
+    # Layer 5: Destructive intent / system commands
     for pattern in _DESTRUCTIVE_PATTERNS:
-        if pattern.search(normalized):
+        if pattern.search(normalized) or pattern.search(flattened):
             return GuardrailDecision(
                 allowed=False,
                 category="destructive_intent",
@@ -229,15 +345,25 @@ def evaluate_input(query: str) -> GuardrailDecision:
                 refusal_message=REFUSAL_DESTRUCTIVE_INTENT,
             )
 
-    # Layer 5: Unethical or harmful acts
+    # Layer 6: Unethical or harmful acts
     for pattern in _HARMFUL_PATTERNS:
-        if pattern.search(normalized):
+        if pattern.search(normalized) or pattern.search(flattened):
             return GuardrailDecision(
                 allowed=False,
                 category="unethical_or_harmful",
                 reason=f"Unethical or malicious intent pattern matched: '{pattern.pattern}'.",
                 refusal_message=REFUSAL_UNETHICAL_OR_HARMFUL,
             )
+
+    # Layer 7: Out-of-Scope Enforcement
+    # Verify that query contains at least one valid sewing, machine, fabric, defect, or needle signal
+    if not _RE_SEWING_DOMAIN.search(flattened):
+        return GuardrailDecision(
+            allowed=False,
+            category="out_of_scope",
+            reason="Query does not contain recognized sewing machine, fabric, calibration, or defect concepts.",
+            refusal_message=REFUSAL_OUT_OF_SCOPE,
+        )
 
     # All guardrail checks passed
     return GuardrailDecision(
@@ -297,7 +423,7 @@ def validate_tool_call(
 
 def sanitize_output(text: str) -> str:
     """Sanitizes outgoing LLM responses by scrubbing raw system prompt markers,
-    API keys, and secret patterns.
+    API keys, generic secrets, verbatim prompt instructions, and leaked delimiters.
     """
     if not text:
         return ""
@@ -310,13 +436,11 @@ def sanitize_output(text: str) -> str:
     # Redact generic secret assignments
     sanitized = _RE_GENERIC_SECRET.sub("api_key = '[REDACTED]'", sanitized)
 
-    # Replace raw system prompt leaks if verbatim excerpt was reflected
-    if _RE_SYSTEM_PROMPT_MARKER.search(sanitized):
-        sanitized = re.sub(
-            r"You are Caliper, an expert Universal Sewing Machine Setup and Calibration Agent.*?(?=When you have|$)",
-            "[REDACTED: System Prompt Configuration]",
-            sanitized,
-            flags=re.DOTALL | re.IGNORECASE,
-        )
+    # Redact leaked boundary tags
+    sanitized = _RE_DELIMITER_TAGS.sub("[REDACTED_DELIMITER]", sanitized)
+
+    # Replace verbatim system prompt fragments
+    for frag in _SYSTEM_PROMPT_FRAGMENTS:
+        sanitized = frag.sub("[REDACTED: System Prompt Configuration]", sanitized)
 
     return sanitized
