@@ -201,6 +201,6 @@ Caliper reads directly from `caliper_sewing_machines_hardware_specs.xlsx`, which
 
 ## 📄 Links & Deliverables
 
-- **Current Hosted App:** [https://caliper-atelier.onrender.com/]
+- **Current Hosted App:** https://caliper-atelier.onrender.com/
 - **GitHub Repository:** [https://github.com/aryadevkota/caliper](https://github.com/aryadevkota/caliper)
 
