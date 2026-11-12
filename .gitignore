@@ -48,3 +48,8 @@ logs/
 *.zip
 cis4394-agentic-ai-coursematerials/
 newbrandkit/Logo/Caliper Logo.orig.svg
+
+# Evaluation Harness & Milestone Reports
+MILESTONE_I_REPORT.md
+evals/
+

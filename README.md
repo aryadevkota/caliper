@@ -145,11 +145,8 @@ caliper/
 ├── START_HERE_WINDOWS.bat                       # 1-Click Windows Launcher
 ├── requirements.txt                             # Production Dependencies
 ├── requirements-dev.txt                         # Local Testing Dependencies
-├── MILESTONE_I_REPORT.md                        # Milestone Report & Trace Analysis
 ├── caliper_sewing_machines_hardware_specs.xlsx  # 50 Sewing Machine Specifications
 ├── assets/                                      # App Screenshots & Preview Images
-├── evals/                                       # Evaluation Harness
-│   └── run_passk_eval.py                        # Automated Pass^k (k=3) Runner & Excel Exporter
 ├── caliper/                                     # Core Agent & Sewing Mechanics
 │   ├── __init__.py                              # Public Exports
 │   ├── hardware_db.py                           # 50-Machine Lookup & Fuzzy Matcher
