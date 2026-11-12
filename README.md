@@ -201,8 +201,6 @@ Caliper reads directly from `caliper_sewing_machines_hardware_specs.xlsx`, which
 
 ## 📄 Links & Deliverables
 
-- **Local Web App:** [http://127.0.0.1:7860](http://127.0.0.1:7860)
+- **Current Hosted App:** [https://caliper-atelier.onrender.com/]
 - **GitHub Repository:** [https://github.com/aryadevkota/caliper](https://github.com/aryadevkota/caliper)
-- **Pass^k Evaluation Results:** [`caliper_eval_results.xlsx`](caliper_eval_results.xlsx) (14 cases, 3 trials each, pass@1 vs pass^3)
-- **Milestone Report:** [`MILESTONE_I_REPORT.md`](MILESTONE_I_REPORT.md)
-- **Original Project Proposal:** [`DevkotaArya_ProjectProposal-AgenticAI.pdf`](DevkotaArya_ProjectProposal-AgenticAI.pdf)
+
