@@ -652,17 +652,17 @@ function updateSafety(safety) {
   
   if (severity === "CRITICAL" || severity === "HAZARD") {
     safetyCard.innerHTML = `
-      <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/82.svg" class="safety-badge-icon" alt="Hazard">
+      <img src="/static/atelier_assets/icons/82.svg" class="safety-badge-icon" alt="Hazard">
       <div><strong>HAZARD INTERCEPTED:</strong> ${escapeHtml(safety.message || "Fabric density exceeds needle limits. Needle upgraded to prevent snapping.")}</div>
     `;
   } else if (severity === "WARNING") {
     safetyCard.innerHTML = `
-      <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/82.svg" class="safety-badge-icon" alt="Caution">
+      <img src="/static/atelier_assets/icons/82.svg" class="safety-badge-icon" alt="Caution">
       <div><strong>CAUTION:</strong> ${escapeHtml(safety.message || "Delicate fabric fiber piercing risk.")}</div>
     `;
   } else {
     safetyCard.innerHTML = `
-      <img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/30.svg" class="safety-badge-icon" alt="Safe">
+      <img src="/static/atelier_assets/icons/30.svg" class="safety-badge-icon" alt="Safe">
       <div><strong>Physical Safety Verified:</strong> ${escapeHtml(safety.message || "All parameters within safe operating thresholds.")}</div>
     `;
   }
@@ -680,10 +680,10 @@ function renderTrace(trace) {
           <span>[Step ${step.step}]</span>
           <span>${isAnswer ? "FINAL ANSWER" : (step.tool_name || "REASONING")}</span>
         </div>
-        ${step.thought ? `<div class="step-thought"><img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/94.svg" class="trace-icon" alt="" aria-hidden="true"><strong>Reasoning:</strong> ${escapeHtml(step.thought)}</div>` : ""}
-        ${step.tool_name ? `<div class="step-tool"><img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/1.svg" class="trace-icon" alt="" aria-hidden="true"><code>${step.tool_name}(${JSON.stringify(step.tool_args || {})})</code></div>` : ""}
-        ${step.observation ? `<div class="step-obs"><img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/15.svg" class="trace-icon" alt="" aria-hidden="true"><strong>Observation:</strong>\n${escapeHtml(step.observation)}</div>` : ""}
-        ${step.answer ? `<div class="step-answer"><img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/23.svg" class="trace-icon" alt="" aria-hidden="true"><strong>Answer:</strong> ${escapeHtml(step.answer.slice(0, 160))}...</div>` : ""}
+        ${step.thought ? `<div class="step-thought"><img src="/static/atelier_assets/icons/94.svg" class="trace-icon" alt="" aria-hidden="true"><strong>Reasoning:</strong> ${escapeHtml(step.thought)}</div>` : ""}
+        ${step.tool_name ? `<div class="step-tool"><img src="/static/atelier_assets/icons/1.svg" class="trace-icon" alt="" aria-hidden="true"><code>${step.tool_name}(${JSON.stringify(step.tool_args || {})})</code></div>` : ""}
+        ${step.observation ? `<div class="step-obs"><img src="/static/atelier_assets/icons/15.svg" class="trace-icon" alt="" aria-hidden="true"><strong>Observation:</strong>\n${escapeHtml(step.observation)}</div>` : ""}
+        ${step.answer ? `<div class="step-answer"><img src="/static/atelier_assets/icons/23.svg" class="trace-icon" alt="" aria-hidden="true"><strong>Answer:</strong> ${escapeHtml(step.answer.slice(0, 160))}...</div>` : ""}
       </div>
     `;
   }).join("");
@@ -699,7 +699,7 @@ function appendMessage(sender, text) {
   if (sender === "user") {
     meta.textContent = "You";
   } else {
-    meta.innerHTML = `<img src="/newbrandkit/AccentsGraphicsElements/AssetsSVGs/81.svg" class="bubble-notion-icon" style="width:14px; height:14px; object-fit:contain; vertical-align:middle; margin-right:4px;" alt=""> Caliper Atelier Assistant`;
+    meta.innerHTML = `<img src="/static/atelier_assets/icons/81.svg" class="bubble-notion-icon" style="width:14px; height:14px; object-fit:contain; vertical-align:middle; margin-right:4px;" alt=""> Caliper Atelier Assistant`;
   }
 
   const content = document.createElement("div");

@@ -8,9 +8,7 @@
    -------------------------------------------------------------------------- */
 @font-face {
   font-family: 'Oslo Stitch';
-  src: url('/newbrandkit/Fonts/Title/Oslo Stitch DEMO.otf') format('opentype'),
-       url('/static/fonts/Title/Oslo Stitch DEMO.otf') format('opentype'),
-       url('../fonts/Title/Oslo Stitch DEMO.otf') format('opentype');
+  src: url('/static/atelier_assets/fonts/Title/Oslo Stitch DEMO.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -18,9 +16,7 @@
 
 @font-face {
   font-family: 'Autography';
-  src: url('/newbrandkit/Fonts/Subtitle/Autography.otf') format('opentype'),
-       url('/static/fonts/Subtitle/Autography.otf') format('opentype'),
-       url('../fonts/Subtitle/Autography.otf') format('opentype');
+  src: url('/static/atelier_assets/fonts/Subtitle/Autography.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -28,9 +24,7 @@
 
 @font-face {
   font-family: 'Photography';
-  src: url('/newbrandkit/Fonts/Heading/Photography.otf') format('opentype'),
-       url('/static/fonts/Heading/Photography.otf') format('opentype'),
-       url('../fonts/Heading/Photography.otf') format('opentype');
+  src: url('/static/atelier_assets/fonts/Heading/Photography.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -38,12 +32,8 @@
 
 @font-face {
   font-family: 'Biro Script';
-  src: url('/newbrandkit/Fonts/Subheading/Biro_Script_reduced.otf') format('opentype'),
-       url('/newbrandkit/Fonts/Subheading/Biro_Script_reduced.ttf') format('truetype'),
-       url('/static/fonts/Subheading/Biro_Script_reduced.otf') format('opentype'),
-       url('/static/fonts/Subheading/Biro_Script_reduced.ttf') format('truetype'),
-       url('../fonts/Subheading/Biro_Script_reduced.otf') format('opentype'),
-       url('../fonts/Subheading/Biro_Script_reduced.ttf') format('truetype');
+  src: url('/static/atelier_assets/fonts/Subheading/Biro_Script_reduced.otf') format('opentype'),
+       url('/static/atelier_assets/fonts/Subheading/Biro_Script_reduced.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -51,9 +41,7 @@
 
 @font-face {
   font-family: 'Pastel Crayon';
-  src: url('/newbrandkit/Fonts/Section Header/pastel crayon.ttf') format('truetype'),
-       url('/static/fonts/Section Header/pastel crayon.ttf') format('truetype'),
-       url('../fonts/Section Header/pastel crayon.ttf') format('truetype');
+  src: url('/static/atelier_assets/fonts/Section Header/pastel crayon.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -61,9 +49,7 @@
 
 @font-face {
   font-family: 'Jupiteroid';
-  src: url('/newbrandkit/Fonts/Body/Jupiteroid-Regular.ttf') format('truetype'),
-       url('/static/fonts/Body/Jupiteroid-Regular.ttf') format('truetype'),
-       url('../fonts/Body/Jupiteroid-Regular.ttf') format('truetype');
+  src: url('/static/atelier_assets/fonts/Body/Jupiteroid-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -154,28 +140,28 @@
   /* ========================================================================
      Asset Path Variables (@asset-curator)
      ======================================================================== */
-  --asset-logo: url('/newbrandkit/Logo/Caliper Logo.svg');
-  --asset-swatch-2: url('/newbrandkit/AccentsGraphicsElements/AssetsSVGs/2.svg');
-  --asset-swatch-3: url('/newbrandkit/AccentsGraphicsElements/AssetsSVGs/3.svg');
-  --asset-shears: url('/newbrandkit/AccentsGraphicsElements/AssetsSVGs/95.svg');
-  --asset-clip-binder: url('/newbrandkit/AccentsGraphicsElements/AssetsSVGs/6.svg');
-  --asset-clip-teal: url('/newbrandkit/AccentsGraphicsElements/AssetsSVGs/87.svg');
-  --asset-pin-pink: url('/newbrandkit/AccentsGraphicsElements/AssetsSVGs/54.svg');
-  --asset-pin-blue: url('/newbrandkit/AccentsGraphicsElements/AssetsSVGs/51.svg');
-  --asset-tape-kraft: url('/newbrandkit/AccentsGraphicsElements/AssetsSVGs/84.svg');
-  --asset-tape-yellow: url('/newbrandkit/AccentsGraphicsElements/AssetsSVGs/85.svg');
-  --asset-star-gingham: url('/newbrandkit/AccentsGraphicsElements/AssetsSVGs/23.svg');
-  --asset-denim-twill: url('/newbrandkit/AccentsGraphicsElements/AssetsSVGs/74.svg');
-  --asset-fabric-bolt: url('/newbrandkit/AccentsGraphicsElements/AssetsSVGs/24.svg');
-  --asset-silk-chiffon: url('/newbrandkit/AccentsGraphicsElements/AssetsSVGs/71.svg');
-  --asset-wool-flannel: url('/newbrandkit/AccentsGraphicsElements/AssetsSVGs/66.svg');
-  --asset-bobbin-winder: url('/newbrandkit/AccentsGraphicsElements/AssetsSVGs/93.svg');
-  --asset-stitch-zigzag: url('/newbrandkit/AccentsGraphicsElements/AssetsSVGs/5.svg');
-  --asset-needle-shank: url('/newbrandkit/AccentsGraphicsElements/AssetsSVGs/81.svg');
-  --asset-presser-foot: url('/newbrandkit/AccentsGraphicsElements/AssetsSVGs/79.svg');
-  --asset-seal-safe: url('/newbrandkit/AccentsGraphicsElements/AssetsSVGs/30.svg');
-  --asset-badge-hazard: url('/newbrandkit/AccentsGraphicsElements/AssetsSVGs/82.svg');
-  --asset-button-cta: url('/newbrandkit/AccentsGraphicsElements/AssetsSVGs/17.svg');
+  --asset-logo: url('/static/atelier_assets/brand/Caliper Logo.svg');
+  --asset-swatch-2: url('/static/atelier_assets/icons/2.svg');
+  --asset-swatch-3: url('/static/atelier_assets/icons/3.svg');
+  --asset-shears: url('/static/atelier_assets/icons/95.svg');
+  --asset-clip-binder: url('/static/atelier_assets/icons/6.svg');
+  --asset-clip-teal: url('/static/atelier_assets/icons/87.svg');
+  --asset-pin-pink: url('/static/atelier_assets/icons/54.svg');
+  --asset-pin-blue: url('/static/atelier_assets/icons/51.svg');
+  --asset-tape-kraft: url('/static/atelier_assets/icons/84.svg');
+  --asset-tape-yellow: url('/static/atelier_assets/icons/85.svg');
+  --asset-star-gingham: url('/static/atelier_assets/icons/23.svg');
+  --asset-denim-twill: url('/static/atelier_assets/icons/74.svg');
+  --asset-fabric-bolt: url('/static/atelier_assets/icons/24.svg');
+  --asset-silk-chiffon: url('/static/atelier_assets/icons/71.svg');
+  --asset-wool-flannel: url('/static/atelier_assets/icons/66.svg');
+  --asset-bobbin-winder: url('/static/atelier_assets/icons/93.svg');
+  --asset-stitch-zigzag: url('/static/atelier_assets/icons/5.svg');
+  --asset-needle-shank: url('/static/atelier_assets/icons/81.svg');
+  --asset-presser-foot: url('/static/atelier_assets/icons/79.svg');
+  --asset-seal-safe: url('/static/atelier_assets/icons/30.svg');
+  --asset-badge-hazard: url('/static/atelier_assets/icons/82.svg');
+  --asset-button-cta: url('/static/atelier_assets/icons/17.svg');
 }
 
 /* --------------------------------------------------------------------------
@@ -190,7 +176,7 @@
 /* Master Page Background: Caliper First Layer Brand Background SVG with #FFFFFF Fallback */
 body {
   background-color: #FFFFFF !important;
-  background-image: url('/newbrandkit/WebsiteFirstLayerBackground.svg');
+  background-image: url('/static/atelier_assets/brand/WebsiteFirstLayerBackground.svg');
   background-repeat: no-repeat;
   background-position: center top;
   background-size: cover;
@@ -403,7 +389,7 @@ body::before {
   gap: 40px;
   align-items: center;
   background-color: #FFFFFF;
-  background-image: url('/Users/rdevkota/Downloads/SewingMachineCatalog/Background.jpg');
+  background-image: url('/static/atelier_assets/catalog/Background.jpg');
   background-size: cover;
   background-repeat: repeat;
   background-position: center;
@@ -838,7 +824,7 @@ body::before {
    9. Tactile Wooden Workbench Slab & Atelier Consultation Swatch Grid
    -------------------------------------------------------------------------- */
 .atelier-wood-slab {
-  background-image: url('/static/images/Atalier.svg');
+  background-image: url('/static/atelier_assets/brand/Atalier.svg');
   background-size: cover;
   background-position: center;
   border-radius: 18px;

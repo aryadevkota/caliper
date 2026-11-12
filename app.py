@@ -31,33 +31,13 @@ load_machines()
 
 app = FastAPI(title="Caliper: Sewing Machine Calibration Companion")
 
-# Mount static and assets directories
+# Mount static directory
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 ASSETS_DIR = os.path.join(BASE_DIR, "assets")
 TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
-NEWBRANDKIT_DIR = os.path.join(BASE_DIR, "newbrandkit")
 
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
-app.mount("/newbrandkit", StaticFiles(directory=NEWBRANDKIT_DIR), name="newbrandkit")
-
-# Mount local absolute asset paths requested for exact local reference with repo fallbacks
-DOWNLOADS_SVGS_DIR = "/Users/rdevkota/Downloads/AssetsSVGs (2)"
-if not os.path.exists(DOWNLOADS_SVGS_DIR):
-    DOWNLOADS_SVGS_DIR = os.path.join(NEWBRANDKIT_DIR, "AssetsSVGs (2)")
-if os.path.exists(DOWNLOADS_SVGS_DIR):
-    app.mount("/Users/rdevkota/Downloads/AssetsSVGs (2)", StaticFiles(directory=DOWNLOADS_SVGS_DIR), name="downloads_svgs")
-    app.mount("/downloads/AssetsSVGs (2)", StaticFiles(directory=DOWNLOADS_SVGS_DIR), name="downloads_svgs_alias")
-
-SEWING_CATALOG_DIR = "/Users/rdevkota/Downloads/SewingMachineCatalog"
-if not os.path.exists(SEWING_CATALOG_DIR):
-    SEWING_CATALOG_DIR = os.path.join(STATIC_DIR, "images", "SewingMachineCatalog")
-if os.path.exists(SEWING_CATALOG_DIR):
-    app.mount("/Users/rdevkota/Downloads/SewingMachineCatalog", StaticFiles(directory=SEWING_CATALOG_DIR), name="sewing_catalog")
-    app.mount("/downloads/SewingMachineCatalog", StaticFiles(directory=SEWING_CATALOG_DIR), name="sewing_catalog_alias")
-
-app.mount("/Users/rdevkota/Desktop/Caliper_AgenticAI-FinalTermProject/newbrandkit", StaticFiles(directory=NEWBRANDKIT_DIR), name="desktop_brandkit")
-app.mount("/Users/rdevkota/Desktop/Caliper_AgenticAI-FinalTermProject/static", StaticFiles(directory=STATIC_DIR), name="desktop_static")
 
 templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
