@@ -419,31 +419,7 @@ async function init() {
 
   chatForm.addEventListener("submit", handleSubmit);
 
-  // Collapsible Sample Prompts Drawer
-  const samplePromptsToggle = document.getElementById("samplePromptsToggle");
-  const samplePromptsGrid = document.getElementById("samplePromptsGrid");
-  const promptsToggleHint = document.getElementById("promptsToggleHint");
-
-  if (samplePromptsToggle && samplePromptsGrid) {
-    const togglePrompts = () => {
-      rotaryAudio.playSwitch();
-      const isCollapsed = samplePromptsGrid.classList.toggle("collapsed");
-      samplePromptsToggle.setAttribute("aria-expanded", !isCollapsed);
-      if (promptsToggleHint) {
-        promptsToggleHint.textContent = isCollapsed ? "Expand ▸" : "Collapse ▾";
-      }
-    };
-
-    samplePromptsToggle.addEventListener("click", togglePrompts);
-    samplePromptsToggle.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        togglePrompts();
-      }
-    });
-  }
-
-  // Expandable Chat View Toggle
+  // Expandable Chat View Toggle (collapses swatches & expands chat stream)
   const btnExpandChat = document.getElementById("btnExpandChat");
   const chatCard = document.querySelector(".chat-atelier-card");
   const expandChatText = document.getElementById("expandChatText");
@@ -452,9 +428,11 @@ async function init() {
     btnExpandChat.addEventListener("click", () => {
       rotaryAudio.playSwitch();
       const isExpanded = chatCard.classList.toggle("expanded");
-      btnExpandChat.setAttribute("aria-expanded", isExpanded);
+      btnExpandChat.setAttribute("aria-expanded", isExpanded ? "true" : "false");
+      btnExpandChat.setAttribute("aria-label", isExpanded ? "Show Sample Prompts" : "Expand Chat View");
+      btnExpandChat.title = isExpanded ? "Show sample prompts" : "Expand chat view";
       if (expandChatText) {
-        expandChatText.textContent = isExpanded ? "Collapse View" : "Expand View";
+        expandChatText.textContent = isExpanded ? "Show Samples" : "Expand View";
       }
     });
   }
