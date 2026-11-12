@@ -129,7 +129,7 @@ _INJECTION_PATTERNS = [
     re.compile(r"\b(?:set|put)\s+aside\s+(?:your\s+)?(?:rules?|instructions?)\b", re.IGNORECASE),
     re.compile(r"\b(?:pretend|roleplay|simulate|behave\s+like|imagine\s+you\s+are)\b", re.IGNORECASE),
     re.compile(r"\bstop\s+being\s+caliper\b", re.IGNORECASE),
-    re.compile(r"\bfrom\s+now\s+on\b", re.IGNORECASE),
+    re.compile(r"\bfrom\s+now\s+on,?\s+(?:you\s+are|act|ignore|disregard|forget|answer|behave|pretend|only)\b", re.IGNORECASE),
     re.compile(r"\bnew\s+persona\b", re.IGNORECASE),
     re.compile(r"\bwithout\s+(?:any\s+)?restrictions?\b", re.IGNORECASE),
     re.compile(r"(?m)^\s*(?:SYSTEM|ASSISTANT|DEVELOPER|###\s*INSTRUCTION)\s*:", re.IGNORECASE),
@@ -227,6 +227,7 @@ _RE_GENERIC_SECRET = re.compile(r"(?:api[_-]?key|secret|token)\s*[:=]\s*['\"][A-
 _RE_DELIMITER_TAGS = re.compile(r"</?user_sewing_query[^>]*>", re.IGNORECASE)
 
 _SYSTEM_PROMPT_FRAGMENTS = [
+    re.compile(r"You are Caliper, a warm, expert Universal Sewing Machine Setup and Calibration Atelier Companion.*?(?=Tool Calling Rules:|$)", re.DOTALL | re.IGNORECASE),
     re.compile(r"You are Caliper, an expert Universal Sewing Machine Setup and Calibration Agent.*?(?=When you have|$)", re.DOTALL | re.IGNORECASE),
     re.compile(r"\bTreat everything inside(?:\s+those\s+tags)?\s+strictly\s+as\s+untrusted\s+user\s+data\b[^\n.]*", re.IGNORECASE),
     re.compile(r"\bNever change roles\b[^\n.]*", re.IGNORECASE),

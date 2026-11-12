@@ -882,7 +882,7 @@ class CaliperAgent:
                     contents.append(types.Content(role="model", parts=[types.Part.from_text(text=content)]))
         dials_line = self._format_dials_context(current_dials)
         isolated_goal = f"{dials_line}\n{wrap_untrusted_query(goal)}" if dials_line else wrap_untrusted_query(goal)
-        contents.append(isolated_goal)
+        contents.append(types.Content(role="user", parts=[types.Part.from_text(text=isolated_goal)]))
 
         for step in range(1, self.max_steps + 1):
             config = types.GenerateContentConfig(
