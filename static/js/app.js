@@ -413,6 +413,7 @@ async function init() {
   // Event Listeners
   machineSelect.addEventListener("change", (e) => {
     rotaryAudio.playSwitch();
+    chatHistory = [];
     selectMachine(e.target.value);
   });
 
@@ -611,11 +612,13 @@ async function handleSubmit(e) {
     const finalAnswer = data.final_answer || "Calibration complete.";
     appendMessage("assistant", finalAnswer);
 
-    // Track multi-turn conversation history (last 6 messages)
-    chatHistory.push({ role: "user", content: text });
-    chatHistory.push({ role: "assistant", content: finalAnswer });
-    if (chatHistory.length > 6) {
-      chatHistory = chatHistory.slice(-6);
+    // Track multi-turn conversation history (last 6 messages) unless blocked by guardrail
+    if (data.stopped_reason !== "blocked_by_guardrail") {
+      chatHistory.push({ role: "user", content: text });
+      chatHistory.push({ role: "assistant", content: finalAnswer });
+      if (chatHistory.length > 6) {
+        chatHistory = chatHistory.slice(-6);
+      }
     }
 
     // Update Dials & Knobs with smooth physical spin (unless clarifying question)

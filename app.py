@@ -115,8 +115,17 @@ async def run_calibration(req: CalibrateRequest):
     specs = get_machine(req.machine_id or "brother_sm3701") or {}
     machine_name = f"{specs.get('brand', '')} {specs.get('model_name', '')}".strip()
 
-    # Pre-flight input evaluation on raw query BEFORE appending machine context
+    # Pre-flight input evaluation on raw query and history user turns BEFORE appending machine context
     guardrail_decision = evaluate_input(query)
+    if guardrail_decision.allowed and req.history:
+        for turn in req.history:
+            if isinstance(turn, dict) and turn.get("role") == "user":
+                h_content = (turn.get("content") or "").strip()
+                if h_content:
+                    h_dec = evaluate_input(h_content)
+                    if not h_dec.allowed:
+                        guardrail_decision = h_dec
+                        break
     if not guardrail_decision.allowed:
         dials = {
             "tension": specs.get("tension_default", 4.0),

@@ -122,7 +122,7 @@ def extract_dial_settings(text_or_trace: Union[str, List[Dict[str, Any]], AgentR
 
         # Tension Dial
         if dials["tension"] is None:
-            t_match = re.search(r"(?:Upper Tension Dial|Tension Dial Setting|Tension Dial)\s*[*_]*\s*:\s*([0-9]+(?:\.[0-9]+)?)", obs, re.IGNORECASE)
+            t_match = re.search(r"(?:Upper Tension Dial|Tension Dial Setting|Tension Dial)\s*[*_]*\s*:\s*[*_]*\s*([0-9]+(?:\.[0-9]+)?)", obs, re.IGNORECASE)
             if t_match:
                 try:
                     dials["tension"] = float(t_match.group(1))
@@ -131,7 +131,7 @@ def extract_dial_settings(text_or_trace: Union[str, List[Dict[str, Any]], AgentR
 
         # Stitch Length
         if dials["stitch_length"] is None:
-            l_match = re.search(r"(?:Stitch Length)\s*[*_]*\s*:\s*([0-9]+(?:\.[0-9]+)?)\s*(?:mm)?", obs, re.IGNORECASE)
+            l_match = re.search(r"(?:Stitch Length)\s*[*_]*\s*:\s*[*_]*\s*([0-9]+(?:\.[0-9]+)?)\s*(?:mm)?", obs, re.IGNORECASE)
             if l_match:
                 try:
                     dials["stitch_length"] = float(l_match.group(1))
@@ -140,7 +140,7 @@ def extract_dial_settings(text_or_trace: Union[str, List[Dict[str, Any]], AgentR
 
         # Stitch Width
         if dials["stitch_width"] is None:
-            w_match = re.search(r"(?:Stitch Width)\s*[*_]*\s*:\s*([0-9]+(?:\.[0-9]+)?)\s*(?:mm)?", obs, re.IGNORECASE)
+            w_match = re.search(r"(?:Stitch Width)\s*[*_]*\s*:\s*[*_]*\s*([0-9]+(?:\.[0-9]+)?)\s*(?:mm)?", obs, re.IGNORECASE)
             if w_match:
                 try:
                     dials["stitch_width"] = float(w_match.group(1))
@@ -149,25 +149,25 @@ def extract_dial_settings(text_or_trace: Union[str, List[Dict[str, Any]], AgentR
 
         # Stitch Type
         if dials["stitch_type"] is None:
-            st_match = re.search(r"(?:Stitch Type|Stitch Selection)\s*[*_]*\s*:\s*([^\n\r,;|]+)", obs, re.IGNORECASE)
+            st_match = re.search(r"(?:Stitch Type|Stitch Selection)\s*[*_]*\s*:\s*[*_]*\s*([^\n\r,;|]+)", obs, re.IGNORECASE)
             if st_match:
-                val = st_match.group(1).strip()
+                val = st_match.group(1).split("\n")[0].strip("*_ \t").rstrip(" -:")
                 if val and not any(k in val.lower() for k in ["range", "min", "max", "count"]):
                     dials["stitch_type"] = val
 
         # Needle Recommendation
         if dials["needle"] is None:
-            n_match = re.search(r"(?:Needle Recommendation|Recommended Safe Needle|Recommended Needle)\s*[*_]*\s*:\s*([^\n\r(;,]+)", obs, re.IGNORECASE)
+            n_match = re.search(r"(?:Needle Recommendation|Recommended Safe Needle|Recommended Needle|Needle Standard|Needle)\s*[*_]*\s*:\s*[*_]*\s*([^\n\r(;,]+)", obs, re.IGNORECASE)
             if n_match:
-                val = n_match.group(1).strip().rstrip(" -:")
+                val = n_match.group(1).split("\n")[0].split("\\n")[0].strip("*_ \t").rstrip(" -:")
                 if val and not any(k in val.lower() for k in ["range", "system", "eu"]):
                     dials["needle"] = val
 
         # Presser Foot
         if dials["foot"] is None:
-            f_match = re.search(r"(?:Presser Foot|Recommended Foot)\s*[*_]*\s*:\s*([^\n\r(;,]+)", obs, re.IGNORECASE)
+            f_match = re.search(r"(?:Presser Foot|Recommended Foot)\s*[*_]*\s*:\s*[*_]*\s*([^\n\r(;,]+)", obs, re.IGNORECASE)
             if f_match:
-                val = f_match.group(1).strip().rstrip(" -:")
+                val = f_match.group(1).split("\n")[0].split("\\n")[0].strip("*_ \t").rstrip(" -:")
                 if val and not any(k in val.lower() for k in ["system", "pressure", "was not", "lift"]):
                     dials["foot"] = val
 
@@ -175,7 +175,7 @@ def extract_dial_settings(text_or_trace: Union[str, List[Dict[str, Any]], AgentR
     all_content = final_text + "\n" + "\n".join((s.get("observation") or "") + "\n" + (s.get("answer") or "") for s in trace_steps)
 
     if dials["tension"] is None:
-        for m in re.finditer(r"(?:Upper Tension Dial|Tension Dial Setting|Tension Dial|Upper Tension|set tension dial to)\s*[*_]*\s*[:to ]*\s*([0-9]+(?:\.[0-9]+)?)", all_content, re.IGNORECASE):
+        for m in re.finditer(r"(?:Upper Tension Dial|Tension Dial Setting|Tension Dial|Upper Tension|set tension dial to)\s*[*_]*\s*(?::|to)?\s*[*_]*\s*([0-9]+(?:\.[0-9]+)?)", all_content, re.IGNORECASE):
             try:
                 dials["tension"] = float(m.group(1))
                 break
@@ -183,7 +183,7 @@ def extract_dial_settings(text_or_trace: Union[str, List[Dict[str, Any]], AgentR
                 pass
 
     if dials["stitch_length"] is None:
-        l_match = re.search(r"(?:Stitch Length)\s*[*_]*\s*:\s*([0-9]+(?:\.[0-9]+)?)\s*(?:mm)?", all_content, re.IGNORECASE)
+        l_match = re.search(r"(?:Stitch Length)\s*[*_]*\s*:\s*[*_]*\s*([0-9]+(?:\.[0-9]+)?)\s*(?:mm)?", all_content, re.IGNORECASE)
         if l_match:
             try:
                 dials["stitch_length"] = float(l_match.group(1))
@@ -191,7 +191,7 @@ def extract_dial_settings(text_or_trace: Union[str, List[Dict[str, Any]], AgentR
                 pass
 
     if dials["stitch_width"] is None:
-        w_match = re.search(r"(?:Stitch Width)\s*[*_]*\s*:\s*([0-9]+(?:\.[0-9]+)?)\s*(?:mm)?", all_content, re.IGNORECASE)
+        w_match = re.search(r"(?:Stitch Width)\s*[*_]*\s*:\s*[*_]*\s*([0-9]+(?:\.[0-9]+)?)\s*(?:mm)?", all_content, re.IGNORECASE)
         if w_match:
             try:
                 dials["stitch_width"] = float(w_match.group(1))
@@ -199,23 +199,23 @@ def extract_dial_settings(text_or_trace: Union[str, List[Dict[str, Any]], AgentR
                 pass
 
     if dials["stitch_type"] is None:
-        st_match = re.search(r"(?:Stitch Type|Stitch Selection)\s*[*_]*\s*:\s*([^\n\r,;|]+)", all_content, re.IGNORECASE)
+        st_match = re.search(r"(?:Stitch Type|Stitch Selection)\s*[*_]*\s*:\s*[*_]*\s*([^\n\r,;|]+)", all_content, re.IGNORECASE)
         if st_match:
-            val = st_match.group(1).strip()
+            val = st_match.group(1).split("\n")[0].strip("*_ \t").rstrip(" -:")
             if val and not any(k in val.lower() for k in ["range", "min", "max", "count"]):
                 dials["stitch_type"] = val
 
     if dials["needle"] is None:
-        n_match = re.search(r"(?:Needle Recommendation|Recommended Safe Needle|Recommended Needle|Needle Standard|Needle)\s*[*_]*\s*:\s*([^\n\r(;,]+)", all_content, re.IGNORECASE)
+        n_match = re.search(r"(?:Needle Recommendation|Recommended Safe Needle|Recommended Needle|Needle Standard|Needle)\s*[*_]*\s*:\s*[*_]*\s*([^\n\r(;,]+)", all_content, re.IGNORECASE)
         if n_match:
-            val = n_match.group(1).split("\n")[0].split("\\n")[0].strip().rstrip(" -:")
+            val = n_match.group(1).split("\n")[0].split("\\n")[0].strip("*_ \t").rstrip(" -:")
             if val and not any(k in val.lower() for k in ["range", "system", "eu"]):
                 dials["needle"] = val
 
     if dials["foot"] is None:
-        f_match = re.search(r"(?:Presser Foot|Recommended Foot)\s*[*_]*\s*:\s*([^\n\r(;,]+)", all_content, re.IGNORECASE)
+        f_match = re.search(r"(?:Presser Foot|Recommended Foot)\s*[*_]*\s*:\s*[*_]*\s*([^\n\r(;,]+)", all_content, re.IGNORECASE)
         if f_match:
-            val = f_match.group(1).split("\n")[0].split("\\n")[0].strip().rstrip(" -:")
+            val = f_match.group(1).split("\n")[0].split("\\n")[0].strip("*_ \t").rstrip(" -:")
             if val and not any(k in val.lower() for k in ["system", "pressure", "was not", "lift"]):
                 dials["foot"] = val
 
@@ -245,26 +245,87 @@ class CaliperAgent:
         self.max_steps = min(max(1, max_steps), MAX_STEPS)
         self.api_key = api_key.strip() if api_key and api_key.strip() else None
 
+    def _format_dials_context(self, current_dials: Optional[Dict[str, Any]]) -> str:
+        """Formats a concise read-only dial context string for LLM execution."""
+        if not current_dials:
+            return ""
+        tension = current_dials.get("tension")
+        sl = current_dials.get("length") if current_dials.get("length") is not None else current_dials.get("stitch_length")
+        sw = current_dials.get("width") if current_dials.get("width") is not None else current_dials.get("stitch_width")
+        parts = []
+        if tension is not None:
+            parts.append(f"tension={tension}")
+        if sl is not None:
+            parts.append(f"stitch_length={sl}mm")
+        if sw is not None:
+            parts.append(f"stitch_width={sw}mm")
+        if not parts:
+            return ""
+        return f"[Current UI Dials: {', '.join(parts)}]"
+
     def _is_underspecified_query(
         self, query: str, history: Optional[List[Dict[str, str]]] = None
     ) -> bool:
-        """Determines if a sewing defect query lacks sufficient fabric, needle, or dial
+        """Determines if a sewing defect or setup query lacks sufficient fabric, needle, or dial
         context to provide an accurate physical calibration without guessing.
 
         Constraint: Presets and queries containing fabric, needle, foot, seam, or specific
         mechanical symptoms (e.g. 'bird-nesting and looping on underside') are NOT underspecified.
         """
-        prior_texts = [m.get("content", "") for m in (history or []) if isinstance(m, dict)]
-        combined_text = " ".join(prior_texts + [query]).lower()
+        # Scoped multi-turn history merging: Only consider history if the preceding assistant
+        # turn was a clarifying question (or part of the same active thread)
+        merge_history = False
+        if history:
+            last_assistant_msg = ""
+            for turn in reversed(history):
+                if turn.get("role") == "assistant":
+                    last_assistant_msg = turn.get("content", "")
+                    break
+            clarifying_indicators = [
+                "could you share a few quick details",
+                "fabric type & project",
+                "presser foot & needle",
+                "current dial settings",
+                "what fabric are you sewing",
+                "to determine the exact tension",
+                "without guessing",
+            ]
+            if any(ind in last_assistant_msg.lower() for ind in clarifying_indicators):
+                merge_history = True
+
+        if merge_history:
+            prior_texts = [m.get("content", "") for m in (history or []) if isinstance(m, dict)]
+            combined_text = " ".join(prior_texts + [query]).lower()
+        else:
+            combined_text = query.lower()
 
         defect_terms = [
             "puckering", "pucker", "puckered", "tunneling",
             "skipped stitches", "skipping stitches", "skips stitches", "skipping", "missed stitches",
             "broken needle", "needle breakage", "needle breaking", "snapped needle",
-            "jammed", "thread bunching", "bunching"
+            "jammed", "jamming", "thread bunching", "bunching",
+            "thread breaking", "thread snapping",
+            "weird stitches", "uneven stitches", "messy stitches"
         ]
-        has_defect_term = any(term in combined_text for term in defect_terms)
-        if not has_defect_term:
+        has_defect_term = any(term in combined_text for term in defect_terms) or bool(
+            re.search(r"\bthread\b.*\b(?:break|snap|shred)", combined_text)
+        )
+
+        vague_setup_patterns = [
+            r"\btension\b",
+            r"\bset\s*up\b",
+            r"\bsetup\b",
+            r"\bcalibrate\b",
+            r"\bcalibrat(?:ing|ion)\b",
+            r"\bsettings?\b",
+            r"\bhow\s+to\s+use\b",
+            r"\bhow\s+do\s+i\s+use\b",
+            r"\bconfigure\b",
+            r"\btune\b",
+        ]
+        is_vague_setup = any(re.search(pat, combined_text) for pat in vague_setup_patterns)
+
+        if not has_defect_term and not is_vague_setup:
             return False
 
         specific_symptoms = [
@@ -308,17 +369,34 @@ class CaliperAgent:
         return True
 
     def _build_clarifying_question(self, query: str) -> str:
-        issue_desc = "that stitch defect"
         q_lower = query.lower()
         if "pucker" in q_lower:
             issue_desc = "the puckering on your seam"
+            action_phrase = f"resolve {issue_desc}"
         elif "skip" in q_lower:
             issue_desc = "the skipped stitches"
+            action_phrase = f"resolve {issue_desc}"
         elif "break" in q_lower or "snap" in q_lower:
-            issue_desc = "the needle breakage"
+            issue_desc = "the needle breakage" if "needle" in q_lower else "the thread breakage"
+            action_phrase = f"resolve {issue_desc}"
+        elif "jam" in q_lower or "bunch" in q_lower:
+            issue_desc = "the thread jamming"
+            action_phrase = f"resolve {issue_desc}"
+        elif any(w in q_lower for w in ["weird", "uneven", "messy"]):
+            issue_desc = "the uneven stitches"
+            action_phrase = f"resolve {issue_desc}"
+        elif "tension" in q_lower:
+            issue_desc = "the optimal tension settings"
+            action_phrase = f"determine {issue_desc}"
+        elif any(k in q_lower for k in ["setup", "set up", "calibrate", "calibration", "setting"]):
+            issue_desc = "the optimal machine setup"
+            action_phrase = f"determine {issue_desc}"
+        else:
+            issue_desc = "your stitch setup"
+            action_phrase = f"determine {issue_desc}"
 
         return (
-            f"I'd love to help you resolve {issue_desc} and calibrate your machine for smooth stitches! "
+            f"I'd love to help you {action_phrase} and calibrate your machine for smooth stitches! "
             f"To determine the exact tension, needle, and dial settings without guessing, could you share a few quick details?\n\n"
             f"1. **Fabric type & project:** What fabric are you sewing (e.g., silk chiffon, cotton poplin, stretch jersey, denim) and what kind of seam or garment?\n"
             f"2. **Presser foot & needle:** Which needle size/type (e.g., 70/10 Microtex, 80/12 Universal, Ballpoint) and presser foot are currently installed?\n"
@@ -364,6 +442,29 @@ class CaliperAgent:
                 dials=extract_dial_settings(""),
             )
 
+        # Multi-Turn History Guardrail validation: verify every user turn in history
+        if history:
+            for turn in history:
+                if isinstance(turn, dict) and turn.get("role") == "user":
+                    hist_content = (turn.get("content") or "").strip()
+                    if hist_content:
+                        hist_decision = evaluate_input(hist_content)
+                        if not hist_decision.allowed:
+                            return AgentResult(
+                                final_answer=hist_decision.refusal_message,
+                                trace=[{
+                                    "step": 1,
+                                    "thought": f"Guardrail intercepted {hist_decision.category} in conversation history: {hist_decision.reason}",
+                                    "tool_name": "guardrail_check",
+                                    "tool_args": {"category": hist_decision.category, "source": "history"},
+                                    "observation": "BLOCKED",
+                                    "answer": hist_decision.refusal_message,
+                                }],
+                                stopped_reason="blocked_by_guardrail",
+                                machine_context={},
+                                dials=extract_dial_settings(""),
+                            )
+
         # Clarifying Question Gate for underspecified defect queries
         if self._is_underspecified_query(q, history):
             clarifying_answer = self._build_clarifying_question(q)
@@ -382,7 +483,7 @@ class CaliperAgent:
                 final_answer=clarifying_answer,
                 trace=[{
                     "step": 1,
-                    "thought": "Query describes a stitch defect without fabric, needle, or dial context. Requesting clarification before calculating adjustments.",
+                    "thought": "Query describes a defect or setup without fabric, needle, or dial context. Requesting clarification before calculating adjustments.",
                     "tool_name": None,
                     "tool_args": None,
                     "observation": None,
@@ -627,7 +728,8 @@ class CaliperAgent:
         model_name = self.model or DEFAULT_OLLAMA_MODEL
 
         trace: List[Dict[str, Any]] = []
-        isolated_goal = wrap_untrusted_query(goal)
+        dials_line = self._format_dials_context(current_dials)
+        isolated_goal = f"{dials_line}\n{wrap_untrusted_query(goal)}" if dials_line else wrap_untrusted_query(goal)
         messages: List[Dict[str, Any]] = [
             {"role": "system", "content": AGENT_SYSTEM_PROMPT},
         ]
@@ -778,7 +880,9 @@ class CaliperAgent:
                     contents.append(types.Content(role="user", parts=[types.Part.from_text(text=wrap_untrusted_query(content))]))
                 elif role == "assistant":
                     contents.append(types.Content(role="model", parts=[types.Part.from_text(text=content)]))
-        contents.append(wrap_untrusted_query(goal))
+        dials_line = self._format_dials_context(current_dials)
+        isolated_goal = f"{dials_line}\n{wrap_untrusted_query(goal)}" if dials_line else wrap_untrusted_query(goal)
+        contents.append(isolated_goal)
 
         for step in range(1, self.max_steps + 1):
             config = types.GenerateContentConfig(
@@ -891,9 +995,52 @@ class CaliperAgent:
         """
         trace: List[Dict[str, Any]] = []
 
-        # Multi-Turn Context Synthesis: Merge prior user turns with current goal
-        prior_user_texts = [m.get("content", "") for m in (history or []) if m.get("role") == "user"]
-        combined_goal = " ".join(prior_user_texts + [goal]).strip()
+        # Multi-Turn Context Synthesis: Merge prior user turns with current goal ONLY when
+        # immediately preceding assistant turn was a clarifying question (or part of active defect/calibration thread)
+        merge_history = False
+        if history:
+            last_assistant_msg = ""
+            for turn in reversed(history):
+                if turn.get("role") == "assistant":
+                    last_assistant_msg = turn.get("content", "")
+                    break
+
+            clarifying_indicators = [
+                "could you share a few quick details",
+                "fabric type & project",
+                "presser foot & needle",
+                "current dial settings",
+                "what fabric are you sewing",
+                "to determine the exact tension",
+                "without guessing",
+            ]
+            last_asst_lower = last_assistant_msg.lower()
+            is_clarifying_asst = any(ind in last_asst_lower for ind in clarifying_indicators)
+
+            last_user_msg = ""
+            for turn in reversed(history):
+                if turn.get("role") == "user":
+                    last_user_msg = turn.get("content", "")
+                    break
+
+            if is_clarifying_asst:
+                merge_history = True
+            elif last_user_msg:
+                last_user_lower = last_user_msg.lower()
+                defect_terms_check = [
+                    "pucker", "skip", "broken needle", "needle breakage", "jam", "bunching",
+                    "bird-nesting", "looping", "thread breaking", "thread snapping"
+                ]
+                prior_had_defect = any(t in last_user_lower for t in defect_terms_check)
+                curr_has_defect = any(t in goal.lower() for t in defect_terms_check)
+                if prior_had_defect and not curr_has_defect:
+                    merge_history = True
+
+        if merge_history:
+            prior_user_texts = [m.get("content", "") for m in (history or []) if m.get("role") == "user"]
+            combined_goal = " ".join(prior_user_texts + [goal]).strip()
+        else:
+            combined_goal = goal.strip()
 
         # 1. Match sewing machine
         machine_specs = self._find_machine_in_query(combined_goal, machine_override)
