@@ -306,13 +306,9 @@
 
           <!-- THE TACTILE SEWING MACHINE ROTARY KNOBS -->
           <div class="knobs-stage">
-            <!-- Brass Hardware Mounting Screws at 4 Corners -->
-            <span class="dial-corner-screw top-left" aria-hidden="true"></span>
-            <span class="dial-corner-screw top-right" aria-hidden="true"></span>
-            <span class="dial-corner-screw bottom-left" aria-hidden="true"></span>
-            <span class="dial-corner-screw bottom-right" aria-hidden="true"></span>
-            
-            <!-- Upper Tension Rotary Knob (0-9) -->
+            <img src="/newbrandkit/Sewing%20Machine%20Dial%20Components/sewingmachinedialbackground.svg" class="dial-chassis-bg" alt="" aria-hidden="true">
+
+            <!-- Left housing: Upper Tension Rotary Knob (0-9) -->
             <div class="knob-station" id="knobStationTension">
               <div class="knob-bezel" id="bezelTension"
                    role="slider"
@@ -324,37 +320,13 @@
                    aria-valuetext="4.0"
                    data-param="tension">
                 <img src="/newbrandkit/Sewing%20Machine%20Dial%20Components/Upper%20Tension%20Bezel.svg" class="dial-bezel-graphic" alt="" aria-hidden="true">
-                <div class="knob-rotor" id="rotorTension" style="transform: rotate(-13.3deg);">
+                <div class="knob-rotor" id="rotorTension" style="transform: rotate(-144deg);">
                   <img src="/newbrandkit/Sewing%20Machine%20Dial%20Components/Upper%20Tension%20Wheel.svg" class="dial-wheel-graphic" alt="" aria-hidden="true">
                 </div>
               </div>
-              <span class="knob-label">Upper Tension</span>
-              <span class="knob-digital-val" id="valTension">4.0</span>
-              <span class="knob-range-hint" id="rangeTension">Range: 0 – 9</span>
             </div>
 
-            <!-- Stitch Length Rotary Knob (0-4mm) -->
-            <div class="knob-station" id="knobStationLength">
-              <div class="knob-bezel" id="bezelLength"
-                   role="slider"
-                   tabindex="0"
-                   aria-label="Stitch Length Dial"
-                   aria-valuemin="0"
-                   aria-valuemax="4"
-                   aria-valuenow="2.5"
-                   aria-valuetext="2.5 mm"
-                   data-param="length">
-                <img src="/newbrandkit/Sewing%20Machine%20Dial%20Components/Stitch%20Length%20Bezel.svg" class="dial-bezel-graphic" alt="" aria-hidden="true">
-                <div class="knob-rotor" id="rotorLength" style="transform: rotate(30deg);">
-                  <img src="/newbrandkit/Sewing%20Machine%20Dial%20Components/Stitch%20Length%20Wheel.svg" class="dial-wheel-graphic" alt="" aria-hidden="true">
-                </div>
-              </div>
-              <span class="knob-label">Stitch Length</span>
-              <span class="knob-digital-val" id="valLength">2.5 mm</span>
-              <span class="knob-range-hint" id="rangeLength">Range: 0 – 4mm</span>
-            </div>
-
-            <!-- Stitch Width Rotary Knob (0-5mm) -->
+            <!-- Middle housing: Stitch Width Rotary Knob (0-5mm) -->
             <div class="knob-station" id="knobStationWidth">
               <div class="knob-bezel" id="bezelWidth"
                    role="slider"
@@ -366,15 +338,47 @@
                    aria-valuetext="0.0 mm"
                    data-param="width">
                 <img src="/newbrandkit/Sewing%20Machine%20Dial%20Components/Stitch%20Width%20Bezel.svg" class="dial-bezel-graphic" alt="" aria-hidden="true">
-                <div class="knob-rotor" id="rotorWidth" style="transform: rotate(-120deg);">
+                <div class="knob-rotor" id="rotorWidth" style="transform: rotate(0deg);">
                   <img src="/newbrandkit/Sewing%20Machine%20Dial%20Components/Stitch%20Width%20Wheel.svg" class="dial-wheel-graphic" alt="" aria-hidden="true">
                 </div>
               </div>
+            </div>
+
+            <!-- Right housing: Stitch Length Rotary Knob (0-4mm) -->
+            <div class="knob-station" id="knobStationLength">
+              <div class="knob-bezel" id="bezelLength"
+                   role="slider"
+                   tabindex="0"
+                   aria-label="Stitch Length Dial"
+                   aria-valuemin="0"
+                   aria-valuemax="4"
+                   aria-valuenow="2.5"
+                   aria-valuetext="2.5 mm"
+                   data-param="length">
+                <img src="/newbrandkit/Sewing%20Machine%20Dial%20Components/Stitch%20Length%20Bezel.svg" class="dial-bezel-graphic" alt="" aria-hidden="true">
+                <div class="knob-rotor" id="rotorLength" style="transform: rotate(-34.3deg);">
+                  <img src="/newbrandkit/Sewing%20Machine%20Dial%20Components/Stitch%20Length%20Wheel.svg" class="dial-wheel-graphic" alt="" aria-hidden="true">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dials-readout-bar">
+            <div class="dial-readout-cell">
+              <span class="knob-label">Upper Tension</span>
+              <span class="knob-digital-val" id="valTension">4.0</span>
+              <span class="knob-range-hint" id="rangeTension">Range: 0 – 9</span>
+            </div>
+            <div class="dial-readout-cell">
               <span class="knob-label">Stitch Width</span>
               <span class="knob-digital-val" id="valWidth">0.0 mm</span>
               <span class="knob-range-hint" id="rangeWidth">Range: 0 – 5mm</span>
             </div>
-
+            <div class="dial-readout-cell">
+              <span class="knob-label">Stitch Length</span>
+              <span class="knob-digital-val" id="valLength">2.5 mm</span>
+              <span class="knob-range-hint" id="rangeLength">Range: 0 – 4mm</span>
+            </div>
           </div>
 
           <!-- Sewing Hardware Readout Badges (Pinned Tailor's Fabric Tags) -->

@@ -1416,60 +1416,55 @@ span.cal-tab-title {
    12. Tactile Hand-Crafted Rotary Dials & Circular Drag Physics
    -------------------------------------------------------------------------- */
 .knobs-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1440 / 810;
   background: #FFFFFF;
   border: 1.5px dashed var(--border-stitch);
   border-radius: 16px;
-  padding: 26px 14px 22px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
-  position: relative;
+  padding: 0;
+  margin-bottom: 14px;
+  overflow: hidden;
   box-shadow: 0 4px 12px rgba(61, 30, 40, 0.04);
 }
 
-/* Brass Hardware Mounting Screws at 4 Corners */
-.dial-corner-screw {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #F4D396 0%, #DEA458 60%, #996A25 100%);
-  border: 1px solid #7D5116;
-  box-shadow: 0 1px 2px rgba(61, 30, 40, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+.dial-chassis-bg {
+  width: 100%;
+  height: auto;
+  display: block;
   pointer-events: none;
-  z-index: 5;
+  user-select: none;
 }
-
-.dial-corner-screw::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 20%;
-  right: 20%;
-  height: 1px;
-  background: #5E390A;
-  transform: translateY(-50%) rotate(45deg);
-}
-
-.dial-corner-screw.top-left { top: 8px; left: 8px; }
-.dial-corner-screw.top-right { top: 8px; right: 8px; }
-.dial-corner-screw.bottom-left { bottom: 8px; left: 8px; }
-.dial-corner-screw.bottom-right { bottom: 8px; right: 8px; }
 
 .knob-station {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
+  position: absolute;
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
   user-select: none;
+}
+
+#knobStationTension {
+  left: 32.78%;
+  top: 49.70%;
+  width: 20.1%;
+}
+
+#knobStationWidth {
+  left: 53.10%;
+  top: 50.10%;
+  width: 19.6%;
+}
+
+#knobStationLength {
+  left: 74.15%;
+  top: 49.80%;
+  width: 19.8%;
 }
 
 /* Bezel Chassis with Real SVG Graphic Components */
 .knob-bezel {
-  width: 150px;
-  height: 150px;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   background: transparent;
   border: none;
@@ -1481,8 +1476,8 @@ span.cal-tab-title {
   cursor: grab;
   touch-action: none;
   outline: none;
-  filter: drop-shadow(0 12px 24px rgba(61, 30, 40, 0.22)) drop-shadow(0 4px 8px rgba(61, 30, 40, 0.12));
-  transition: filter 0.2s ease, transform 0.15s ease;
+  filter: drop-shadow(0 4px 10px rgba(61, 30, 40, 0.18)) drop-shadow(0 1px 3px rgba(61, 30, 40, 0.1));
+  transition: filter 0.2s ease;
 }
 
 .knob-bezel:active,
@@ -1491,23 +1486,36 @@ span.cal-tab-title {
 }
 
 .knob-bezel:focus-visible {
-  filter: drop-shadow(0 0 0 3px rgba(191, 215, 234, 0.9)) drop-shadow(0 12px 24px rgba(61, 30, 40, 0.22));
+  filter: drop-shadow(0 0 0 3px rgba(191, 215, 234, 0.9)) drop-shadow(0 4px 10px rgba(61, 30, 40, 0.18));
 }
 
 .dial-bezel-graphic {
   position: absolute;
-  inset: 0;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   width: 100%;
-  height: 100%;
-  object-fit: contain;
+  height: auto;
   pointer-events: none;
   z-index: 1;
 }
 
+#bezelTension .dial-bezel-graphic {
+  transform: translate(-51.44%, -51.60%);
+}
+
+#bezelWidth .dial-bezel-graphic {
+  transform: translate(-49.50%, -51.05%);
+}
+
+#bezelLength .dial-bezel-graphic {
+  transform: translate(-49.71%, -49.81%);
+}
+
 /* Rotating Wheel Core Driven by Calibration Values */
 .knob-rotor {
-  width: 110px;
-  height: 110px;
+  width: 60%;
+  height: 60%;
   border-radius: 50%;
   position: relative;
   transition: transform 0.08s linear;
@@ -1517,7 +1525,22 @@ span.cal-tab-title {
   justify-content: center;
   pointer-events: none;
   z-index: 2;
-  filter: drop-shadow(0 3px 6px rgba(61, 30, 40, 0.25));
+  filter: drop-shadow(0 2px 5px rgba(61, 30, 40, 0.22));
+}
+
+#rotorTension {
+  width: 58.0%;
+  height: 58.0%;
+}
+
+#rotorWidth {
+  width: 61.5%;
+  height: 61.5%;
+}
+
+#rotorLength {
+  width: 60.5%;
+  height: 60.5%;
 }
 
 .knob-rotor.animating {
@@ -1530,7 +1553,26 @@ span.cal-tab-title {
   object-fit: contain;
   display: block;
   pointer-events: none;
-  filter: drop-shadow(0 2px 4px rgba(61, 30, 40, 0.15));
+}
+
+/* 3-Column Readouts Below Sewing Machine Chassis */
+.dials-readout-bar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 12px 10px;
+  background: #FFFFFF;
+  border: 1.5px dashed var(--border-stitch);
+  border-radius: 12px;
+}
+
+.dial-readout-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 2px;
 }
 
 /* Readouts under knobs */
@@ -1538,7 +1580,7 @@ span.cal-tab-title {
   font-family: var(--font-section);
   font-size: 13.5px;
   color: var(--color-plum);
-  margin-top: 10px;
+  margin-top: 0;
   letter-spacing: 0.02em;
 }
 
@@ -1886,9 +1928,25 @@ span.cal-tab-title {
   }
 
   .knobs-stage {
-    flex-direction: column;
-    gap: 20px;
-    padding: 20px 10px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+  }
+
+  .dials-readout-bar {
+    gap: 6px;
+    padding: 10px 6px;
+  }
+
+  .knob-label {
+    font-size: 11.5px;
+  }
+
+  .knob-digital-val {
+    font-size: 15px;
+  }
+
+  .knob-range-hint {
+    font-size: 9.5px;
   }
 
   .spec-cards-grid {

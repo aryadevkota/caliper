@@ -173,8 +173,38 @@ const dialState = {
   }
 };
 
+const WIDTH_WHEEL_ANGLES = [0, -65, -130, -180, -228, -295];
+
 /**
- * Set dial value, compute sweep angle (-120deg to +120deg), and update visual/ARIA state.
+ * Compute rotor rotation (deg) so the active value aligns with the top bezel notch.
+ */
+function getDialAngle(param, value) {
+  if (param === "tension") {
+    // 0–9 ticks span clockwise at 36deg/unit with 0 at 12 o'clock
+    return -value * 36;
+  }
+  if (param === "width") {
+    // 0–5 marks sit clockwise at [0, 65, 130, 180, 228, 295] deg
+    const idx = Math.floor(value);
+    const frac = value - idx;
+    if (idx >= WIDTH_WHEEL_ANGLES.length - 1) {
+      return WIDTH_WHEEL_ANGLES[WIDTH_WHEEL_ANGLES.length - 1];
+    }
+    if (idx < 0) return WIDTH_WHEEL_ANGLES[0];
+    return WIDTH_WHEEL_ANGLES[idx] + frac * (WIDTH_WHEEL_ANGLES[idx + 1] - WIDTH_WHEEL_ANGLES[idx]);
+  }
+  if (param === "length") {
+    // 0–4 marks span -137deg to +137deg at 68.5deg/unit with 2 at 12 o'clock
+    return (2.0 - value) * 68.5;
+  }
+  const dial = dialState[param];
+  const span = dial && dial.max - dial.min > 0 ? (dial.max - dial.min) : 1;
+  const ratio = dial ? (value - dial.min) / span : 0;
+  return -120 + ratio * 240;
+}
+
+/**
+ * Set dial value, compute wheel alignment angle, and update visual/ARIA state.
  */
 function setDialValue(param, value, animate = true) {
   const dial = dialState[param];
@@ -192,9 +222,7 @@ function setDialValue(param, value, animate = true) {
     dial.rotor.classList.remove("animating");
   }
 
-  const span = dial.max - dial.min > 0 ? (dial.max - dial.min) : 1;
-  const ratio = (clamped - dial.min) / span;
-  const angle = -120 + ratio * 240;
+  const angle = getDialAngle(param, clamped);
   dial.rotor.style.transform = `rotate(${angle.toFixed(1)}deg)`;
 
   if (param === "width" && clamped === 0) {
